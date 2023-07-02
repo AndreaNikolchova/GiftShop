@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace GiftShop.Web.Data.Migrations
+namespace GiftShop.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
