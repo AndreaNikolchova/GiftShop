@@ -15,15 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Common", "GiftShop
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{176B3B22-530F-44E0-B1B3-3DD0476D00EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Utilities", "GiftShop.Utilities\GiftShop.Utilities.csproj", "{2AB7B8DA-45BA-4C84-8F01-3E3433397CCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Utilities", "GiftShop.Utilities\GiftShop.Utilities.csproj", "{2AB7B8DA-45BA-4C84-8F01-3E3433397CCA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{0410B823-74C0-445B-8551-7B084ADBCE83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Services", "GiftShop.Services\GiftShop.Services.csproj", "{BA438DB1-E350-447F-98EF-BCF4894A5984}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Services", "GiftShop.Services\GiftShop.Services.csproj", "{BA438DB1-E350-447F-98EF-BCF4894A5984}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{D0D331FA-7ABA-4513-A42A-4C8C1A4C3746}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Contracts", "GiftShop.Contracts\GiftShop.Contracts.csproj", "{052F80D5-6402-466E-82A5-85152D16B5AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Contracts", "GiftShop.Contracts\GiftShop.Contracts.csproj", "{052F80D5-6402-466E-82A5-85152D16B5AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
