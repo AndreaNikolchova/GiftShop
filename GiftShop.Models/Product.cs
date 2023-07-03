@@ -1,5 +1,6 @@
 ﻿namespace GiftShop.Models
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using static GiftShop.Common.ModelValidationConstants.Product;
@@ -11,9 +12,11 @@
         [Required]
         [MaxLength(NameMaxLenght)]
         public string Name { get; set; } = null!;
-        //fix
-        [MaxLength(2048)]
-        public string ImageUrl { get; set; } = null!;
+
+        [ForeignKey(nameof(Image))]
+        public Guid ImageId { get; set; }
+        public Image Images { get; set; } = null!;
+
         [Required]
         public decimal Price { get; set; }
 

@@ -16,7 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GiftShop.Contracts\GiftShop.Contracts.csproj" />
     <ProjectReference Include="..\GiftShop.Data\GiftShop.Data.csproj" />
+    <ProjectReference Include="..\GiftShop.Services\GiftShop.Services.csproj" />
+    <ProjectReference Include="..\GiftShop.Utilities\GiftShop.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

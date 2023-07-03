@@ -15,5 +15,15 @@
             public const int NameMinLenght = 2;
             public const int NameMaxLenght = 20;
         }
+        public static class YarnType
+        {
+            public const int NameMinLenght = 2;
+            public const int NameMaxLenght = 50;
+        }
+        public static class Packaging
+        {
+            public const int NameMinLenght = 2;
+            public const int NameMaxLenght = 50;
+        }
     }
 }
