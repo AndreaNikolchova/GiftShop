@@ -11,14 +11,12 @@
         }
         [Key]
         public Guid Id { get; set; }
-        public string Address { get; set; }
+
+        public Guid CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
         public int DeliveryCompanyId { get; set; }
         public IEnumerable<Product> Products { get; set; }
-
-        [ForeignKey(nameof(IdentityUser))]
-        public int BuyerId { get; set; }
-        public IdentityUser Buyer { get; set; }
 
         public decimal Sum { get; set; }
     }

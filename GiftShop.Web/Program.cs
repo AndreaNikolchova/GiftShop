@@ -1,9 +1,10 @@
 using GiftShop.Contracts;
 using GiftShop.Data;
+using GiftShop.Models;
 using GiftShop.Services;
 using GiftShop.Utilities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,11 @@ builder.Services.AddDbContext<GiftShopDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<GiftShopDbContext>();
+
 builder.Services.AddControllersWithViews();
+
 
 builder.Services.Configure<GCSConfigOptions>(builder.Configuration);
 builder.Services.AddScoped<ICloudStorageService, CloudStorageService>();

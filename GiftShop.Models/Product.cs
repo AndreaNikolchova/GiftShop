@@ -26,7 +26,7 @@
         [MaxLength(SizeMaxLenght)]
         public string Size { get; set; } = null!;
 
-        public int Count { get; set; }
+        public int Quantity { get; set; }
 
         [ForeignKey(nameof(ProductType))]
         public int ProductTypeId { get; set; }
