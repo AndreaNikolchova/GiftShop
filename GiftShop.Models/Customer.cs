@@ -1,8 +1,6 @@
-﻿
-namespace GiftShop.Models
+﻿namespace GiftShop.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    public class Customer : IdentityUser<Guid>
+    public class Customer 
     {
 
         public string FirstName { get; set; } = null!;
