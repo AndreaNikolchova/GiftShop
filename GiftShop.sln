@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Web", "GiftShop.Web\GiftShop.Web.csproj", "{9BB28650-85F2-4D24-9171-96EF771DEB3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Data", "GiftShop.Data\GiftShop.Data.csproj", "{CA73E471-32FE-4F97-82A5-F5A16A0D82AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Data", "GiftShop.Data\GiftShop.Data.csproj", "{CA73E471-32FE-4F97-82A5-F5A16A0D82AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Models", "GiftShop.Models\GiftShop.Models.csproj", "{68536C61-6418-4363-AF93-4F1627B549B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Models", "GiftShop.Models\GiftShop.Models.csproj", "{68536C61-6418-4363-AF93-4F1627B549B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Common", "GiftShop.Common\GiftShop.Common.csproj", "{A161EFC0-BCF6-476A-8197-063AEE85E338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Common", "GiftShop.Common\GiftShop.Common.csproj", "{A161EFC0-BCF6-476A-8197-063AEE85E338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,9 @@
 using GiftShop.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +13,21 @@ builder.Services.AddDbContext<GiftShopDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<GiftShopDbContext>();
 builder.Services.AddControllersWithViews();
+string clouldName = builder.Configuration.GetValue<string>("Cloudinary:CloudName");
+string apiKey = builder.Configuration.GetValue<string>("Cloudinary:ApiKey");
+string apiSecret = builder.Configuration.GetValue<string>("Cloudinary:ApiSecret");
+
+Account cloudinaryCredentials = new Account(
+        clouldName,
+        apiKey,
+        apiSecret
+    );
+
+Cloudinary cloudinary = new Cloudinary(cloudinaryCredentials);
+builder.Services.AddSingleton(cloudinary);
 
 var app = builder.Build();
 
