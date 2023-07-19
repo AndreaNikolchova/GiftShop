@@ -25,5 +25,26 @@
             public const int NameMinLenght = 2;
             public const int NameMaxLenght = 50;
         }
+
+        public class Customer
+        {
+            public const int NameMinLenght = 2;
+            public const int NameMaxLenght = 50;
+            public const int AddressMinLenght = 2;
+            public const int AddressMaxLenght = 50;
+
+        }
+
+        public class DeliveryCompany
+        {
+            public const int NameMinLenght = 2;
+            public const int NameMaxLenght = 50;
+        }
+
+        public class Image
+        {
+            public const int UrlMinLenght = 7;
+            public const int UrlMaxLenght = 2083;
+        }
     }
 }

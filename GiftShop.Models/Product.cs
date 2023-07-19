@@ -1,6 +1,5 @@
 ﻿namespace GiftShop.Models
 {
-    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using static GiftShop.Common.ModelValidationConstants.Product;
@@ -32,9 +31,10 @@
         public int ProductTypeId { get; set; }
         public ProductType Type { get; set; } = null!;
 
-        [ForeignKey(nameof(YarnType))]
-        public int YarnTypeId { get; set; }
-        public YarnType YarnType { get; set; }
+        public Guid YarnTypeId { get; set; }
+        [ForeignKey(nameof(YarnTypeId))]
+        public YarnType YarnType { get; set; } = null!;
+
 
 
 

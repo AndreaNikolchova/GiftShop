@@ -1,12 +1,13 @@
 ﻿namespace GiftShop.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using static GiftShop.Common.ModelValidationConstants.DeliveryCompany;
     public class DeliveryCompany
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
-        //Add max lenght
+        [MaxLength(NameMaxLenght)]
         public string Name { get; set; } = null!;
       
     }

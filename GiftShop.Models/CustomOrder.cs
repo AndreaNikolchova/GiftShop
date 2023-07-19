@@ -2,26 +2,18 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    public class Order
+    public class CustomOrder
     {
-        public Order()
-        {
-            this.Products = new List<Product>();
-        }
         [Key]
         public Guid Id { get; set; }
-
         public Guid CustomerId { get; set; }
         [ForeignKey(nameof(CustomerId))]
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; } = null!;
+        public Guid ProduductId { get; set; }
+        [ForeignKey(nameof(ProduductId))]
+        public CustomProduct Product { get; set; } = null!;
         public Guid DeliveryCompanyId { get; set; }
-
         [ForeignKey(nameof(DeliveryCompanyId))]
         public DeliveryCompany DeliveryCompany { get; set; } = null!;
-        public IEnumerable<Product> Products { get; set; }
-        public decimal Sum { get; set; }
-        public Guid PackagingId { get; set; }
-        [ForeignKey(nameof(PackagingId))]
-        public Packaging Packaging { get; set; }
     }
 }

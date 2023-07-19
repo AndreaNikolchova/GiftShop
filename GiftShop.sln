@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Models", "GiftShop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Common", "GiftShop.Common\GiftShop.Common.csproj", "{A161EFC0-BCF6-476A-8197-063AEE85E338}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{176A8E95-5A32-4EA1-8155-DB8521D37E6F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{FE47604C-F2FB-4445-B7C2-70382DDD89B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{478616D0-C132-410B-B6BF-2D9FA118AB88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +42,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9BB28650-85F2-4D24-9171-96EF771DEB3F} = {FE47604C-F2FB-4445-B7C2-70382DDD89B7}
+		{CA73E471-32FE-4F97-82A5-F5A16A0D82AB} = {176A8E95-5A32-4EA1-8155-DB8521D37E6F}
+		{68536C61-6418-4363-AF93-4F1627B549B6} = {176A8E95-5A32-4EA1-8155-DB8521D37E6F}
+		{A161EFC0-BCF6-476A-8197-063AEE85E338} = {478616D0-C132-410B-B6BF-2D9FA118AB88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC9E340E-C076-4111-9DC1-9999CA63A19E}

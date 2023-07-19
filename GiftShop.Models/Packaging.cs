@@ -1,12 +1,11 @@
-﻿
-namespace GiftShop.Models
+﻿namespace GiftShop.Models
 {
     using System.ComponentModel.DataAnnotations;
     using static GiftShop.Common.ModelValidationConstants.Packaging;
     public class Packaging
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(NameMaxLenght)]
