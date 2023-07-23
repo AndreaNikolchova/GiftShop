@@ -2,7 +2,7 @@ using GiftShop.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CloudinaryDotNet;
-
+using GiftShop.Data.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 

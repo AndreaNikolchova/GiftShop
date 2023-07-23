@@ -11,10 +11,7 @@
         [Required]
         [MaxLength(NameMaxLenght)]
         public string Name { get; set; } = null!;
-
-        [ForeignKey(nameof(Image))]
-        public Guid ImageId { get; set; }
-        public Image Images { get; set; } = null!;
+        public string ImageId { get; set; } = null!;
 
         [Required]
         public decimal Price { get; set; }
@@ -28,7 +25,7 @@
         public int Quantity { get; set; }
 
         [ForeignKey(nameof(ProductType))]
-        public int ProductTypeId { get; set; }
+        public Guid ProductTypeId { get; set; }
         public ProductType Type { get; set; } = null!;
 
         public Guid YarnTypeId { get; set; }

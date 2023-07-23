@@ -10,7 +10,8 @@
         [MaxLength(NameMaxLenght)]
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
-        public Image? Image { get; set; }
+
+        public string? ImageId { get; set; }
 
         [Required]
         [MaxLength(SizeMaxLenght)]
