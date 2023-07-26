@@ -4,6 +4,10 @@
     using static GiftShop.Common.ModelValidationConstants.DeliveryCompany;
     public class DeliveryCompany
     {
+        public DeliveryCompany()
+        {
+            this.Id = Guid.NewGuid();
+        }
         [Key]
         public Guid Id { get; set; }
         [Required]

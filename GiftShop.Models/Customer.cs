@@ -6,6 +6,10 @@
     using static GiftShop.Common.ModelValidationConstants.Customer;
     public class Customer
     {
+        public Customer()
+        {
+            this.Id = Guid.NewGuid();
+        }
         [Key]
         public Guid Id { get; set; }
         public string UserId { get; set; } = null!;

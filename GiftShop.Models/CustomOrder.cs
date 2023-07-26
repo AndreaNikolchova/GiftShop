@@ -4,6 +4,10 @@
     using System.ComponentModel.DataAnnotations.Schema;
     public class CustomOrder
     {
+        public CustomOrder()
+        {
+            this.Id = Guid.NewGuid();
+        }
         [Key]
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }

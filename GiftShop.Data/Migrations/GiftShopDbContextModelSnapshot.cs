@@ -183,7 +183,7 @@ namespace GiftShop.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageId")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -198,8 +198,8 @@ namespace GiftShop.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -209,9 +209,6 @@ namespace GiftShop.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<Guid>("TypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("YarnTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -219,11 +216,49 @@ namespace GiftShop.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("ProductTypeId");
 
                     b.HasIndex("YarnTypeId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a356b9ee-4486-43d9-9b3e-f58490556376"),
+                            Description = "Blue soft blanket",
+                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
+                            Name = "Blanket",
+                            Price = 130.00m,
+                            ProductTypeId = new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"),
+                            Quantity = 1,
+                            Size = "100x180 cm",
+                            YarnTypeId = new Guid("33db593a-7a2b-493d-ae3c-f35086510855")
+                        },
+                        new
+                        {
+                            Id = new Guid("4e0d8c44-eb7a-414c-83ab-fb7889e1ba72"),
+                            Description = "A buquet of 5 roses",
+                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
+                            Name = "Roses",
+                            Price = 20.00m,
+                            ProductTypeId = new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"),
+                            Quantity = 2,
+                            Size = "25 cm",
+                            YarnTypeId = new Guid("d9ff2381-dcad-4a99-b2f7-2c8a34af34b2")
+                        },
+                        new
+                        {
+                            Id = new Guid("acd46b9f-131a-4c3b-8cdf-6a3c307d50f1"),
+                            Description = "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)",
+                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
+                            Name = "Baby Dear",
+                            Price = 25.00m,
+                            ProductTypeId = new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"),
+                            Quantity = 1,
+                            Size = "20 cm",
+                            YarnTypeId = new Guid("fa6e1ffc-2094-4b9d-a985-305443b7ef27")
+                        });
                 });
 
             modelBuilder.Entity("GiftShop.Models.ProductType", b =>
@@ -240,6 +275,23 @@ namespace GiftShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"),
+                            Name = "Toys"
+                        },
+                        new
+                        {
+                            Id = new Guid("c1143e77-ccfa-4231-bd25-49e29470f13a"),
+                            Name = "Clothes"
+                        },
+                        new
+                        {
+                            Id = new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"),
+                            Name = "Accessories"
+                        });
                 });
 
             modelBuilder.Entity("GiftShop.Models.YarnType", b =>
@@ -256,6 +308,23 @@ namespace GiftShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("YarnTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("33db593a-7a2b-493d-ae3c-f35086510855"),
+                            Name = "Alize Puffy"
+                        },
+                        new
+                        {
+                            Id = new Guid("fa6e1ffc-2094-4b9d-a985-305443b7ef27"),
+                            Name = "Baby Bunny"
+                        },
+                        new
+                        {
+                            Id = new Guid("d9ff2381-dcad-4a99-b2f7-2c8a34af34b2"),
+                            Name = "Alexander Yarn Ira"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -533,7 +602,7 @@ namespace GiftShop.Data.Migrations
 
                     b.HasOne("GiftShop.Models.ProductType", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId")
+                        .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

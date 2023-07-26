@@ -4,6 +4,11 @@
     using static GiftShop.Common.ModelValidationConstants.ProductType;
     public class ProductType
     {
+        public ProductType()
+        {
+            this.Id = Guid.NewGuid();
+        }
+        [Key]
         public Guid Id { get; set; }
         [Required]
         [MaxLength(NameMaxLenght)]

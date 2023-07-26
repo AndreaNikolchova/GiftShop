@@ -5,13 +5,17 @@
     using static GiftShop.Common.ModelValidationConstants.Product;
     public class Product
     {
+        public Product()
+        {
+            this.Id = Guid.NewGuid();
+        }
         [Key]
         public Guid Id { get; set; }
 
         [Required]
         [MaxLength(NameMaxLenght)]
         public string Name { get; set; } = null!;
-        public string ImageId { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
 
         [Required]
         public decimal Price { get; set; }

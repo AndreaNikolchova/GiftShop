@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using GiftShop.Models;
-using GiftShop.Data.Seed;
+using System.Reflection;
 
 namespace GiftShop.Data
 {
@@ -23,7 +23,8 @@ namespace GiftShop.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            var applicationSeeder = new ApplicationDbContextSeeder();
+            Assembly configAssembly = Assembly.GetAssembly(typeof(GiftShopDbContext)) ?? Assembly.GetExecutingAssembly();
+            builder.ApplyConfigurationsFromAssembly(configAssembly);
             base.OnModelCreating(builder);
             
         }

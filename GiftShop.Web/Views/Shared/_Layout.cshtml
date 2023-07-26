@@ -25,10 +25,10 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               Products
+                                Products
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item text-dark" href="#">Toys</a>
+                                <a class="dropdown-item text-dark" asp-controller="Toys" asp-action="Index">Toys</a>
                                 <a class="dropdown-item text-dark" href="#">Clothes</a>
                                 <a class="dropdown-item text-dark" href="#">Accessories</a>
                             </div>
@@ -49,35 +49,25 @@
             @RenderBody()
         </main>
     </div>
-    <!--Fix Footerrr!!!-->
-    <footer class="bg-white text-center text-black border-top border-bottom border-black">
-
+    <footer class="bg-white text-center text-black border-top border-bottom border-black mt-3 mb-0">
         <div class="container p-4">
             <section class="mb-4">
                 <p>
                     Homemade croshet gifts. In our site you can find things from clothes to toys that can make your friends and family happy.
                 </p>
             </section>
-            <!-- Section: Social media -->
             <section class="mb-4">
-                <!-- Facebook -->
                 <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
-                    <!-- --> @*<i class="bi bi-facebook facebook-icon-black"></i>*@
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.25.0/font/bootstrap-icons.css">
+                    Facebook
                 </a>
-
-                <!-- Email -->
-                <a class="btn btn-outline-dark btn-floating m-1" " href="#!" role="button">
-                    <i class="fab fa-twitter"></i>
-                </a>
-
-
-                <!-- Instagram -->
                 <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
-                    <i class="fab fa-instagram"></i>
+                    Email
+                </a>
+                <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                    Instagram
                 </a>
             </section>
-            <div class="text-center p-3 bg-white">
+            <div class="text-center bg-white">
                 © 2023 Copyright: Andy's gifts
 
             </div>
