@@ -1,0 +1,32 @@
+﻿@model ProductDetailsViewModel
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <img class="product-image-details img-fluid" src="@Model.ImageUrl" alt="@Model.Name">
+            </div>
+            <div class="col-md-4">
+                <h2 class="product-title-details  text-center">@Model.Name</h2>
+                <p class="product-description-details">
+                    <strong>Description:</strong>
+                    @Model.Description
+                </p>
+                <p class="product-description-details">
+                    <strong>Size:</strong>
+                    @Model.Size
+                </p>
+                <p class="product-description-details">
+                    <strong>Type:</strong>
+                    @Model.Type
+                </p>
+                <p class="product-description-details">
+                   <strong>Yarn brand and type:</strong> 
+                    @Model.YarnName
+                </p>
+                <p class="product-price-details">@Model.Price leva</p>
+                <button type="button" class="btn btn-primary">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+</body>

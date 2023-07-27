@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductViewModelHomePage>
+﻿@model IEnumerable<ProductViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,8 +13,15 @@
         @foreach (var product in Model)
         {
             <div class="col">
-                <a class="card" >
-                    <img src="@product.ImageUrl" alt="@product.Name">
+                <a class="product-card text-decoration-none text-dark" asp-controller="@product.Type"  asp-action="Index">
+                    <div class="card">
+                        <img src="@product.ImageUrl" alt="@product.Name">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title text-center">@product.Name</h3>
+                        <p class="product-description">@product.Description</p>
+                        <span class="product-price">@product.Price leva</span>
+                    </div>
                 </a>
             </div>
         }
