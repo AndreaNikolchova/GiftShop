@@ -3,7 +3,7 @@
     using GiftShop.Data;
     using GiftShop.Services.ImageService.Contracts;
     using GiftShop.Services.Product.Contracts;
-    using GiftShop.ViewModels.Product;
+    using GiftShop.Web.ViewModels.Product;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;

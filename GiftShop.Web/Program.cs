@@ -15,8 +15,11 @@ builder.Services.AddDbContext<GiftShopDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<GiftShopDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddEntityFrameworkStores<GiftShopDbContext>();
 
 builder.Services.AddScoped<IMediaService, MediaService>();
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -41,7 +44,6 @@ builder.Services.AddSingleton(cloudinary);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

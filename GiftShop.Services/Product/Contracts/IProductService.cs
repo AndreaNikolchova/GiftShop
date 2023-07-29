@@ -1,6 +1,6 @@
 ﻿namespace GiftShop.Services.Product.Contracts
 {
-    using GiftShop.ViewModels.Product;
+    using GiftShop.Web.ViewModels.Product;
     public interface IProductService
     {
         public Task<IEnumerable<ProductViewModel>> GetProductFromEveryCategory();

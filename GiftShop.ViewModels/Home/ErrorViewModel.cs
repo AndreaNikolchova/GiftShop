@@ -1,4 +1,4 @@
-namespace GiftShop.ViewModels
+namespace GiftShop.Web.ViewModels.Home
 {
     public class ErrorViewModel
     {

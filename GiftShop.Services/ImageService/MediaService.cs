@@ -12,11 +12,6 @@
             this.cloudinary = cloudinary;
         }
 
-       // public string GetImageUrl(string id)
-        //{
-        //    var item = cloudinary.GetResource(new GetResourceParams(id));
-        //    return cloudinary.GetResource(new GetResourceParams(id)).Url; 
-        //}
 
         public async Task<string> UploadPicture(string path)
         {
@@ -28,8 +23,8 @@
 
             var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
-            string publicId = uploadResult.PublicId;
-            return publicId;
+            string url = uploadResult.Url.ToString();
+            return url;
         }
     }
 }

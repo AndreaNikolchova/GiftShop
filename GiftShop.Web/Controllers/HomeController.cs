@@ -1,10 +1,9 @@
-﻿using GiftShop.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using GiftShop.Services.Product.Contracts;
-
-namespace GiftShop.Web.Controllers
+﻿namespace GiftShop.Web.Controllers
 {
+    using ViewModels.Home;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
+    using GiftShop.Services.Product.Contracts;
     public class HomeController : Controller
     {
         private IProductService productService;

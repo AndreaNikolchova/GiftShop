@@ -1,4 +1,4 @@
-﻿namespace GiftShop.ViewModels.Product
+﻿namespace GiftShop.Web.ViewModels.Product
 {
     public class ProductDetailsViewModel
     {

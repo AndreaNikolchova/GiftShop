@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GiftShop.Data\GiftShop.Data.csproj" />
-    <ProjectReference Include="..\GiftShop.ViewModels\GiftShop.ViewModels.csproj" />
+    <ProjectReference Include="..\GiftShop.ViewModels\GiftShop.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

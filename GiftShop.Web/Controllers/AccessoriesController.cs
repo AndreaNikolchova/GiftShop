@@ -19,9 +19,10 @@ namespace GiftShop.Web.Controllers
 
         }
 
-        public IActionResult Details(Guid id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            return View();
+            var product = await this.productService.GetDetails(id);
+            return View(product);
         }
     }
 }

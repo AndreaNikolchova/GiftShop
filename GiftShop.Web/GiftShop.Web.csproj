@@ -25,7 +25,7 @@
     <ProjectReference Include="..\GiftShop.Data\GiftShop.Data.csproj" />
     <ProjectReference Include="..\GiftShop.Models\GiftShop.Models.csproj" />
     <ProjectReference Include="..\GiftShop.Services\GiftShop.Services.csproj" />
-    <ProjectReference Include="..\GiftShop.ViewModels\GiftShop.ViewModels.csproj" />
+    <ProjectReference Include="..\GiftShop.ViewModels\GiftShop.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
