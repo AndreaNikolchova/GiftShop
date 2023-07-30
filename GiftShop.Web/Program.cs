@@ -6,6 +6,7 @@ using GiftShop.Services.Product.Contracts;
 using GiftShop.Services.Product;
 using GiftShop.Services.ImageService.Contracts;
 using GiftShop.Services.ImageService;
+using Giftshop.Web.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +26,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 })
 .AddEntityFrameworkStores<GiftShopDbContext>();
+builder.Services.AddApplicationServices(typeof(IProductService));
 
-builder.Services.AddScoped<IMediaService, MediaService>();
-builder.Services.AddScoped<IProductService, ProductService>();
 
 
 
