@@ -1,0 +1,46 @@
+﻿@model CustomProductViewModel
+@{
+    ViewData["Title"] = "Custom";
+}
+
+<h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form id="registerForm" asp-action="Index" method="post" enctype="multipart/form-data">
+            <h2 class="text-center">Describe your custom product.</h2>
+            <hr />
+            <div class="form-floating mb-3">
+                <input asp-for="Name" class="form-control" aria-required="true" />
+                <label asp-for="Name"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <label class="mb-3">Please choose a file in which I can clearly see the product you want.</label>
+            <div class="form-floating mb-3">
+                <input asp-for="Photo" type="file" name="picture" id="picture">
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Description" class="form-control" aria-required="false" />
+                <label asp-for="Description"></label>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+             <div class="form-floating mb-3">
+                <input asp-for="Size" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Size"></label>
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Quantity" type="number" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Quantity"></label>
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Send request</button>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

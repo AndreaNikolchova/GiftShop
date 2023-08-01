@@ -1,21 +1,24 @@
 ﻿namespace GiftShop.Services.Product
 {
-    using GiftShop.Data;
-    using GiftShop.Services.ImageService.Contracts;
-    using GiftShop.Services.Product.Contracts;
-    using GiftShop.Web.ViewModels.Product;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using GiftShop.Data;
+    using GiftShop.Services.ImageService.Contracts;
+    using GiftShop.Services.Product.Contracts;
+    using GiftShop.Web.ViewModels.CustomProduct;
+    using GiftShop.Web.ViewModels.Product;
+    using Microsoft.EntityFrameworkCore;
     public class ProductService : IProductService
     {
         public GiftShopDbContext dbContext { get; set; }
+        private IMediaService mediaService { get; set; }
 
         public ProductService(GiftShopDbContext dbContext, IMediaService mediaService)
         {
             this.dbContext = dbContext;
+            this.mediaService = mediaService;
 
         }
 
@@ -24,6 +27,7 @@
             var products = await this.dbContext.Products.Take(3)
                 .Select(p => new ProductViewModel()
                 {
+                    Id = p.Id,
                     Name = p.Name,
                     ImageUrl = p.ImageUrl,
                     Price = p.Price.ToString(),
@@ -31,12 +35,12 @@
                     Type = p.Type.Name
 
                 })
-                
+
                 .ToArrayAsync();
             return products;
         }
 
-      
+
         public async Task<IEnumerable<ProductViewModel>> GetAll(string productType)
         {
             var products = await this.dbContext.Products.Where(x => x.Type.Name == productType)
@@ -47,8 +51,8 @@
                        ImageUrl = p.ImageUrl,
                        Price = p.Price.ToString(),
                        Description = p.Description!,
-                       
-                    
+
+
                    })
                    .ToArrayAsync();
             return products;
@@ -71,6 +75,16 @@
                 })
                 .ToArrayAsync();
             return product[0];
+        }
+
+        public async Task AddCustomOrder(CustomProductViewModel product)
+        {
+            string picture;
+            if (product.Photo != null)
+            {
+                picture = await this.mediaService.UploadPicture(product.Photo);
+            }
+
         }
     }
 }

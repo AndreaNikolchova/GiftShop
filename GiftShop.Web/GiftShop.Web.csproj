@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.20">
       <PrivateAssets>all</PrivateAssets>
@@ -26,7 +27,7 @@
     <ProjectReference Include="..\GiftShop.Models\GiftShop.Models.csproj" />
     <ProjectReference Include="..\GiftShop.Services\GiftShop.Services.csproj" />
     <ProjectReference Include="..\GiftShop.ViewModels\GiftShop.Web.ViewModels.csproj" />
-    <ProjectReference Include="..\Giftshop.Web.Infrastructure\Giftshop.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\Giftshop.Web.Infrastructure\GiftShop.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,18 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿let array = document.getElementsByTagName('input');
+sessionStorage.setItem('cart');
+for (let i = 0; i < array.length; i++) {
 
-// Write your JavaScript code.
+    array[i].addEventListener('click', function (e) {
+
+        let items = sessionStorage.getItem('cart');
+        let arr = [];
+        if (items === null) {
+            
+        }
+        else {
+            items.add()
+        }
+        alert('Data saved to localStorage!');
+    });
+}
+

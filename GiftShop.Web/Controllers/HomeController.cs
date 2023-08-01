@@ -18,6 +18,8 @@
             var products = await productService.GetProductFromEveryCategory();
             return View(products);
         }
+     
+
 
 
 

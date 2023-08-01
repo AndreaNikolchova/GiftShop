@@ -1,4 +1,4 @@
-﻿namespace Giftshop.Web.Infrastructure.Extensions
+﻿namespace GiftShop.Web.Infrastructure.Extensions
 {
     using Microsoft.Extensions.DependencyInjection;
     using System.Reflection;

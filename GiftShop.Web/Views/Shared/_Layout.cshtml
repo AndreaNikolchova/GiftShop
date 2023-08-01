@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GiftShop.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/bootraptheme.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GiftShop.Web.styles.css" asp-append-version="true" />
 </head>
@@ -12,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Andy's Gifts</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <img href="~/Images/Andy's.png" />Andy's Gifts</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,11 +31,11 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item text-dark" asp-controller="Toys" asp-action="Index">Toys</a>
                                 <a class="dropdown-item text-dark" asp-controller="Clothes" asp-action="Index">Clothes</a>
-                                <a class="dropdown-item text-dark"asp-controller="Accessories" asp-action="Index">Accessories</a>
+                                <a class="dropdown-item text-dark" asp-controller="Accessories" asp-action="Index">Accessories</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Custom</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CustomProduct" asp-action="Index">Custom</a>
                         </li>
 
                     </ul>
@@ -52,18 +53,27 @@
     <footer class="bg-white text-center text-black border-top border-bottom border-black mt-3 mb-0">
         <div class="container p-4">
             <section class="mb-4">
-                <p>
-                    Homemade croshet gifts. In our site you can find things from clothes to toys that can make your friends and family happy.
-                </p>
+                <div>
+                    <p>
+                        Discover the Magic of Handmade Crochet Creations at Andy's Gifts! 🧶🎁
+                    </p>
+                    <p>
+                        ✨ Uniquely Crafted, Just for You ✨
+                    </p>
+                    <p>
+                        🎯 Custom Orders Available! Your Imagination, Our Creation 🌠
+                    </p>
+                    Join us in the world of crochet artistry and experience the joy of giving and receiving heartwarming, handmade treasures. Follow us for updates, inspirations, and a touch of yarn magic! 🧡
+                </div>
             </section>
             <section class="mb-4">
                 <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
                     Facebook
                 </a>
-                <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                <a class="btn btn-outline-dark btn-floating m-1" href="mailto:agiftsmadebyandy@gmail.com" role="button">
                     Email
                 </a>
-                <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                <a class="btn btn-outline-dark btn-floating m-1" href="https://www.instagram.com/giftsmadebyandy/" role="button">
                     Instagram
                 </a>
             </section>
