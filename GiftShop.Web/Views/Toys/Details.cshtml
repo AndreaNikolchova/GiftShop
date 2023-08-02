@@ -1,12 +1,15 @@
 ﻿@model ProductDetailsViewModel
+@using static GiftShop.Common.ApplicationConstants;
 <body>
+    <h1 class="text-center">@Model.Name</h1>
     <div class="container">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-4">
-                <img class="product-image-details img-fluid" src="@Model.ImageUrl" alt="@Model.Name">
+                <div class="cardDetails ms-xl-0">
+                    <img src="@Model.ImageUrl" alt="@Model.Name">
+                </div>
             </div>
             <div class="col-md-4">
-                <h2 class="product-title-details  text-center">@Model.Name</h2>
                 <p class="product-description-details">
                     <strong>Description:</strong>
                     @Model.Description
@@ -20,11 +23,27 @@
                     @Model.Type
                 </p>
                 <p class="product-description-details">
-                   <strong>Yarn brand and type:</strong> 
+                    <strong>Yarn brand and type:</strong>
                     @Model.YarnName
                 </p>
-                <p class="product-price-details">@Model.Price leva</p>
-                <button type="button" class="btn btn-primary">Add to Cart</button>
+                <p class="product-price-details">@Model.Price BGN</p>
+                @if (!User.IsInRole(AdminRoleName))
+                {
+                    <button type="button" class="btn btn-primary">Add to Cart</button>
+                }
+                else
+                {
+                    <div class="container">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-success">Edit</button>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

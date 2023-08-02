@@ -1,27 +1,53 @@
 ﻿@model IEnumerable<ProductViewModel>
-<h1 class="text-center">Clothes</h1>
+@using static GiftShop.Common.ApplicationConstants;
 <body>
-     @{
-            if(Model.Count() == 0)
-            {
-                <h2 class="mb-5">There is no items yet :(</h2>
-            }
+<h1 class="text-center">Clothes</h1>
+    @{
+        if (Model.Count() == 0)
+        {
+            <h2 class="mb-5">There is no items yet :(</h2>
         }
+    }
     <div class="row row-cols-1 row-cols-md-3 ms-5">
+
         @foreach (var product in Model)
         {
             <div class="col">
-                <a class="product-card text-decoration-none text-dark" asp-action="Details" asp-route-id="@product.Id">
-                    <div class="card">
+                <div class="product-card text-decoration-none text-dark">
+                    <a class="card" asp-action="Details" asp-route-id="@product.Id">
                         <img src="@product.ImageUrl" alt="@product.Name">
-                    </div>
+                    </a>
                     <div class="product-info">
                         <h3 class="product-title text-center">@product.Name</h3>
                         <p class="product-description">@product.Description</p>
-                         <button type="button" class="btn btn-primary">Add to Cart</button>
-                        <span class="product-price ms-5">@product.Price leva</span>
+                        @if (!User.IsInRole(AdminRoleName))
+                        {
+                            <div class="container">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-primary">Add to Cart</button>
+                                    </div>
+                                    <span class="product-price text-center mb-2">@product.Price BGN</span>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="container">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-success">Edit</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
+                                    <span class="product-price text-center mb-2 mt-2">@product.Price BGN</span>
+                                </div>
+                            </div>
+                        }
                     </div>
-                </a>
+                </div>
             </div>
         }
     </div>
