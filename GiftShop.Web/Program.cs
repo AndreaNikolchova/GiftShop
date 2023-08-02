@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using CloudinaryDotNet;
 using GiftShop.Services.Product.Contracts;
 using GiftShop.Web.Infrastructure.Extensions;
+using static GiftShop.Common.ApplicationConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 
 })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<GiftShopDbContext>();
 
 builder.Services.AddApplicationServices(typeof(IProductService));
@@ -67,6 +69,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.SeedAdministrator(DeveloperAdminEmail);
 
 app.MapControllerRoute(
     name: "default",
