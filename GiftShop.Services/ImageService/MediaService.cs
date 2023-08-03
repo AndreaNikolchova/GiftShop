@@ -17,29 +17,30 @@
         }
 
 
-        public async Task<string> UploadPicture(IFormFile file)
+        public async Task<string> UploadPicture(IFormFile file,string name)
         {
+            byte[] destinationImage;
 
-            // Generate a unique filename for the uploaded picture
-            string fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            destinationImage = memoryStream.ToArray();
 
-            // Save the file to a temporary location on the server
-            string tempFilePath = Path.Combine(webHostEnvironment.WebRootPath, "uploads", fileName);
+            using var destinationStream = new MemoryStream(destinationImage);
 
-            using (var stream = new FileStream(tempFilePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // Upload the file to Cloudinary
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription(fileName, new FileStream(tempFilePath, FileMode.Open)),
-                PublicId = fileName, // Use the filename as the public ID
+                File = new FileDescription(name, destinationStream),
+                PublicId = name,
             };
 
-            var uploadResult = await cloudinary.UploadAsync(uploadParams);
-            return uploadResult.Url.ToString();
+            var result = await this.cloudinary.UploadAsync(uploadParams);
+
+            if (result.Error != null)
+            {
+                throw new InvalidOperationException("The file is too big. Choose a file which is less then 10.4 mb");
+            }
+
+            return result.Url.AbsoluteUri;
         }
     }
 }

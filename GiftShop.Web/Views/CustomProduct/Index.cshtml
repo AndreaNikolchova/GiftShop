@@ -1,7 +1,5 @@
 ﻿@model CustomProductViewModel
-@{
-    ViewData["Title"] = "Custom";
-}
+
 
 <h1 class="text-center mb-4">@ViewData["Title"]</h1>
 
@@ -17,15 +15,21 @@
             </div>
             <label class="mb-3">Please choose a file in which I can clearly see the product you want.</label>
             <div class="form-floating mb-3">
-                <input asp-for="Photo" type="file" name="picture" id="picture">
-                <span asp-validation-for="Photo" class="text-danger"></span>
+                <input asp-for="Photo" type="file" name="Photo" id="picture">
+                @if (Model != null)
+                {
+                    @if (!string.IsNullOrEmpty(Model.PhotoError))
+                    {
+                       <br> <span asp-validation-for="Photo" class="text-danger">@Model.PhotoError</span>
+                    }
+                }
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Description" class="form-control" aria-required="false" />
                 <label asp-for="Description"></label>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-             <div class="form-floating mb-3">
+            <div class="form-floating mb-3">
                 <input asp-for="Size" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Size"></label>
                 <span asp-validation-for="Size" class="text-danger"></span>

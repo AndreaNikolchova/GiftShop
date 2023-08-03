@@ -20,6 +20,7 @@ namespace GiftShop.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<YarnType> YarnTypes { get; set; }
+        public DbSet<CustomRequest> CustomRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
