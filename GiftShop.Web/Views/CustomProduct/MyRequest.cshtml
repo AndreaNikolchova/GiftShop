@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CustomRequestViewModel>;
+
+<body>
+    <h1 class="text-center">Custom Requests</h1>
+    @if (Model == null)
+    {
+        <h2 class="card-title text-center">There are no requests.</h2>
+        return;
+    }
+    <div class="container mt-5">
+        @foreach (var product in Model)
+        {
+            <div class="mb-5 border border-dark custom-rounded p-3">
+                <div class="row no-gutters mb-3">
+                    <div class="col-md-3">
+                        @if (product.ImageUrl != null)
+                        {
+                            <div class="card">
+                                <img src="@product.ImageUrl" class="card-img" alt="Product Image">
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="card-text text-center mt-5"><strong>Photo: </strong>No photo imported :(</p>
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h2 class="card-title text-center">@product.Name</h2>
+                            <p class="card-text"><strong>Description: </strong>@product.Description</p>
+                            <p class="card-text"><strong>Size: </strong>@product.Size</p>
+                            <p class="card-text"><strong>Quantity: </strong>@product.Quantity</p>
+                            <p class="card-text"><strong>Client's email address: </strong>@product.EmailAddress</p>
+
+                        </div>
+
+                        <div class="container mt-5">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-auto">
+                                    <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-primary">Accept</a>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>

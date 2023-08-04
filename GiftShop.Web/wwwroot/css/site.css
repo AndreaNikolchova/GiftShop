@@ -113,3 +113,7 @@ footer {
     color: #2e7d32;
     margin-top: 10px;
 }
+
+.custom-rounded {
+    border-radius: 8px;
+}

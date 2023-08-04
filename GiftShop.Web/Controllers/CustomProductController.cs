@@ -10,9 +10,9 @@
     [Authorize]
     public class CustomProductController : Controller
     {
-        private IProductService productService;
+        private ICustomProductService productService;
 
-        public CustomProductController(IProductService productService)
+        public CustomProductController(ICustomProductService productService)
         {
             this.productService = productService;
         }
@@ -36,20 +36,45 @@
                     await productService.AddCustomRequest(model);
                     return Redirect("Home/Index");
                 }
-                catch(InvalidOperationException e)
+                catch (InvalidOperationException e)
                 {
                     model.PhotoError = e.Message;
                     return View(model);
                 }
-               
+
             }
             return View(model);
         }
 
-        //[Authorize(Roles = AdminRoleName)]
-        //public async Task<IActionResult> Request()
-        //{
+        [Authorize(Roles = AdminRoleName)]
+        public async Task<IActionResult> Request()
+        {
+            var customProducts = await productService.GetAllRequests();
+            return View(customProducts);
 
-        //}
+        }
+
+        [Authorize(Roles = AdminRoleName)]
+        [HttpPost]
+        public async Task<IActionResult> Accept(CustomRequestViewModel model)
+        {
+           
+            return View(model);
+
+        }
+        [Authorize(Roles = AdminRoleName)]
+        public async Task<IActionResult> Accept(Guid id)
+        {
+            var model = await productService.GetRequest(id);
+            return View(model);
+
+        }
+        public async Task<IActionResult> MyRequest()
+        {
+
+            return View();
+
+        }
+
     }
 }
