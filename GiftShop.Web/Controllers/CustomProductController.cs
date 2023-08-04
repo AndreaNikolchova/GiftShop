@@ -55,26 +55,43 @@
         }
 
         [Authorize(Roles = AdminRoleName)]
-        [HttpPost]
-        public async Task<IActionResult> Accept(CustomRequestViewModel model)
-        {
-           
-            return View(model);
-
-        }
-        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Accept(Guid id)
         {
             var model = await productService.GetRequest(id);
             return View(model);
 
         }
+        [Authorize(Roles = AdminRoleName)]
+        [HttpPost]
+        public async Task<IActionResult> Accept(CustomRequestViewModel model)
+        {
+            await productService.AcceptRequest(model);
+            return Redirect("/CustomProduct/Request");
+        }
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await productService.DeleteRequest(id);
+            return Redirect("/CustomProduct/Request");
+        }
         public async Task<IActionResult> MyRequest()
         {
-
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customApprovedRequests = await productService.GetRequestsFromUser(userId);
+            return View(customApprovedRequests);
 
         }
+       
+        public async Task<IActionResult> Send(Guid id)
+        {
+            var model = await productService.GetRequest(id);
+            return View(model);
 
+        }
+        [HttpPost]
+        public async Task<IActionResult> Send(CustomRequestViewModel model)
+        {
+            await productService.AcceptRequest(model);
+            return Redirect("/CustomProduct/Request");
+        }
     }
 }

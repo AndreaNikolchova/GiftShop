@@ -18,5 +18,6 @@
         public string Price { get; set; } = null!;
         public string Date { get; set; } = null!;
 
+
     }
 }

@@ -4,7 +4,7 @@
     <h1 class="text-center">Custom Requests</h1>
     @if (Model == null)
     {
-        <h2 class="card-title text-center">There are no requests.</h2>
+        <h2 class="card-title text-center mt-5">There are no requests.</h2>
         return;
     }
     <div class="container mt-5">
@@ -30,17 +30,15 @@
                             <p class="card-text"><strong>Description: </strong>@product.Description</p>
                             <p class="card-text"><strong>Size: </strong>@product.Size</p>
                             <p class="card-text"><strong>Quantity: </strong>@product.Quantity</p>
-                            <p class="card-text"><strong>Client's email address: </strong>@product.EmailAddress</p>
+                            <p class="product-price">@product.Price BGN</p>
+                            <p class="card-text"><strong>Expected day: </strong>@product.Date</p>
 
                         </div>
 
                         <div class="container mt-5">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-auto">
-                                    <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-primary">Accept</a>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="btn btn-danger">Delete</button>
+                                    <a asp-action="Send" asp-route-id="@product.RequestId" class="btn btn-primary">Send</a>
                                 </div>
                             </div>
                         </div>

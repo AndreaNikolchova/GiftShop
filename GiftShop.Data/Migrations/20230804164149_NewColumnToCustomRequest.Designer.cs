@@ -4,6 +4,7 @@ using GiftShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShop.Data.Migrations
 {
     [DbContext(typeof(GiftShopDbContext))]
-    partial class GiftShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230804164149_NewColumnToCustomRequest")]
+    partial class NewColumnToCustomRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,14 +121,8 @@ namespace GiftShop.Data.Migrations
                     b.Property<Guid>("CustomProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Date")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
-
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -256,7 +252,7 @@ namespace GiftShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("15b666c9-5ea0-4d34-8251-8e46712c6d99"),
+                            Id = new Guid("a46284b3-6953-45c9-ae8c-54d3bd210f64"),
                             Description = "Blue soft blanket",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
                             Name = "Blanket",
@@ -268,7 +264,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5345e1d5-2025-42f8-aee0-f8056cc0ad48"),
+                            Id = new Guid("b38d8089-3d4e-496a-8557-cbc7b1217cf4"),
                             Description = "A buquet of 5 roses",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
                             Name = "Roses",
@@ -280,7 +276,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7fde039f-5e84-4e31-8262-de8e6049f8ec"),
+                            Id = new Guid("06e4f7aa-ee39-4d6a-a20f-876f7a83e97a"),
                             Description = "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
                             Name = "Baby Dear",

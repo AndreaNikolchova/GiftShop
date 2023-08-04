@@ -4,7 +4,7 @@
     <h1 class="text-center">Custom Requests</h1>
     @if (Model == null)
     {
-        <h2 class="card-title text-center">There are no requests.</h2>
+        <h2 class="card-title text-center mt-5">There are no requests.</h2>
         return;
     }
     <div class="container mt-5">
@@ -40,7 +40,7 @@
                                     <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-primary">Accept</a>
                                 </div>
                                 <div class="col-auto">
-                                    <button class="btn btn-danger">Delete</button>
+                                    <a asp-action="Delete" asp-route-id="@product.RequestId" class="btn btn-danger">Delete</a>
                                 </div>
                             </div>
                         </div>
