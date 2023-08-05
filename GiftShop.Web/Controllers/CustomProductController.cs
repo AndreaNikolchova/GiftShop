@@ -69,7 +69,7 @@
             return Redirect("/CustomProduct/Request");
         }
         [Authorize(Roles = AdminRoleName)]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> DeleteAdmin(Guid id)
         {
             await productService.DeleteRequest(id);
             return Redirect("/CustomProduct/Request");
@@ -82,16 +82,22 @@
 
         }
        
-        public async Task<IActionResult> Send(Guid id)
+        public async Task<IActionResult> ConfirmOrder(Guid id)
         {
             var model = await productService.GetRequestByUser(id);
             return View(model);
 
         }
         [HttpPost]
-        public async Task<IActionResult> Send(CustomRequestViewModel model)
+        public async Task<IActionResult> ConfirmOrder(CustomRequestViewModel model)
         {
             await productService.AddCustomOrder(model);
+            return Redirect("/CustomProduct/MyRequest");
+        }
+
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            await productService.DeleteRequest(id);
             return Redirect("/CustomProduct/MyRequest");
         }
     }

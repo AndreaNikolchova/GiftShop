@@ -1,7 +1,7 @@
-﻿using GiftShop.Data;
-using GiftShop.Models;
-namespace GiftShop.Services.CustomProducts
+﻿namespace GiftShop.Services.CustomProducts
 {
+    using GiftShop.Data;
+    using GiftShop.Models;
     using GiftShop.Services.EmailSender.Contracts;
     using GiftShop.Services.ImageService.Contracts;
     using GiftShop.Services.CustomProducts.Contracts;
@@ -9,6 +9,8 @@ namespace GiftShop.Services.CustomProducts
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using GiftShop.Web.ViewModels.Customer;
+    using static GiftShop.Common.EmailMessagesConstants;
+
 
     public class CustomProductService : ICustomProductService
     {
@@ -48,7 +50,7 @@ namespace GiftShop.Services.CustomProducts
                     };
                     await dbContext.AddAsync<CustomRequest>(request);
                     await dbContext.SaveChangesAsync();
-                    emailSender.SendEmail(product.EmailAddress, "Your request has been send succsessfully", "Your custom order");
+                    emailSender.SendEmail(product.EmailAddress, CustomOrderSubject , CustomOrderBody, CustomOrderEnding);
 
                 }
                 catch (InvalidOperationException e)
@@ -75,7 +77,7 @@ namespace GiftShop.Services.CustomProducts
                 await dbContext.AddAsync<CustomRequest>(request);
 
                 await dbContext.SaveChangesAsync();
-                emailSender.SendEmail(product.EmailAddress, "Your request has been send succsessfully", "Your custom order");
+                emailSender.SendEmail(product.EmailAddress, CustomOrderSubject, CustomOrderBody, CustomOrderEnding);
             }
 
         }
@@ -133,8 +135,6 @@ namespace GiftShop.Services.CustomProducts
             }
             return customRequest;
         }
-
-
 
         public async Task<IEnumerable<CustomRequestViewModel>> GetRequestsFromUser(string userId)
         {

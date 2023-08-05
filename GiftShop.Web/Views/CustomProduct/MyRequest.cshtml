@@ -38,7 +38,10 @@
                         <div class="container mt-5">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-auto">
-                                    <a asp-action="Send" asp-route-id="@product.RequestId" class="btn btn-primary">Send</a>
+                                    <a asp-action="ConfirmOrder" asp-route-id="@product.RequestId" class="btn btn-primary">Confirm Order</a>
+                                </div>
+                                <div class="col-auto">
+                                    <a asp-action="DeleteUser" asp-route-id="@product.RequestId" class="btn btn-danger">Delete</a>
                                 </div>
                             </div>
                         </div>

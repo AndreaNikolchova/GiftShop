@@ -70,12 +70,12 @@
 
                         <p class="product-description-details mt-4">
                             <strong>Your name:</strong>
-                            @Model.CustomerViewModel.FirstName + " " + @Model.CustomerViewModel.LastName
+                            @Model.CustomerViewModel.FirstName  @Model.CustomerViewModel.LastName
                         </p>
                         <p class="product-description-details">
                             <strong>Your address:</strong>
                             @Model.CustomerViewModel.Address
-                            <button id="changeAddress" class="btn btn-primary">Change address</button>
+                            <button id="changeAddress" class="btn btn-primary mt-3">Change address</button>
                             <div class="form-floating mb-4" id="address" hidden>
                                 <input asp-for="CustomerViewModel.Address" class="form-control" aria-required="true" required />
                                 <label asp-for="CustomerViewModel.Address"></label>
@@ -90,7 +90,7 @@
 
 
                     }
-                    <div class="form-floating mb-4">
+                    <div class="form-floating mt-3 mb-4">
                         <select asp-for="CustomerViewModel.DeliveryCompanyName" class="form-control" aria-required="true" required>
                             <option value="">Choose a company</option>
 
