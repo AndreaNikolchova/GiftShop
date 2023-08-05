@@ -1,5 +1,6 @@
 ﻿namespace GiftShop.Web.ViewModels.CustomProduct
 {
+    using GiftShop.Web.ViewModels.Customer;
     using System.ComponentModel.DataAnnotations;
     using static GiftShop.Common.ModelValidationConstants.Product;
     public class CustomRequestViewModel
@@ -18,6 +19,8 @@
         public string Price { get; set; } = null!;
         public string Date { get; set; } = null!;
 
+        public CustomerViewModel CustomerViewModel { get; set; } = null!;
 
+        public IEnumerable<string> DeliveryCompaniesNames { get; set; }
     }
 }

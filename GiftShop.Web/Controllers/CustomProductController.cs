@@ -1,6 +1,6 @@
 ﻿namespace GiftShop.Web.Controllers
 {
-    using GiftShop.Services.Product.Contracts;
+    using GiftShop.Services.CustomProducts.Contracts;
     using GiftShop.Web.ViewModels.CustomProduct;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -57,7 +57,7 @@
         [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Accept(Guid id)
         {
-            var model = await productService.GetRequest(id);
+            var model = await productService.GetRequestByAdmin(id);
             return View(model);
 
         }
@@ -68,6 +68,7 @@
             await productService.AcceptRequest(model);
             return Redirect("/CustomProduct/Request");
         }
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Delete(Guid id)
         {
             await productService.DeleteRequest(id);
@@ -83,15 +84,15 @@
        
         public async Task<IActionResult> Send(Guid id)
         {
-            var model = await productService.GetRequest(id);
+            var model = await productService.GetRequestByUser(id);
             return View(model);
 
         }
         [HttpPost]
         public async Task<IActionResult> Send(CustomRequestViewModel model)
         {
-            await productService.AcceptRequest(model);
-            return Redirect("/CustomProduct/Request");
+            await productService.AddCustomOrder(model);
+            return Redirect("/CustomProduct/MyRequest");
         }
     }
 }

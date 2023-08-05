@@ -47,10 +47,7 @@ main {
     flex-grow: 1;
 }
 
-footer {
-    background-color: #f0f0f0;
-    padding: 20px;
-}
+
 
 .card {
     border: 1px solid #ccc;
