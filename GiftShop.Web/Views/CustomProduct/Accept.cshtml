@@ -1,6 +1,7 @@
 ﻿@model CustomRequestViewModel
 <body>
     <h1 class="text-center mb-5">Accept</h1>
+
     <div class="container">
         <form asp-action="Accept" method="post">
             <div class="row mb-3">
@@ -41,7 +42,7 @@
                     <input type="hidden" asp-for="Size" />
                     <input type="hidden" asp-for="Quantity" />
                     <input type="hidden" asp-for="EmailAddress" />
-
+                    <label class="text-primary">Please enter the price with a point like this '20.50'.</label>
                     <div class="form-floating mb-3">
                         <input asp-for="Price" class="form-control" aria-required="true" required  />
                         <label asp-for="Price"></label>
@@ -66,3 +67,6 @@
         </form>
     </div>
 </body>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

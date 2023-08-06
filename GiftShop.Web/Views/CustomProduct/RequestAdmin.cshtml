@@ -1,13 +1,20 @@
 ﻿@model IEnumerable<CustomRequestViewModel>;
 
 <body>
-    <h1 class="text-center">Custom Requests</h1>
-    @if (Model == null)
-    {
-        <h2 class="card-title text-center mt-5">There are no requests.</h2>
-        return;
+    <h1 class="text-center mb-5">Custom Requests</h1>
+   @{
+        if (Model.Count() == 0)
+        {
+            <div class="row justify-content-center align-items-center mb-5">
+                <div class="col-auto">
+                    <div id="banner">
+                        <img class="img-fluid h-200 mb-4" src="~/Images/No items found.png" />
+                    </div>
+                </div>
+            </div>
+        }
     }
-    <div class="container mt-5">
+    <div class="container">
         @foreach (var product in Model)
         {
             <div class="mb-5 border border-dark custom-rounded p-3">
@@ -30,18 +37,17 @@
                             <p class="card-text"><strong>Description: </strong>@product.Description</p>
                             <p class="card-text"><strong>Size: </strong>@product.Size</p>
                             <p class="card-text"><strong>Quantity: </strong>@product.Quantity</p>
-                            <p class="product-price">@product.Price BGN</p>
-                            <p class="card-text"><strong>Expected day: </strong>@product.Date</p>
+                            <p class="card-text"><strong>Client's email address: </strong>@product.EmailAddress</p>
 
                         </div>
 
                         <div class="container mt-5">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-auto">
-                                    <a asp-action="ConfirmOrder" asp-route-id="@product.RequestId" class="btn btn-primary">Confirm Order</a>
+                                    <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-primary">Accept</a>
                                 </div>
                                 <div class="col-auto">
-                                    <a asp-action="DeleteUser" asp-route-id="@product.RequestId" class="btn btn-danger">Delete</a>
+                                    <a asp-action="DeleteAdmin" asp-route-id="@product.RequestId" class="btn btn-danger">Delete</a>
                                 </div>
                             </div>
                         </div>

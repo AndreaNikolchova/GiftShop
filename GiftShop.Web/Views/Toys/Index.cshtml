@@ -2,11 +2,16 @@
 @using static GiftShop.Common.ApplicationConstants;
 <body>
 <h1 class="text-center">Toys</h1>
-    @{
+   @{
         if (Model.Count() == 0)
         {
-            <h2>There is no items yet :(</h2>
-            return;
+            <div class="row justify-content-center align-items-center mb-5">
+                <div class="col-auto">
+                    <div id="banner">
+                        <img class="img-fluid h-200 mb-4" src="~/Images/No items found.png" />
+                    </div>
+                </div>
+            </div>
         }
     }
     <div class="row row-cols-1 row-cols-md-3 ms-5">
@@ -38,10 +43,10 @@
                             <div class="container">
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-success">Edit</button>
+                                        <a asp-controller="Toys" asp-action="Edit" asp-route-id="@product.Id" type="button" class="btn btn-success">Edit</a>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                        <a asp-controller="Toys" asp-action="Delete" asp-route-id="@product.Id" type="button" class="btn btn-danger">Delete</a>
                                     </div>
                                     <span class="product-price text-center mb-2 mt-2">@product.Price BGN</span>
                                 </div>

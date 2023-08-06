@@ -33,7 +33,7 @@
                 model.EmailAddress = User.FindFirstValue(ClaimTypes.Email);
                 try
                 {
-                    await productService.AddCustomRequest(model);
+                    await productService.AddCustomRequestAsync(model);
                     return Redirect("Home/Index");
                 }
                 catch (InvalidOperationException e)
@@ -47,9 +47,9 @@
         }
 
         [Authorize(Roles = AdminRoleName)]
-        public async Task<IActionResult> Request()
+        public async Task<IActionResult> RequestAdmin()
         {
-            var customProducts = await productService.GetAllRequests();
+            var customProducts = await productService.GetAllRequestsAsync();
             return View(customProducts);
 
         }
@@ -57,7 +57,7 @@
         [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Accept(Guid id)
         {
-            var model = await productService.GetRequestByAdmin(id);
+            var model = await productService.GetRequestByAdminAsync(id);
             return View(model);
 
         }
@@ -65,39 +65,45 @@
         [HttpPost]
         public async Task<IActionResult> Accept(CustomRequestViewModel model)
         {
-            await productService.AcceptRequest(model);
+            await productService.AcceptRequestAsync(model);
             return Redirect("/CustomProduct/Request");
         }
         [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> DeleteAdmin(Guid id)
         {
-            await productService.DeleteRequest(id);
+            await productService.DeleteRequestAsync(id);
             return Redirect("/CustomProduct/Request");
         }
-        public async Task<IActionResult> MyRequest()
+
+        public async Task<IActionResult> Request()
         {
+            if (User.IsInRole(AdminRoleName))
+            {
+                var customProducts = await productService.GetAllRequestsAsync();
+                return View("RequestAdmin",customProducts);
+            }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customApprovedRequests = await productService.GetRequestsFromUser(userId);
-            return View(customApprovedRequests);
+            var customApprovedRequests = await productService.GetRequestsFromUserAsync(userId);
+            return View("RequestUser", customApprovedRequests);
 
         }
        
         public async Task<IActionResult> ConfirmOrder(Guid id)
         {
-            var model = await productService.GetRequestByUser(id);
+            var model = await productService.GetRequestByUserAsync(id);
             return View(model);
 
         }
         [HttpPost]
         public async Task<IActionResult> ConfirmOrder(CustomRequestViewModel model)
         {
-            await productService.AddCustomOrder(model);
+            await productService.AddCustomOrderAsync(model);
             return Redirect("/CustomProduct/MyRequest");
         }
 
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            await productService.DeleteRequest(id);
+            await productService.DeleteRequestAsync(id);
             return Redirect("/CustomProduct/MyRequest");
         }
     }

@@ -9,6 +9,10 @@
 
             public const int SizeMinLenght = 2; 
             public const int SizeMaxLenght = 20;
+
+            public const int DescriptionMinLenght = 2;
+            public const int DescriptionMaxLenght = 1000;
+
         }
         public static class ProductType
         {

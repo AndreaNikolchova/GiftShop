@@ -3,14 +3,14 @@
     using GiftShop.Web.ViewModels.CustomProduct;
     public interface ICustomProductService
     {
-        public Task AddCustomRequest(CustomProductViewModel product);
-        public Task<IEnumerable<CustomRequestViewModel>> GetAllRequests();
-        public Task<CustomRequestViewModel> GetRequestByUser(Guid id);
-        public Task<CustomRequestViewModel> GetRequestByAdmin(Guid id);
-        public Task AddCustomOrder(CustomRequestViewModel request);
-        public Task<IEnumerable<CustomRequestViewModel>> GetRequestsFromUser(string userId);
-        public Task DeleteRequest(Guid id);
-        public Task AcceptRequest(CustomRequestViewModel model);
-        public Task<bool> SeeIfUserIsACustomer(string userId);
+        public Task AddCustomRequestAsync(CustomProductViewModel product);
+        public Task<IEnumerable<CustomRequestViewModel>> GetAllRequestsAsync();
+        public Task<CustomRequestViewModel> GetRequestByUserAsync(Guid id);
+        public Task<CustomRequestViewModel> GetRequestByAdminAsync(Guid id);
+        public Task AddCustomOrderAsync(CustomRequestViewModel request);
+        public Task<IEnumerable<CustomRequestViewModel>> GetRequestsFromUserAsync(string userId);
+        public Task DeleteRequestAsync(Guid id);
+        public Task AcceptRequestAsync(CustomRequestViewModel model);
+        public Task<bool> SeeIfUserIsACustomerAsync(string userId);
     }
 }

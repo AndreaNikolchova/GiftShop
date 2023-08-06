@@ -2,7 +2,7 @@
 @using GiftShop.Services.CustomProducts.Contracts;
 @inject ICustomProductService customProductService
 @{
-    bool isCustomer = await customProductService.SeeIfUserIsACustomer(User.Identity.Name);
+    bool isCustomer = await customProductService.SeeIfUserIsACustomerAsync(User.Identity.Name);
 }
 <body>
     <h1 class="text-center mb-5">Accept</h1>
@@ -117,3 +117,6 @@
         </form>
     </div>
 </body>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

@@ -40,24 +40,25 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="CustomProduct" asp-action="Index">Custom</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="CustomProduct" asp-action="MyRequest" >My Custom Requests</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CustomProduct" asp-action="Request" >My Custom Requests</a>
                             </li>
                         }
 
                     </ul>
                     @if (User.IsInRole("Administrator"))
                     {
-                        <div class="nav-item ms-2">
+                        <div class="nav-item ms-3">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
+                        </div>
+                        <div class="nav-item ms-3">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CustomProduct" asp-action="Request">View custom requests</a>
+                        </div>
+                        <div class="nav-item ms-3 ">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CustomProduct" asp-action="Request">View custom orders</a>
                         </div>
                     }
 
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        <div class="nav-item ms-2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CustomProduct" asp-action="Request">View custom requests</a>
-                        </div>
-                    }
+                   
 
                     <partial name="_LoginPartial" />
 

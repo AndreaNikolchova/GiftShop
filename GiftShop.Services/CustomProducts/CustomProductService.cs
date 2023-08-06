@@ -25,7 +25,7 @@
             this.mediaService = mediaService;
         }
 
-        public async Task AddCustomRequest(CustomProductViewModel product)
+        public async Task AddCustomRequestAsync(CustomProductViewModel product)
         {
             string picture;
             if (product.Photo != null)
@@ -83,7 +83,7 @@
         }
 
 
-        public async Task<IEnumerable<CustomRequestViewModel>> GetAllRequests()
+        public async Task<IEnumerable<CustomRequestViewModel>> GetAllRequestsAsync()
         {
             var customRequests = await dbContext.CustomRequests
                 .Where(x => x.IsAccepted == false)
@@ -102,7 +102,7 @@
             return customRequests;
         }
 
-        public async Task<CustomRequestViewModel> GetRequestByUser(Guid id)
+        public async Task<CustomRequestViewModel> GetRequestByUserAsync(Guid id)
         {
             var customRequest = await dbContext.CustomRequests
                 .Where(x => x.Id == id)
@@ -120,7 +120,7 @@
                 }).FirstAsync();
 
             customRequest.DeliveryCompaniesNames = await dbContext.DeliveryCompanies.Select(x => x.Name).ToArrayAsync();
-            if (await SeeIfUserIsACustomer(customRequest.EmailAddress))
+            if (await SeeIfUserIsACustomerAsync(customRequest.EmailAddress))
             {
                 var customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.UserName == customRequest.EmailAddress);
                 CustomerViewModel customerViewModel = new CustomerViewModel()
@@ -136,7 +136,7 @@
             return customRequest;
         }
 
-        public async Task<IEnumerable<CustomRequestViewModel>> GetRequestsFromUser(string userId)
+        public async Task<IEnumerable<CustomRequestViewModel>> GetRequestsFromUserAsync(string userId)
         {
             var customRequests = await dbContext.CustomRequests
                 .Where(x => x.UserId == userId && x.IsAccepted == true)
@@ -157,7 +157,7 @@
             return customRequests;
         }
 
-        public async Task DeleteRequest(Guid id)
+        public async Task DeleteRequestAsync(Guid id)
         {
             var customRequests = await dbContext.CustomRequests
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -170,7 +170,7 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AcceptRequest(CustomRequestViewModel model)
+        public async Task AcceptRequestAsync(CustomRequestViewModel model)
         {
             var customRequests = await dbContext.CustomRequests
                .FirstOrDefaultAsync(x => x.Id == model.RequestId);
@@ -181,9 +181,9 @@
 
         }
 
-        public async Task AddCustomOrder(CustomRequestViewModel request)
+        public async Task AddCustomOrderAsync(CustomRequestViewModel request)
         {
-            if (!await SeeIfUserIsACustomer(request.EmailAddress))
+            if (!await SeeIfUserIsACustomerAsync(request.EmailAddress))
             {
                 Customer customer = new Customer()
                 {
@@ -234,7 +234,7 @@
 
         }
 
-        public async Task<bool> SeeIfUserIsACustomer(string userId)
+        public async Task<bool> SeeIfUserIsACustomerAsync(string userId)
         {
             var customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.Email == userId);
             if (customer == null)
@@ -244,7 +244,7 @@
             return true;
         }
 
-        public async Task<CustomRequestViewModel> GetRequestByAdmin(Guid id)
+        public async Task<CustomRequestViewModel> GetRequestByAdminAsync(Guid id)
         {
             var customRequest = await dbContext.CustomRequests
                 .Where(x => x.Id == id)

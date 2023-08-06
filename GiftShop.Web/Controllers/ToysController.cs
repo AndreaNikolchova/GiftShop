@@ -14,13 +14,23 @@ namespace GiftShop.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var toys = await productService.GetAll("Toys");
+            var toys = await productService.GetAllAsync("Toys");
             return View(toys);
         }
         public async Task<IActionResult> Details(Guid id)
         {
-            var product = await this.productService.GetDetails(id);
+            var product = await this.productService.GetDetailsAsync(id);
             return View(product);
+        }
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await this.productService.DeleteAsync(id);
+            return Redirect("/Index");
+        }
+        public  Task<IActionResult> Edit(Guid id)
+        {
+           await this.productService.DeleteAsync(id);
+            return View();
         }
     }
 }

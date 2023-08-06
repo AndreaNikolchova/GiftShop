@@ -15,7 +15,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var products = await productService.GetProductFromEveryCategory();
+            var products = await productService.GetLast3ProductsAsync();
             return View(products);
         }
      

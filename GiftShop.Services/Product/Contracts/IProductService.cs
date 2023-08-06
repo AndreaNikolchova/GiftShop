@@ -3,8 +3,11 @@
     using GiftShop.Web.ViewModels.Product;
     public interface IProductService
     {
-        public Task<IEnumerable<ProductViewModel>> GetProductFromEveryCategory();
-        public Task<IEnumerable<ProductViewModel>> GetAll(string productType);
-        public Task<ProductDetailsViewModel> GetDetails(Guid id);
+        public Task<IEnumerable<ProductViewModel>> GetLast3ProductsAsync();
+        public Task<IEnumerable<ProductViewModel>> GetAllAsync(string productType);
+        public Task<ProductDetailsViewModel> GetDetailsAsync(Guid id);
+        public Task AddProductAsync(AddProductViewModel addProductViewModel);
+        public Task<AddProductViewModel> FillTypesAsync();
+        public Task DeleteAsync(Guid id);
     }
 }

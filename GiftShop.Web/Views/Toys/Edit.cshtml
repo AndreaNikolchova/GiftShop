@@ -1,0 +1,72 @@
+﻿@model AddProductViewModel
+
+<h1 class="text-center mb-4">Add Product</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Add" method="post" enctype="multipart/form-data">
+            <hr />
+            <div class="form-floating mb-3">
+                <input asp-for="Name" class="form-control" aria-required="true" />
+                <label asp-for="Name"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <label class="text-primary">Please select a photo.</label>
+            <div class="form-floating mb-3">
+                <input asp-for="Photo" type="file" name="Photo" id="picture">
+
+                @if (Model != null)
+                {
+                    @if (!string.IsNullOrEmpty(Model.PhotoError))
+                    {
+                        <br> <span asp-validation-for="Photo" class="text-danger">@Model.PhotoError</span>
+                    }
+                }
+
+            </div>
+            <div class="form-floating mb-3">
+                <textarea asp-for="Description" class="form-control" aria-required="false" ></textarea>
+                <label asp-for="Description"></label>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Size" class="form-control" aria-required="true" />
+                <label asp-for="Size"></label>
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Quantity" type="number" class="form-control" value="" aria-required="true" />
+                <label asp-for="Quantity"></label>
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <select asp-for="Type" class="form-control" aria-required="true" required>
+                    <option value="">Choose type</option>
+
+                    @foreach (var name in Model.Types)
+                    {
+                        <option value="@name">@name</option>
+                    }
+                </select>
+                <label asp-for="Type"></label>
+            </div>
+              <label class="text-primary">Please enter the price with a point like this '20.50'.</label>
+            <div class="form-floating mb-3">
+                <input asp-for="Price" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Price"></label>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="YarnType" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="YarnType"></label>
+                <span asp-validation-for="YarnType" class="text-danger"></span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Add Product</button>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

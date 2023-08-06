@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CustomRequestViewModel>;
 
 <body>
-    <h1 class="text-center">Custom Requests</h1>
+    <h1 class="text-center">Custom Orders</h1>
     @if (Model == null)
     {
         <h2 class="card-title text-center mt-5">There are no requests.</h2>
@@ -37,10 +37,7 @@
                         <div class="container mt-5">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-auto">
-                                    <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-primary">Accept</a>
-                                </div>
-                                <div class="col-auto">
-                                    <a asp-action="DeleteAdmin" asp-route-id="@product.RequestId" class="btn btn-danger">Delete</a>
+                                    <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-btn-success">Done</a>
                                 </div>
                             </div>
                         </div>
