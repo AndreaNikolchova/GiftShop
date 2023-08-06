@@ -1,15 +1,19 @@
 ﻿namespace GiftShop.Web.ViewModels.Product
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
     using static GiftShop.Common.ModelValidationConstants.Product;
     public class EditProductViewModel
     {
+        public Guid Id { get; set; }
+
         [Required]
         [MaxLength(NameMaxLenght)]
         [MinLength(NameMinLenght)]
         public string Name { get; set; } = null!;
-        [Required]
-
+  
+        public IFormFile? Photo { get; set; }
+        public string? ImageUrl { get; set; } 
         public string? PhotoError { get; set; }
         [Required]
         [MaxLength(DescriptionMaxLenght)]

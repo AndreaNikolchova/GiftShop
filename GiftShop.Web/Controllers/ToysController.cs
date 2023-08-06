@@ -1,4 +1,5 @@
 ﻿using GiftShop.Services.Product.Contracts;
+using GiftShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GiftShop.Web.Controllers
@@ -27,10 +28,21 @@ namespace GiftShop.Web.Controllers
             await this.productService.DeleteAsync(id);
             return Redirect("/Index");
         }
-        public  Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-           await this.productService.DeleteAsync(id);
-            return View();
+            var model = await productService.GetDetailsForEditAsync(id);
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await productService.UpdateProductInformation(model);
+            return Redirect($"/{model.Type}");
+
         }
     }
 }
