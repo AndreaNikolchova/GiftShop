@@ -6,8 +6,7 @@
 
     using GiftShop.Data;
     using GiftShop.Models;
-    using GiftShop.Services.EmailSender.Contracts;
-    using GiftShop.Services.ImageService.Contracts;
+    using GiftShop.Services.MediaService.Contracts;
     using GiftShop.Services.Product.Contracts;
     using GiftShop.Web.ViewModels.Product;
     using Microsoft.EntityFrameworkCore;
@@ -83,7 +82,7 @@
             try
             {
 
-                var picture = await this.mediaService.UploadPicture(addProductViewModel.Photo, addProductViewModel.Name);
+                var picture = await this.mediaService.UploadPictureAsync(addProductViewModel.Photo, addProductViewModel.Name);
 
 
                 var yarnType = await dbContext.YarnTypes
@@ -168,7 +167,7 @@
                .FirstOrDefaultAsync(x => x.Id == model.Id);
             if (model.Photo != null)
             {
-                var picture = await this.mediaService.UploadPicture(model.Photo, model.Name);
+                var picture = await this.mediaService.UploadPictureAsync(model.Photo, model.Name);
                 product!.ImageUrl = picture;
             }
             else
@@ -180,7 +179,7 @@
             product.Size = model.Size;
             product.Price = decimal.Parse(model.Price);
             product.Quantity = model.Quantity;
-            if (dbContext.ProductTypes.Where(x=>x.Id == product.ProductTypeId).First().Name != model.Type)
+            if (dbContext.ProductTypes.Where(x => x.Id == product.ProductTypeId).First().Name != model.Type)
             {
                 product.ProductTypeId = await dbContext.ProductTypes
                     .Where(x => x.Name == model.Type)
@@ -197,5 +196,24 @@
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task AddToCartAsync(Guid id)
+        {
+            var cart = new Cart();
+            var product = await this.dbContext.Products.FirstOrDefaultAsync(x => x.Id == id);
+            if (this.dbContext.Cart.Count() != 0)
+            {
+                cart = await this.dbContext.Cart.FirstAsync();
+                if (!cart.Products.Contains(product))
+                {
+                    cart.Products.Add(product!);
+                }
+            }
+            else
+            {
+                cart.Products.Add(product!);
+                await dbContext.Cart.AddAsync(cart);
+            }
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

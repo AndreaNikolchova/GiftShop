@@ -1,13 +1,14 @@
 ﻿namespace GiftShop.Services.CustomProducts
 {
+    using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
+
     using GiftShop.Data;
     using GiftShop.Models;
     using GiftShop.Services.EmailSender.Contracts;
-    using GiftShop.Services.ImageService.Contracts;
+    using GiftShop.Services.MediaService.Contracts;
     using GiftShop.Services.CustomProducts.Contracts;
     using GiftShop.Web.ViewModels.CustomProduct;
-    using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
     using GiftShop.Web.ViewModels.Customer;
     using static GiftShop.Common.EmailMessagesConstants;
 
@@ -27,58 +28,29 @@
 
         public async Task AddCustomRequestAsync(CustomProductViewModel product)
         {
-            string picture;
+            CustomProduct customProduct = new CustomProduct()
+            {
+                Description = product.Description,
+                Size = product.Size,
+                Name = product.Name,
+                Quantity = product.Quantity,
+            };
             if (product.Photo != null)
             {
-                try
-                {
-                    picture = await this.mediaService.UploadPicture(product.Photo, product.Name);
-                    CustomProduct customProduct = new CustomProduct()
-                    {
-                        Description = product.Description,
-                        Size = product.Size,
-                        Name = product.Name,
-                        ImageId = picture,
-                        Quantity = product.Quantity,
-                    };
-                    await dbContext.AddAsync<CustomProduct>(customProduct);
-                    CustomRequest request = new CustomRequest()
-                    {
-                        CustomProduct = customProduct,
-                        UserId = product.User!,
-                        IsAccepted = false
-                    };
-                    await dbContext.AddAsync<CustomRequest>(request);
-                    await dbContext.SaveChangesAsync();
-                    emailSender.SendEmail(product.EmailAddress, CustomOrderSubject , CustomOrderBody, CustomOrderEnding);
-
-                }
-                catch (InvalidOperationException e)
-                {
-                    throw e;
-                }
+                var picture = await this.mediaService.UploadPictureAsync(product.Photo, product.Name);
+                customProduct.ImageId = picture;
             }
-            else
+            await dbContext.AddAsync<CustomProduct>(customProduct);
+            CustomRequest request = new CustomRequest()
             {
-                CustomProduct customProduct = new CustomProduct()
-                {
-                    Description = product.Description,
-                    Size = product.Size,
-                    Name = product.Name,
-                    Quantity = product.Quantity,
-                };
-                await dbContext.AddAsync<CustomProduct>(customProduct);
-                CustomRequest request = new CustomRequest()
-                {
-                    CustomProduct = customProduct,
-                    UserId = product.User!,
-                    IsAccepted = false
-                };
-                await dbContext.AddAsync<CustomRequest>(request);
+                CustomProduct = customProduct,
+                UserId = product.User!,
+                IsAccepted = false
+            };
+            await dbContext.AddAsync<CustomRequest>(request);
+            await dbContext.SaveChangesAsync();
+            emailSender.SendEmail(product.EmailAddress, CustomOrderSubject, CustomOrderBody, CustomOrderEnding);
 
-                await dbContext.SaveChangesAsync();
-                emailSender.SendEmail(product.EmailAddress, CustomOrderSubject, CustomOrderBody, CustomOrderEnding);
-            }
 
         }
 

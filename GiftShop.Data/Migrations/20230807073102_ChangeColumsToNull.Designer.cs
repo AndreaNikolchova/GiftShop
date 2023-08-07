@@ -4,6 +4,7 @@ using GiftShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShop.Data.Migrations
 {
     [DbContext(typeof(GiftShopDbContext))]
-    partial class GiftShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230807073102_ChangeColumsToNull")]
+    partial class ChangeColumsToNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +30,20 @@ namespace GiftShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("DeliveryCompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PackegingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Sum")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DeliveryCompanyId");
+
+                    b.HasIndex("PackegingId");
 
                     b.ToTable("Cart");
                 });
@@ -295,7 +310,7 @@ namespace GiftShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1f495f6d-f41e-47ad-826a-aa869ae92976"),
+                            Id = new Guid("a46f9df3-2c57-47c8-8bc6-836797530615"),
                             Description = "Blue soft blanket",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
                             Name = "Blanket",
@@ -307,7 +322,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6a049ae2-eb40-4b6f-ba53-b0448ea10127"),
+                            Id = new Guid("0ed10a12-8f27-4b4a-8f2b-658e7080077b"),
                             Description = "A buquet of 5 roses",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
                             Name = "Roses",
@@ -319,7 +334,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b772f8ac-403a-446f-b302-31c1ae27438d"),
+                            Id = new Guid("37d28417-ac0d-4960-9b0e-7d089dc4f009"),
                             Description = "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
                             Name = "Baby Dear",
@@ -597,6 +612,25 @@ namespace GiftShop.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("GiftShop.Models.Cart", b =>
+                {
+                    b.HasOne("GiftShop.Models.DeliveryCompany", "DeliveryCompany")
+                        .WithMany()
+                        .HasForeignKey("DeliveryCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GiftShop.Models.Packaging", "Packaging")
+                        .WithMany()
+                        .HasForeignKey("PackegingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeliveryCompany");
+
+                    b.Navigation("Packaging");
                 });
 
             modelBuilder.Entity("GiftShop.Models.Customer", b =>

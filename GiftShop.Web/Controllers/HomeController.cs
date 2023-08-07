@@ -18,7 +18,12 @@
             var products = await productService.GetLast3ProductsAsync();
             return View(products);
         }
-     
+        public async Task<IActionResult> AddToCart(Guid id)
+        {
+            await productService.AddToCartAsync(id);
+            return Redirect("/Home/Index");
+        }
+
 
 
 

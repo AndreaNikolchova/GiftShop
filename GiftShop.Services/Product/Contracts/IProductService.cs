@@ -11,5 +11,6 @@
         public Task DeleteAsync(Guid id);
         public Task<EditProductViewModel> GetDetailsForEditAsync(Guid id);
         public Task UpdateProductInformation(EditProductViewModel model);
+        public Task AddToCartAsync(Guid id);
     }
 }

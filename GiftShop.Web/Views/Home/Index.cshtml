@@ -24,7 +24,7 @@
                         <div class="container">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-auto">
-                                    <button type="button" class="btn btn-secondary mb-2">Add to Cart</button>
+                                    <a  asp-action="AddToCart" asp-route-id="@product.Id" class="btn btn-secondary mb-2">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
                                 </div>
                                 <span class="product-price text-center ">@product.Price BGN</span>
                             </div>

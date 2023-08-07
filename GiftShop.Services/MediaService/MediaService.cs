@@ -1,23 +1,20 @@
-﻿namespace GiftShop.Services.ImageService
+﻿namespace GiftShop.Services.MediaService
 {
+    using Microsoft.AspNetCore.Http;
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
-    using GiftShop.Services.ImageService.Contracts;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
+    using GiftShop.Services.MediaService.Contracts;
 
     public class MediaService : IMediaService
     {
         private Cloudinary cloudinary;
-        private IWebHostEnvironment webHostEnvironment;
-        public MediaService(Cloudinary cloudinary,IWebHostEnvironment webHostEnvironment)
+        public MediaService(Cloudinary cloudinary)
         {
             this.cloudinary = cloudinary;
-            this.webHostEnvironment = webHostEnvironment;
         }
 
 
-        public async Task<string> UploadPicture(IFormFile file,string name)
+        public async Task<string> UploadPictureAsync(IFormFile file,string name)
         {
             byte[] destinationImage;
 
