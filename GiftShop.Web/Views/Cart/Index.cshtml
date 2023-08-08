@@ -1,0 +1,75 @@
+﻿@using GiftShop.Web.ViewModels.Cart
+@model CartViewModel
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<h1 class="text-center mb-3">Cart</h1>
+<h3 class="text-center mb-5"><strong class="text-black">Sum All: </strong><span class="sumAll font-weight-bold" id="totalSum"> BGN</span></h3>
+    @{
+    if (Model.Products.Count() == 0)
+    {
+        <div class="row justify-content-center align-items-center mb-5">
+            <div class="col-auto">
+                <div id="banner">
+                    <img class="img-fluid h-200 mb-4" src="~/Images/EmptyCart.png" />
+                </div>
+            </div>
+        </div>
+    }
+}
+<div class="container justify-content-center align-items-center">
+    <div class="justify-content-center align-items-center ">
+        <form asp-action="Order" method="post">
+            @for (int i = 0; i < Model.Products.Count; i++)
+            {
+                <input type="hidden" asp-for="Products[i].Id" />
+                <input type="hidden" asp-for="Products[i].Name" />
+                <input type="hidden" asp-for="Products[i].Price" />
+                <input type="hidden" asp-for="Products[i].ImageUrl" />
+                <div class="row justify-content-center align-items-center mb-5">
+                    <div class="col-md-3 ">
+                        <div class="card">
+                            <img src="@Model.Products[i].ImageUrl" class="card-img" alt="Product Image">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <h3 class="card-title mb-2">@Model.Products[i].Name</h3>
+                        <p class="card-text "><strong>Description: </strong>@Model.Products[i].Description</p>
+                        <div class="row">
+                            <div class="col-auto">
+                                <a asp-action="Remove" asp-route-id="@Model.Products[i].Id" class="btn btn-danger mt-3">Remove Item</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <h4 class="text-black">@Model.Products[i].Price BGN</h4>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" id="minusBtn" type="button">-</button>
+                            </div>
+                            <input asp-for="@Model.Products[i].Quantity" class="form-control quantity-input" aria-required="true" value="1" data-product-id="@Model.Products[i].Id" data-product-price="@Model.Products[i].Price" readonly />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" id="plusBtn" type="button">+</button>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-2">
+                            <strong class="text-black">Sum: </strong>
+                            <p class="product-price" data-product-id="@Model.Products[i].Id">@Model.Products[i].Price BGN</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row justify-content-center align-items-center">
+                <div class="col-3">
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">Buy</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/cart.js"></script>

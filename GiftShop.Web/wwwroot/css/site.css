@@ -114,3 +114,7 @@ main {
 .custom-rounded {
     border-radius: 8px;
 }
+.sumAll {
+    color: #2e7d32;
+    font-weight: bold;
+}

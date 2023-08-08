@@ -196,21 +196,22 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AddToCartAsync(Guid id)
+        public async Task AddToCartAsync(Guid id, string userId)
         {
             var cart = new Cart();
             var product = await this.dbContext.Products.FirstOrDefaultAsync(x => x.Id == id);
-            if (this.dbContext.Cart.Count() != 0)
+            var thisUsersCart = await this.dbContext.Cart.FirstOrDefaultAsync(x => x.UserId == userId);
+            if (thisUsersCart != null)
             {
-                cart = await this.dbContext.Cart.FirstAsync();
-                if (!cart.Products.Contains(product))
+                if (!thisUsersCart.Products.Contains(product))
                 {
-                    cart.Products.Add(product!);
+                    thisUsersCart.Products.Add(product!);
                 }
             }
             else
             {
                 cart.Products.Add(product!);
+                cart.UserId = userId;
                 await dbContext.Cart.AddAsync(cart);
             }
             await dbContext.SaveChangesAsync();

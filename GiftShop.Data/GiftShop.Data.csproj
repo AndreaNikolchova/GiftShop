@@ -21,4 +21,8 @@
     <ProjectReference Include="..\GiftShop.Models\GiftShop.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

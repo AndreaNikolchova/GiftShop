@@ -1,72 +1,72 @@
 ﻿@model CustomRequestViewModel
-<body>
-    <h1 class="text-center mb-5">Accept</h1>
 
-    <div class="container">
-        <form asp-action="Accept" method="post">
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    @if (Model.ImageUrl == null)
-                    {
-                        <p class="card-text text-center mt-5"><strong>Photo: </strong>No photo imported :(</p>
-                    }
-                    else
-                    {
-                        <div class="cardDetails ms-xl-0">
-                            <img src="@Model.ImageUrl" alt="@Model.Name">
-                        </div>
-                    }
-                </div>
-                <div class="col-md-4">
-                    <h2 class="text-center mb-4">@Model.Name</h2>
-                    <p class="product-description-details">
-                        <strong>Description:</strong>
-                        @Model.Description
-                    </p>
-                    <p class="product-description-details">
-                        <strong>Size:</strong>
-                        @Model.Size
-                    </p>
-                    <p class="product-description-details">
-                        <strong>Quantity:</strong>
-                        @Model.Quantity
-                    </p>
-                      <p class="product-description-details">
-                        <strong>Customer's email:</strong>
-                        @Model.EmailAddress
-                    </p>
-                     <input type="hidden" asp-for="RequestId" />
-                    <input type="hidden" asp-for="ImageUrl" />
-                    <input type="hidden" asp-for="Name" />
-                    <input type="hidden" asp-for="Description" />
-                    <input type="hidden" asp-for="Size" />
-                    <input type="hidden" asp-for="Quantity" />
-                    <input type="hidden" asp-for="EmailAddress" />
-                    <label class="text-primary">Please enter the price with a point like this '20.50'.</label>
-                    <div class="form-floating mb-3">
-                        <input asp-for="Price" class="form-control" aria-required="true" required  />
-                        <label asp-for="Price"></label>
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <input asp-for="Date" class="form-control" aria-required="true" required />
-                        <label asp-for="Date"></label>
-                        <span asp-validation-for="Date" class="text-danger"></span>
-                    </div>
+<h1 class="text-center mb-5">Accept</h1>
 
-                    <div class="container">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-primary">Accept</button>
-                            </div>
-                        </div>
+<div class="container">
+    <form asp-action="Accept" method="post">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                @if (Model.ImageUrl == null)
+                {
+                    <p class="card-text text-center mt-5"><strong>Photo: </strong>No photo imported :(</p>
+                }
+                else
+                {
+                    <div class="cardDetails ms-xl-0">
+                        <img src="@Model.ImageUrl" alt="@Model.Name">
                     </div>
-
-                </div>
+                }
             </div>
-        </form>
-    </div>
-</body>
+            <div class="col-md-4">
+                <h2 class="text-center mb-4">@Model.Name</h2>
+                <p class="product-description-details">
+                    <strong>Description:</strong>
+                    @Model.Description
+                </p>
+                <p class="product-description-details">
+                    <strong>Size:</strong>
+                    @Model.Size
+                </p>
+                <p class="product-description-details">
+                    <strong>Quantity:</strong>
+                    @Model.Quantity
+                </p>
+                <p class="product-description-details">
+                    <strong>Customer's email:</strong>
+                    @Model.EmailAddress
+                </p>
+                <input type="hidden" asp-for="RequestId" />
+                <input type="hidden" asp-for="ImageUrl" />
+                <input type="hidden" asp-for="Name" />
+                <input type="hidden" asp-for="Description" />
+                <input type="hidden" asp-for="Size" />
+                <input type="hidden" asp-for="Quantity" />
+                <input type="hidden" asp-for="EmailAddress" />
+                <label class="text-primary">Please enter the price with a point like this '20.50'.</label>
+                <div class="form-floating mb-3">
+                    <input asp-for="Price" class="form-control" aria-required="true" required />
+                    <label asp-for="Price"></label>
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-4">
+                    <input asp-for="Date" class="form-control" aria-required="true" required />
+                    <label asp-for="Date"></label>
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Accept</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 }

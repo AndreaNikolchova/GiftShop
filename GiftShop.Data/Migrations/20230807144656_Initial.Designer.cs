@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShop.Data.Migrations
 {
     [DbContext(typeof(GiftShopDbContext))]
-    [Migration("20230805125606_SeedDeliveryCompanies")]
-    partial class SeedDeliveryCompanies
+    [Migration("20230807144656_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,23 @@ namespace GiftShop.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("GiftShop.Models.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Cart");
+                });
 
             modelBuilder.Entity("GiftShop.Models.Customer", b =>
                 {
@@ -235,7 +252,11 @@ namespace GiftShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CartId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
@@ -269,6 +290,8 @@ namespace GiftShop.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CartId");
+
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductTypeId");
@@ -280,7 +303,7 @@ namespace GiftShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2e13aeca-db7b-4964-8e38-7492cd263933"),
+                            Id = new Guid("97516dfc-1180-44d8-8572-b3751406b6d4"),
                             Description = "Blue soft blanket",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
                             Name = "Blanket",
@@ -292,7 +315,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("26e9836c-ecfb-403f-8bb0-75926802b548"),
+                            Id = new Guid("6ec80daa-f0d3-4acb-8211-5bee5605b59b"),
                             Description = "A buquet of 5 roses",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
                             Name = "Roses",
@@ -304,7 +327,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8df28018-bf8f-4c45-b0c3-b14d1eed4580"),
+                            Id = new Guid("51c4de19-c2de-44fc-8078-3a167301a73c"),
                             Description = "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
                             Name = "Baby Dear",
@@ -584,6 +607,17 @@ namespace GiftShop.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GiftShop.Models.Cart", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GiftShop.Models.Customer", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -670,6 +704,10 @@ namespace GiftShop.Data.Migrations
 
             modelBuilder.Entity("GiftShop.Models.Product", b =>
                 {
+                    b.HasOne("GiftShop.Models.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartId");
+
                     b.HasOne("GiftShop.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
@@ -740,6 +778,11 @@ namespace GiftShop.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GiftShop.Models.Cart", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("GiftShop.Models.Order", b =>

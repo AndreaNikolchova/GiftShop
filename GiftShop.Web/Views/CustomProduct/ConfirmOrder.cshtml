@@ -4,119 +4,117 @@
 @{
     bool isCustomer = await customProductService.SeeIfUserIsACustomerAsync(User.Identity.Name);
 }
-<body>
-    <h1 class="text-center mb-5">Accept</h1>
-    <div class="container">
-        <h2 class="text-center mb-3">@Model.Name</h2>
-        <form asp-action="Send" method="post">
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    @if (Model.ImageUrl == null)
-                    {
-                        <p class="card-text text-center mt-5"><strong>Photo: </strong>No photo imported :(</p>
-                    }
-                    else
-                    {
-                        <div class="cardDetails ms-xl-0 mt-4">
-                            <img src="@Model.ImageUrl" alt="@Model.Name">
-                        </div>
-                    }
-                </div>
-                <div class="col-md-4">
-                    <p class="product-description-details mt-4">
-                        <strong>Description:</strong>
-                        @Model.Description
-                    </p>
-                    <p class="product-description-details">
-                        <strong>Size:</strong>
-                        @Model.Size
-                    </p>
-                    <p class="product-description-details">
-                        <strong>Quantity:</strong>
-                        @Model.Quantity
-                    </p>
-                    <input type="hidden" asp-for="RequestId" />
-                    <input type="hidden" asp-for="ProductId" />
-                    <input type="hidden" asp-for="ImageUrl" />
-                    <input type="hidden" asp-for="Name" />
-                    <input type="hidden" asp-for="Description" />
-                    <input type="hidden" asp-for="Size" />
-                    <input type="hidden" asp-for="Quantity" />
-                    <input type="hidden" asp-for="EmailAddress" />
-                    @if (isCustomer != true)
-                    {
+<h1 class="text-center mb-5">Accept</h1>
+<div class="container">
+    <h2 class="text-center mb-3">@Model.Name</h2>
+    <form asp-action="Send" method="post">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                @if (Model.ImageUrl == null)
+                {
+                    <p class="card-text text-center mt-5"><strong>Photo: </strong>No photo imported :(</p>
+                }
+                else
+                {
+                    <div class="cardDetails ms-xl-0 mt-4">
+                        <img src="@Model.ImageUrl" alt="@Model.Name">
+                    </div>
+                }
+            </div>
+            <div class="col-md-4">
+                <p class="product-description-details mt-4">
+                    <strong>Description:</strong>
+                    @Model.Description
+                </p>
+                <p class="product-description-details">
+                    <strong>Size:</strong>
+                    @Model.Size
+                </p>
+                <p class="product-description-details">
+                    <strong>Quantity:</strong>
+                    @Model.Quantity
+                </p>
+                <input type="hidden" asp-for="RequestId" />
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" asp-for="ImageUrl" />
+                <input type="hidden" asp-for="Name" />
+                <input type="hidden" asp-for="Description" />
+                <input type="hidden" asp-for="Size" />
+                <input type="hidden" asp-for="Quantity" />
+                <input type="hidden" asp-for="EmailAddress" />
+                @if (isCustomer != true)
+                {
 
-                        <div class="form-floating mb-3">
-                            <input asp-for="CustomerViewModel.FirstName" class="form-control" aria-required="true" required />
-                            <label asp-for="CustomerViewModel.FirstName"></label>
-                            <span asp-validation-for="CustomerViewModel.FirstName" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input asp-for="CustomerViewModel.LastName" class="form-control" aria-required="true" required />
-                            <label asp-for="CustomerViewModel.LastName"></label>
-                            <span asp-validation-for="CustomerViewModel.LastName" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating mb-4">
+                    <div class="form-floating mb-3">
+                        <input asp-for="CustomerViewModel.FirstName" class="form-control" aria-required="true" required />
+                        <label asp-for="CustomerViewModel.FirstName"></label>
+                        <span asp-validation-for="CustomerViewModel.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="CustomerViewModel.LastName" class="form-control" aria-required="true" required />
+                        <label asp-for="CustomerViewModel.LastName"></label>
+                        <span asp-validation-for="CustomerViewModel.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input asp-for="CustomerViewModel.Address" class="form-control" aria-required="true" required />
+                        <label asp-for="CustomerViewModel.Address"></label>
+                        <span asp-validation-for="CustomerViewModel.Address" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="CustomerViewModel.FirstName" />
+                    <input type="hidden" asp-for="CustomerViewModel.LastName" />
+                    <input type="hidden" asp-for="CustomerViewModel.Address" />
+
+                    <p class="product-description-details mt-4">
+                        <strong>Your name:</strong>
+                        @Model.CustomerViewModel.FirstName  @Model.CustomerViewModel.LastName
+                    </p>
+                    <p class="product-description-details">
+                        <strong>Your address:</strong>
+                        @Model.CustomerViewModel.Address
+                        <button id="changeAddress" class="btn btn-primary mt-3">Change address</button>
+                        <div class="form-floating mb-4" id="address" hidden>
                             <input asp-for="CustomerViewModel.Address" class="form-control" aria-required="true" required />
                             <label asp-for="CustomerViewModel.Address"></label>
                             <span asp-validation-for="CustomerViewModel.Address" class="text-danger"></span>
                         </div>
-                    }
-                    else
-                    {
-                        <input type="hidden" asp-for="CustomerViewModel.FirstName" />
-                        <input type="hidden" asp-for="CustomerViewModel.LastName" />
-                        <input type="hidden" asp-for="CustomerViewModel.Address" />
-
-                        <p class="product-description-details mt-4">
-                            <strong>Your name:</strong>
-                            @Model.CustomerViewModel.FirstName  @Model.CustomerViewModel.LastName
-                        </p>
-                        <p class="product-description-details">
-                            <strong>Your address:</strong>
-                            @Model.CustomerViewModel.Address
-                            <button id="changeAddress" class="btn btn-primary mt-3">Change address</button>
-                            <div class="form-floating mb-4" id="address" hidden>
-                                <input asp-for="CustomerViewModel.Address" class="form-control" aria-required="true" required />
-                                <label asp-for="CustomerViewModel.Address"></label>
-                                <span asp-validation-for="CustomerViewModel.Address" class="text-danger"></span>
-                            </div>
-                            <script>
-                                document.getElementById('changeAddress').addEventListener('click',e=>{
-                                      document.getElementById('address').hidden = false;
-                                });
-                            </script>
-                        </p>
+                        <script>
+                            document.getElementById('changeAddress').addEventListener('click',e=>{
+                                  document.getElementById('address').hidden = false;
+                            });
+                        </script>
+                    </p>
 
 
-                    }
-                    <div class="form-floating mt-3 mb-4">
-                        <select asp-for="CustomerViewModel.DeliveryCompanyName" class="form-control" aria-required="true" required>
-                            <option value="">Choose a company</option>
+                }
+                <div class="form-floating mt-3 mb-4">
+                    <select asp-for="CustomerViewModel.DeliveryCompanyName" class="form-control" aria-required="true" required>
+                        <option value="">Choose a company</option>
 
-                            @foreach (var name in Model.DeliveryCompaniesNames)
-                            {
-                                <option value="@name">@name</option>
-                            }
-                        </select>
-                        <label asp-for="CustomerViewModel.DeliveryCompanyName">Delivery Company</label>
+                        @foreach (var name in Model.DeliveryCompaniesNames)
+                        {
+                            <option value="@name">@name</option>
+                        }
+                    </select>
+                    <label asp-for="CustomerViewModel.DeliveryCompanyName">Delivery Company</label>
 
-
-                    </div>
-
-                    <div class="container">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-primary">Send</button>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
+
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </form>
-    </div>
-</body>
+        </div>
+    </form>
+</div>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 }
