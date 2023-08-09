@@ -19,11 +19,7 @@ namespace GiftShop.Web.Controllers
             var toys = await productService.GetAllAsync("Toys");
             return View(toys);
         }
-        public async Task<IActionResult> AddToCart(Guid id)
-        {
-            await productService.AddToCartAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            return Redirect("/Toys/Index");
-        }
+     
         public async Task<IActionResult> Details(Guid id)
         {
             var product = await this.productService.GetDetailsAsync(id);

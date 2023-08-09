@@ -1,9 +1,12 @@
 ﻿namespace GiftShop.Web.Controllers
 {
     using GiftShop.Services.Product.Contracts;
+    using GiftShop.Web.ViewModels.Cart;
     using GiftShop.Web.ViewModels.Product;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Security.Claims;
+
     [Authorize]
     public class ProductController : Controller
     {
@@ -37,6 +40,13 @@
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToCart([FromBody] ProductToAddToCartViewModel model)
+        {
+            await productService.AddToCartAsync(Guid.Parse(model.ProductId), User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return Redirect($"/{model.ControllerName}/Index");
         }
 
     }

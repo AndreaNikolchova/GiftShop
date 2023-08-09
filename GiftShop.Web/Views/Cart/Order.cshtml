@@ -1,2 +1,64 @@
-﻿
-<h1>Order</h1>
+﻿@model OrderViewModel;
+<h1 class="text-center mb-5">Order</h1>
+<div class="container justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center mb-5">
+        <div class="col-md-5 border border-dark custom-rounded">
+            <form asp-action="Order" method="post">
+                <h3 class="text-center mt-2">Order Information</h3>
+                <div class="row justify-content-center align-items-center mt-3 ">
+                    <div class="form-floating col-md-5">
+                        <input asp-for="Customer.FirstName" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <label asp-for="Customer.FirstName">First name</label>
+                        <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating col-md-5">
+                        <input asp-for="Customer.LastName" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <label asp-for="Customer.LastName">Last name</label>
+                        <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center mt-3 mb-3">
+                    <div class="form-floating col-md-5">
+                        <input asp-for="Customer.Town" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <label asp-for="Customer.Town"></label>
+                        <span asp-validation-for="Customer.Town" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating col-md-5  ">
+                        <input asp-for="Customer.Address" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <label asp-for="Customer.Address"></label>
+                        <span asp-validation-for="Customer.Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="container mb-3">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Confirm Order</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3 border border-dark custom-rounded ms-5 p-4">
+            <h4 class="text-center mt-2">Cart</h4>
+            <hr />
+            @foreach (var product in Model.Cart.Products)
+            {
+                <div class="row border border-dark custom-rounded bg-info-subtle mb-3">
+                    <div class="col-md-4">
+                        <div class="cardOrder">
+                            <img src="@product.ImageUrl" class="card-img" alt="Product Image">
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h5 class="text-center mt-2">@product.Name</h5>
+                            <p ><strong>Quantity: </strong>@product.Quantity</p>
+                            <p class="">@product.Price BGN</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

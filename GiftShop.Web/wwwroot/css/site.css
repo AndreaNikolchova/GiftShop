@@ -1,15 +1,3 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
 .product-card {
     display: flex;
     flex-direction: column;
@@ -43,44 +31,48 @@ body {
     color: #2e7d32;
 }
 
-main {
-    flex-grow: 1;
-}
-
-
-
 .card {
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 250px; /* Set a fixed width for the card */
-    height: 250px; /* Set a fixed height for the card */
-    overflow: hidden; /* Hide any overflowing content */
+    width: 250px; 
+    height: 250px; 
+    overflow: hidden; 
     margin-top: 15px;
     margin-left: 24px
 }
+
 .card img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Scale and crop the image to fill the container */
+    object-fit: cover; 
 }
+
 .cardDetails {
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 400px; /* Set a fixed width for the card */
-    height: 400px; /* Set a fixed height for the card */
-    overflow: hidden; /* Hide any overflowing content */
+    width: 400px; 
+    height: 400px; 
+    overflow: hidden; 
     margin-top: 15px;
     margin-left: 24px
 }
-
 .cardDetails img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Scale and crop the image to fill the container */
-    }
+     width: 100%;
+     height: 100%;
+     object-fit: cover; 
+ }
 
+.myCustomColor {
+    background-color: #03989E;
+    color: white;
+}
+
+.myCustomColor .dropdown-item:hover {
+    background-color: #03797d; 
+    color: white; 
+}
 
 .top3products {
     background-color: #03989E;
@@ -114,7 +106,28 @@ main {
 .custom-rounded {
     border-radius: 8px;
 }
+
 .sumAll {
     color: #2e7d32;
     font-weight: bold;
+}
+
+.form-floating label {
+    text-align: center;
+}
+
+.cardOrder {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 85px; 
+    height: 85px; 
+    overflow: hidden; 
+    margin-top: 15px;
+}
+
+.cardOrder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
 }

@@ -47,10 +47,6 @@ namespace GiftShop.Web.Controllers
             return Redirect($"/{model.Type}");
 
         }
-        public async Task<IActionResult> AddToCart(Guid id)
-        {
-            await productService.AddToCartAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            return Redirect("/Accessories/Index");
-        }
+      
     }
 }

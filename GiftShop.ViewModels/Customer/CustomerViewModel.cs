@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GiftShop.Web.ViewModels.Customer
+﻿namespace GiftShop.Web.ViewModels.Customer
 {
     public class CustomerViewModel
     {
@@ -12,6 +6,7 @@ namespace GiftShop.Web.ViewModels.Customer
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Address { get; set; } = null!;
+        public string Town { get; set; } = null!;
 
         public string DeliveryCompanyName { get; set; } = null!;    
 

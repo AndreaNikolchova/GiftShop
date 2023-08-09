@@ -8,6 +8,7 @@
 
     using GiftShop.Web.ViewModels.Home;
     using GiftShop.Services.Product.Contracts;
+    using GiftShop.Web.ViewModels.Cart;
 
     [Authorize]
     public class HomeController : Controller
@@ -25,11 +26,6 @@
             return View(products);
         }
         
-        public async Task<IActionResult> AddToCart(Guid id)
-        {
-            await productService.AddToCartAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            return Redirect("/Home/Index");
-        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

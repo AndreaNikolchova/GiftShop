@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@inject SignInManager<IdentityUser> SignInManager
+@model IEnumerable<ProductViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,7 +14,7 @@
     @foreach (var product in Model)
     {
         <div class="col">
-            <div class="product-card text-decoration-none text-dark">
+            <div class="product-card text-decoration-none text-dark shadow-lg">
                 <a class="card" asp-controller="@product.Type" asp-action="Index">
                     <img src="@product.ImageUrl" alt="@product.Name">
                 </a>
@@ -24,7 +25,16 @@
                     <div class="container">
                         <div class="row justify-content-center align-items-center">
                             <div class="col-auto">
-                                <a asp-action="AddToCart" asp-route-id="@product.Id" class="btn btn-secondary mb-2">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <a class="btn btn-secondary mb-2" onclick="addToCart(this,'@Html.Raw(product.Id)','@Html.Raw("Home")')"> Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                                }
+                                else
+                                {
+                                    <a class="btn btn-secondary mb-2" asp-area="Identity" asp-page="/Account/Login">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                                }
                             </div>
                             <span class="product-price text-center ">@product.Price BGN</span>
                         </div>
@@ -35,5 +45,7 @@
         </div>
     }
 </div>
+<script src="~/js/addToCart.js"></script>
+
 
 

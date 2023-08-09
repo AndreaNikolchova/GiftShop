@@ -24,6 +24,9 @@
         [Required]
         [MaxLength(AddressMaxLenght)]
         public string Address { get; set; } = null!;
+        [Required]
+        [MaxLength(AddressMaxLenght)]
+        public string TownName { get; set; } = null!;
 
     }
 }

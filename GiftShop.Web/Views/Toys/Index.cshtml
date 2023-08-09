@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@inject SignInManager<IdentityUser> SignInManager
+@model IEnumerable<ProductViewModel>
 @using static GiftShop.Common.ApplicationConstants;
 <h1 class="text-center">Toys</h1>
    @{
@@ -30,7 +31,16 @@
                         <div class="container">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-auto mb-2">
-                                    <a asp-action="AddToCart" asp-route-id="@product.Id" class="btn btn-secondary mb-2">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                       <a class="btn btn-secondary mb-2" onclick="addToCart(this,'@Html.Raw(product.Id)','@Html.Raw("Toys")')"> Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-secondary mb-2" asp-area="Identity" asp-page="/Account/Login">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                                    }
                                 </div>
                                 <span class="product-price text-center ">@product.Price BGN</span>
                             </div>
@@ -56,6 +66,6 @@
         </div>
     }
 </div>
-
+<script src="~/js/addToCart.js"></script>
 
 

@@ -27,9 +27,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 .AddEntityFrameworkStores<GiftShopDbContext>();
 
 builder.Services.AddApplicationServices(typeof(IProductService));
-
-
-
+builder.Services.AddSession();
 
 builder.Services.AddControllersWithViews();
 string clouldName = builder.Configuration.GetValue<string>("Cloudinary:CloudName");
@@ -64,13 +62,13 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.SeedAdministrator(DeveloperAdminEmail);
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

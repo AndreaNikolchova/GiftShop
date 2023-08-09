@@ -1,12 +1,20 @@
-﻿@using GiftShop.Web.ViewModels.Cart
-@using static GiftShop.Common.ModelValidationConstants.Product;
+﻿@using static GiftShop.Common.ModelValidationConstants.Product;
 @model CartViewModel
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <h1 class="text-center mb-3">Cart</h1>
-<h3 class="text-center mb-5"><strong class="text-black">Sum All: </strong><span class="sumAll font-weight-bold" id="totalSum"> BGN</p></h3>
-    @{
+ @{
+    if (Model.Products.Count() != 0)
+    {
+        <h3 class="text-center mb-5">
+            <strong class="text-black">Sum All: </strong>
+            <span class="sumAll font-weight-bold" id="totalSum"> BGN</span>
+        </h3>
+
+    }
+}
+@{
     if (Model.Products.Count() == 0)
     {
         <div class="row justify-content-center align-items-center mb-5">
@@ -14,6 +22,12 @@
                 <div id="banner">
                     <img class="img-fluid h-200 mb-4" src="~/Images/EmptyCart.png" />
                 </div>
+            </div>
+
+        </div>
+        <div class="row justify-content-center align-items-center mb-5">
+            <div class="col-auto">
+                <h3> To continue shopping click <a class="" asp-controller="Home" asp-action="Index">here</a></h3>
             </div>
         </div>
     }
@@ -57,7 +71,7 @@
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" id="plusBtn" type="button">+</button>
                             </div>
-                            <span  id="quantityErrorMessage_@Model.Products[i].Id" asp-validation-for="@Model.Products[i].Quantity" class="text-danger"></span>
+                            <span id="quantityErrorMessage_@Model.Products[i].Id" asp-validation-for="@Model.Products[i].Quantity" class="text-danger"></span>
 
                         </div>
 
@@ -68,11 +82,17 @@
                     </div>
                 </div>
             }
-            <div class="row justify-content-center align-items-center">
-                <div class="col-3">
-                    <button type="submit" class="w-100 btn btn-lg btn-primary">Buy</button>
-                </div>
-            </div>
+            @{
+                if (Model.Products.Count() != 0)
+                {
+
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-3">
+                            <button type="submit" class="w-100 btn btn-lg btn-primary">Confirm</button>
+                        </div>
+                    </div>
+                }
+            }
 
         </form>
     </div>
