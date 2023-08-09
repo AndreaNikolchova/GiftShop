@@ -27,7 +27,6 @@
         
         public async Task<IActionResult> AddToCart(Guid id)
         {
-
             await productService.AddToCartAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
             return Redirect("/Home/Index");
         }

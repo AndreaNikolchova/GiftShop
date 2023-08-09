@@ -8,6 +8,7 @@
         public Product()
         {
             this.Id = Guid.NewGuid();
+            this.CartProduct = new HashSet<CartProduct>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -36,7 +37,7 @@
         [ForeignKey(nameof(YarnTypeId))]
         public YarnType YarnType { get; set; } = null!;
 
-
+        public ICollection<CartProduct> CartProduct { get; set; }
 
 
     }

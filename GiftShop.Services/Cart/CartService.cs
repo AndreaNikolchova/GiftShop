@@ -25,13 +25,12 @@
                 var cartViewModel = new CartViewModel();
                 return cartViewModel;
             }
-            var cartProducts = await dbContext.Cart
+            var thisUserCartProducts = await dbContext.Cart
                 .Where(x => x.UserId == userId)
-                .Select(x => x.Products)
+                .Select(x => x.CartProduct.Select(x=>x.Product))
                 .FirstAsync();
-
-
-            var products = cartProducts
+              
+            var products = thisUserCartProducts
                 .Select(p => new ProductViewModel()
                 {
                     Id = p.Id,
@@ -39,15 +38,16 @@
                     Name = p.Name,
                     Price = p.Price.ToString(),
                     Size = p.Size,
-                    Quantity = p.Quantity,
+                    AllQuantity = p.Quantity,
                     Description = p.Description,
                     Type = dbContext.ProductTypes
-                    .Where(x => x.Id==p.ProductTypeId)
-                    .Select(x=>x.Name)
+                    .Where(x => x.Id == p.ProductTypeId)
+                    .Select(x => x.Name)
                     .First(),
 
                 })
                 .ToList();
+
             var productsForView = new HashSet<ProductViewModel>();
 
             var model = new CartViewModel()
@@ -57,6 +57,18 @@
 
             };
             return model;
+        }
+        public async Task RemoveProductFromCart(string userId, Guid productId)
+        {
+            var cart = await dbContext.Cart
+                .Where(x => x.UserId == userId)
+                .Select(x=>x.CartProduct)
+                .FirstAsync();
+
+            var cartProduct = cart
+                .FirstOrDefault(x=>x.ProductId==productId);
+            this.dbContext.CartProducts.Remove(cartProduct);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

@@ -17,20 +17,29 @@
         {
             this.cartService = cartService;
         }
-       
+
         public async Task<IActionResult> Index()
         {
             var model = await cartService.GetCartInformationAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return View(model);
         }
-        public async Task<IActionResult> Remove()
+        [HttpPost]
+        public async Task<IActionResult> Index(CartViewModel model)
         {
-            var model = await cartService.GetCartInformationAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Order");
+            }
             return View(model);
         }
-        public IActionResult Order(CartViewModel model)
+        public async Task<IActionResult> Remove(Guid id)
         {
-            return View(model);
+            await cartService.RemoveProductFromCart(User.FindFirstValue(ClaimTypes.NameIdentifier),id);
+            return Redirect("/Cart/Index");
+        }
+        public IActionResult Order()
+        {
+            return View();
         }
     }
 }

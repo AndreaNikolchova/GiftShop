@@ -8,7 +8,7 @@
     {
         public Cart()
         {
-            this.Products = new HashSet<Product>();
+            this.CartProduct = new HashSet<CartProduct>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -17,7 +17,7 @@
 
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set;}
-        public ICollection<Product> Products { get; set; }
+        public ICollection<CartProduct> CartProduct { get; set; }
 
     }
 }

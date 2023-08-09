@@ -52,3 +52,19 @@ $(document).ready(function () {
 
     updateTotalSum();
 });
+$(document).ready(function () {
+    $(".quantity-input").on('change', function () {
+        var maxQuantity = parseInt($(this).attr('max'));
+        var inputQuantity = parseInt($(this).val());
+
+        var errorMessage = $(this).data('error-message');
+        var productId = $(this).data('product-id');
+        var errorMessageElement = $("#quantityErrorMessage_" + productId);
+
+        if (inputQuantity > maxQuantity) {
+            errorMessageElement.text(errorMessage);
+        } else {
+            errorMessageElement.text('');
+        }
+    });
+});

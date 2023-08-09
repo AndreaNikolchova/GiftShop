@@ -12,6 +12,7 @@
 
             public const int DescriptionMinLenght = 2;
             public const int DescriptionMaxLenght = 1000;
+            public const string QuantityErrorMessage = "Quantity Exceeded! Please select a smaller quantity for your order.";
 
         }
         public static class ProductType

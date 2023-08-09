@@ -10,6 +10,7 @@ namespace GiftShop.Web.ViewModels.Product
         [Required]
         public string ImageUrl { get; set; } = null!;
         public int Quantity { get; set; }
+        public int AllQuantity { get; set; }
         [Required]
         public string Description { get; set; } = null!;
         [Required]

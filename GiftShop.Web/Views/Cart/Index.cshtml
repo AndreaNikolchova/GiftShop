@@ -1,10 +1,11 @@
 ﻿@using GiftShop.Web.ViewModels.Cart
+@using static GiftShop.Common.ModelValidationConstants.Product;
 @model CartViewModel
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <h1 class="text-center mb-3">Cart</h1>
-<h3 class="text-center mb-5"><strong class="text-black">Sum All: </strong><span class="sumAll font-weight-bold" id="totalSum"> BGN</span></h3>
+<h3 class="text-center mb-5"><strong class="text-black">Sum All: </strong><span class="sumAll font-weight-bold" id="totalSum"> BGN</p></h3>
     @{
     if (Model.Products.Count() == 0)
     {
@@ -19,13 +20,17 @@
 }
 <div class="container justify-content-center align-items-center">
     <div class="justify-content-center align-items-center ">
-        <form asp-action="Order" method="post">
+        <form asp-action="Index" method="post">
             @for (int i = 0; i < Model.Products.Count; i++)
             {
                 <input type="hidden" asp-for="Products[i].Id" />
                 <input type="hidden" asp-for="Products[i].Name" />
+                <input type="hidden" asp-for="Products[i].Size" />
+                <input type="hidden" asp-for="Products[i].Type" />
+                <input type="hidden" asp-for="Products[i].Description" />
                 <input type="hidden" asp-for="Products[i].Price" />
                 <input type="hidden" asp-for="Products[i].ImageUrl" />
+                <input type="hidden" asp-for="Products[i].AllQuantity" />
                 <div class="row justify-content-center align-items-center mb-5">
                     <div class="col-md-3 ">
                         <div class="card">
@@ -48,10 +53,11 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" id="minusBtn" type="button">-</button>
                             </div>
-                            <input asp-for="@Model.Products[i].Quantity" class="form-control quantity-input" aria-required="true" value="1" data-product-id="@Model.Products[i].Id" data-product-price="@Model.Products[i].Price" readonly />
+                            <input asp-for="@Model.Products[i].Quantity" class="form-control quantity-input" aria-required="true" value="1" data-product-id="@Model.Products[i].Id" data-product-price="@Model.Products[i].Price" max="@Model.Products[i].AllQuantity" data-error-message="@QuantityErrorMessage" readonly />
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" id="plusBtn" type="button">+</button>
                             </div>
+                            <span  id="quantityErrorMessage_@Model.Products[i].Id" asp-validation-for="@Model.Products[i].Quantity" class="text-danger"></span>
 
                         </div>
 
@@ -71,5 +77,5 @@
         </form>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/cart.js"></script>
+<partial name="_ValidationScriptsPartial" />

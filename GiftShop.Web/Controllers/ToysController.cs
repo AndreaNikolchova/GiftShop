@@ -1,6 +1,7 @@
 ﻿using GiftShop.Services.Product.Contracts;
 using GiftShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GiftShop.Web.Controllers
 {
@@ -17,6 +18,11 @@ namespace GiftShop.Web.Controllers
         {
             var toys = await productService.GetAllAsync("Toys");
             return View(toys);
+        }
+        public async Task<IActionResult> AddToCart(Guid id)
+        {
+            await productService.AddToCartAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return Redirect("/Toys/Index");
         }
         public async Task<IActionResult> Details(Guid id)
         {

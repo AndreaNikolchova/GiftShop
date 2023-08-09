@@ -22,6 +22,7 @@ namespace GiftShop.Data
         public DbSet<YarnType> YarnTypes { get; set; }
         public DbSet<CustomRequest> CustomRequests { get; set; } 
         public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartProduct> CartProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

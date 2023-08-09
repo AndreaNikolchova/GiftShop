@@ -199,19 +199,42 @@
         public async Task AddToCartAsync(Guid id, string userId)
         {
             var cart = new Cart();
-            var product = await this.dbContext.Products.FirstOrDefaultAsync(x => x.Id == id);
-            var thisUsersCart = await this.dbContext.Cart.FirstOrDefaultAsync(x => x.UserId == userId);
+            var product = await this.dbContext.Products
+                .FirstOrDefaultAsync(x => x.Id == id);
+            var thisUsersCart = await this.dbContext.Cart
+                .FirstOrDefaultAsync(x => x.UserId == userId); 
+            var usersCartProducts = await this.dbContext.Cart
+                .Where(x => x.UserId == userId)
+                .Select(x=>x.CartProduct)
+                .FirstAsync();
             if (thisUsersCart != null)
             {
-                if (!thisUsersCart.Products.Contains(product))
+                
+                var products = usersCartProducts
+                    .Select(x=>x.Product)
+                    .ToArray();
+                if (!products.Contains(product))
                 {
-                    thisUsersCart.Products.Add(product!);
+                    var cartProduct = new CartProduct()
+                    {
+                        Cart = thisUsersCart,
+                        Product = product,
+                    };
+                    thisUsersCart.CartProduct.Add(cartProduct);
+                    product.CartProduct.Add(cartProduct);
                 }
+                //Add toaser
             }
             else
             {
-                cart.Products.Add(product!);
                 cart.UserId = userId;
+                var cartProduct = new CartProduct()
+                {
+                    Cart = cart,
+                    Product = product,
+                };
+                cart.CartProduct.Add(cartProduct);
+                product.CartProduct.Add(cartProduct);
                 await dbContext.Cart.AddAsync(cart);
             }
             await dbContext.SaveChangesAsync();
