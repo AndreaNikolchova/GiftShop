@@ -4,6 +4,7 @@ using GiftShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShop.Data.Migrations
 {
     [DbContext(typeof(GiftShopDbContext))]
-    partial class GiftShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230810054215_SeedPackaging")]
+    partial class SeedPackaging
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,9 +191,6 @@ namespace GiftShop.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.ToTable("DeliveryCompanies");
@@ -200,38 +199,22 @@ namespace GiftShop.Data.Migrations
                         new
                         {
                             Id = new Guid("3505bf92-0bcd-463f-b117-9f0d8365ef66"),
-                            Name = "Ekont Avtomat",
-                            Price = 6m
-                        },
-                        new
-                        {
-                            Id = new Guid("20adea35-fc7d-4d09-a08d-c1565da80428"),
-                            Name = "Ekont to your address",
-                            Price = 7m
+                            Name = "Ekont"
                         },
                         new
                         {
                             Id = new Guid("41be4560-ba27-46c7-a75c-5dfe69339302"),
-                            Name = "Speedy to your address",
-                            Price = 8m
+                            Name = "Speedy"
                         },
                         new
                         {
-                            Id = new Guid("32399eb3-76c3-4c96-8b63-1ae65d949175"),
-                            Name = "Speedy Avtomat",
-                            Price = 4.16m
-                        },
-                        new
-                        {
-                            Id = new Guid("692078e5-eaed-48f6-b513-c81fe669f8c3"),
-                            Name = "Sameday to your address",
-                            Price = 5.88m
+                            Id = new Guid("5f6bd9b9-d348-4dea-813c-93a1a365f288"),
+                            Name = "Box Now"
                         },
                         new
                         {
                             Id = new Guid("49ce683b-bd2d-4d6c-8d3f-fea4395cefe6"),
-                            Name = "Sameday Avtomat",
-                            Price = 3.48m
+                            Name = "Sameday"
                         });
                 });
 
@@ -349,7 +332,7 @@ namespace GiftShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("580c60d4-b959-48f2-b853-ea5921717ae2"),
+                            Id = new Guid("309a38d9-6c18-411c-a215-225c6591c06d"),
                             Description = "Blue soft blanket",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
                             Name = "Blanket",
@@ -361,7 +344,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("86d73a25-da4f-4741-910d-0b3405edafac"),
+                            Id = new Guid("0f3776ca-578c-4f78-8c02-7bca1f35f606"),
                             Description = "A buquet of 5 roses",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
                             Name = "Roses",
@@ -373,7 +356,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6ab8d854-dddc-4ec7-bd90-91cdaec4100f"),
+                            Id = new Guid("af56957a-a164-422f-b033-7d320e68e5f2"),
                             Description = "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
                             Name = "Baby Dear",

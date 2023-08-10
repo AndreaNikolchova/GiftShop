@@ -9,6 +9,7 @@
     using GiftShop.Web.ViewModels.Cart;
     using GiftShop.Services.Order.Contracts;
     using Newtonsoft.Json;
+    using GiftShop.Web.ViewModels.Order;
 
     [Authorize]
     public class CartController : Controller
@@ -45,11 +46,17 @@
             }
             return View(model);
         }
-        public IActionResult Order()
+        public async Task<IActionResult> Order()
         {
             var model = JsonConvert.DeserializeObject<CartViewModel>(HttpContext.Session.GetString("cart"));
-            var orderModel = orderService.FillOrderViewModel(model);
+            var orderModel = await orderService.FillOrderViewModel(model);
             return View(orderModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Order(OrderViewModel order)
+        {
+            await orderService.AddOrder(order, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return View();
         }
     }
 }

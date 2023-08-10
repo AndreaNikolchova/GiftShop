@@ -65,11 +65,11 @@
 
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" id="minusBtn" type="button">-</button>
+                                <button class="btn btn-secondary" id="minusBtn" type="button">-</button>
                             </div>
                             <input asp-for="@Model.Products[i].Quantity" class="form-control quantity-input" aria-required="true" value="1" data-product-id="@Model.Products[i].Id" data-product-price="@Model.Products[i].Price" max="@Model.Products[i].AllQuantity" data-error-message="@QuantityErrorMessage" readonly />
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" id="plusBtn" type="button">+</button>
+                                <button class="btn btn-secondary" id="plusBtn" type="button">+</button>
                             </div>
                             <span id="quantityErrorMessage_@Model.Products[i].Id" asp-validation-for="@Model.Products[i].Quantity" class="text-danger"></span>
 
@@ -88,7 +88,7 @@
 
                     <div class="row justify-content-center align-items-center">
                         <div class="col-3">
-                            <button type="submit" class="w-100 btn btn-lg btn-primary">Confirm</button>
+                            <button type="submit" class="w-100 btn btn-lg btn-secondary">Confirm</button>
                         </div>
                     </div>
                 }

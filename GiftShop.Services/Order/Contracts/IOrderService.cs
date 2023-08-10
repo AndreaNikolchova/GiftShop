@@ -4,6 +4,7 @@
     using GiftShop.Web.ViewModels.Order;
     public interface IOrderService
     {
-        public OrderViewModel FillOrderViewModel(CartViewModel cartViewModel);
+        public Task<OrderViewModel> FillOrderViewModel(CartViewModel cartViewModel);
+        public Task AddOrder(OrderViewModel order, string userId);
     }
 }

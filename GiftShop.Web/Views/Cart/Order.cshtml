@@ -2,9 +2,21 @@
 <h1 class="text-center mb-5">Order</h1>
 <div class="container justify-content-center align-items-center">
     <div class="row justify-content-center align-items-center mb-5">
-        <div class="col-md-5 border border-dark custom-rounded">
+        <div class="col-md-5 border border-dark custom-rounded bg-white">
             <form asp-action="Order" method="post">
-                <h3 class="text-center mt-2">Order Information</h3>
+                @for (int i = 0; i < Model.Cart.Products.Count; i++)
+                {
+                    <input type="hidden" asp-for="@Model.Cart.Products[i].Id" />
+                    <input type="hidden" asp-for="@Model.Cart.Products[i].Name" />
+                    <input type="hidden" asp-for="@Model.Cart.Products[i].ImageUrl" />
+                    <input type="hidden" asp-for="@Model.Cart.Products[i].Description" />
+                    <input type="hidden" asp-for="@Model.Cart.Products[i].Quantity" />
+                    <input type="hidden" asp-for="@Model.Cart.Products[i].AllQuantity" />
+                    <input type="hidden" asp-for="@Model.Cart.Products[i].Price" />
+
+                }
+                <input type="hidden" asp-for="Sum" />
+                <h3 class="text-center mt-4">Order Information</h3>
                 <div class="row justify-content-center align-items-center mt-3 ">
                     <div class="form-floating col-md-5">
                         <input asp-for="Customer.FirstName" class="form-control" autocomplete="new-password" aria-required="true" />
@@ -29,6 +41,34 @@
                         <span asp-validation-for="Customer.Address" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="row justify-content-center align-items-center mt-3 mb-3">
+                    <div class="form-floating col-md-8">
+                        <p class="text-secondary">We are sorry to inform you that our only accepted payment method is cash on delivery (COD).</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center mt-3 mb-3">
+                    <div class="form-floating col-md-6">
+                        <select id="deliveryCompany" asp-for="DeliveryCompanyName" class="form-control" aria-required="true" required>
+                            <option value="0">Choose a company</option>
+                            @foreach (var deliveryCompany in Model.DeliveryCompanyNames)
+                            {
+                                <option value="@deliveryCompany.Price">@deliveryCompany.Name</option>
+                            }
+                        </select>
+                        <label asp-for="DeliveryCompanyName">Delivery Company</label>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center mt-3 mb-3">
+                    <div class="form-floating col-md-6">
+                        <select id="packaging" asp-for="PackagingName" class="form-control" aria-required="true" required>
+                            @foreach (var packagingViewModel in Model.Packagings.Reverse())
+                            {
+                                <option value="@packagingViewModel.Price">@packagingViewModel.Name</option>
+                            }
+                        </select>
+                        <label asp-for="PackagingName">Packaging</label>
+                    </div>
+                </div>
                 <div class="container mb-3">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-auto">
@@ -38,27 +78,70 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-3 border border-dark custom-rounded ms-5 p-4">
-            <h4 class="text-center mt-2">Cart</h4>
+        <div class="col-md-3 border border-dark custom-rounded ms-5 p-4 bg-white">
+            <h4 class="text-center">Cart</h4>
             <hr />
             @foreach (var product in Model.Cart.Products)
             {
-                <div class="row border border-dark custom-rounded bg-info-subtle mb-3">
+                <div class="row border border-dark custom-rounded bg-primary-subtle mb-2">
                     <div class="col-md-4">
                         <div class="cardOrder">
                             <img src="@product.ImageUrl" class="card-img" alt="Product Image">
                         </div>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="card-body">
                             <h5 class="text-center mt-2">@product.Name</h5>
-                            <p ><strong>Quantity: </strong>@product.Quantity</p>
-                            <p class="">@product.Price BGN</p>
+                            @{
+                                var sum = decimal.Parse(product.Price) * product.Quantity;
+                            }
+                            <p class="text-center">@product.Quantity x @product.Price BGN</p>
+                            <p class="sumAll text-center">@sum BGN</p>
                         </div>
                     </div>
                 </div>
             }
+            <h5 class="sumAll text-center mt-3"><strong class="text-black">Sum:</strong> <span id="sum">@Model.Sum</span> BGN</h5>
         </div>
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const deliveryCompanySelect = $('#deliveryCompany');
+        const packagingSelect = $('#packaging');
+        const sumElement = $('#sum');
+        let previousDeliveryValue = 0; // To store the previous delivery value
+        let previousPackagingValue = 0; // To store the previous packaging value
+
+        // Function to update the sum based on selected options
+        function updateSum() {
+            const selectedDeliveryCompany = parseFloat(deliveryCompanySelect.val());
+            const selectedPackaging = parseFloat(packagingSelect.val());
+
+            // Get the current sum from the span element
+            const currentSum = parseFloat(sumElement.text());
+
+            // Calculate the differences to be subtracted based on the previously selected values
+            const subtractedDelivery = (selectedDeliveryCompany === 0) ? previousDeliveryValue : 0;
+            const subtractedPackaging = (selectedPackaging === 0) ? previousPackagingValue : 0;
+
+            // Calculate the new sum based on the selected options
+            const newSum = currentSum - subtractedDelivery - subtractedPackaging + selectedDeliveryCompany + selectedPackaging;
+
+            // Update the sumElement with the new sum
+            sumElement.text(newSum);
+
+            // Update the previous values for the next selections
+            previousDeliveryValue = selectedDeliveryCompany;
+            previousPackagingValue = selectedPackaging;
+        }
+
+        // Attach event listeners to both select elements
+        deliveryCompanySelect.on('change', updateSum);
+        packagingSelect.on('change', updateSum);
+    });
+</script>
+
