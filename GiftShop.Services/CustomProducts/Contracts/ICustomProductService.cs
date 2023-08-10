@@ -7,10 +7,9 @@
         public Task<IEnumerable<CustomRequestViewModel>> GetAllRequestsAsync();
         public Task<CustomRequestViewModel> GetRequestByUserAsync(Guid id);
         public Task<CustomRequestViewModel> GetRequestByAdminAsync(Guid id);
-        public Task AddCustomOrderAsync(CustomRequestViewModel request);
         public Task<IEnumerable<CustomRequestViewModel>> GetRequestsFromUserAsync(string userId);
         public Task DeleteRequestAsync(Guid id);
-        public Task AcceptRequestAsync(CustomRequestViewModel model);
+        public Task AcceptRequestAsync(CustomRequestViewModel model, string email);
         public Task<bool> SeeIfUserIsACustomerAsync(string userId);
     }
 }

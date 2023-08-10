@@ -1,5 +1,6 @@
 ﻿namespace GiftShop.Web.Controllers
 {
+    using GiftShop.Services.CustomOrder.Contracts;
     using GiftShop.Services.CustomProducts.Contracts;
     using GiftShop.Web.ViewModels.CustomProduct;
     using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@
     public class CustomProductController : Controller
     {
         private ICustomProductService productService;
+        private ICustomOrderService customOrderService;
 
         public CustomProductController(ICustomProductService productService)
         {
@@ -65,7 +67,7 @@
         [HttpPost]
         public async Task<IActionResult> Accept(CustomRequestViewModel model)
         {
-            await productService.AcceptRequestAsync(model);
+            await productService.AcceptRequestAsync(model, model.EmailAddress);
             return Redirect("/CustomProduct/Request");
         }
         [Authorize(Roles = AdminRoleName)]
@@ -97,14 +99,8 @@
         [HttpPost]
         public async Task<IActionResult> ConfirmOrder(CustomRequestViewModel model)
         {
-            await productService.AddCustomOrderAsync(model);
-            return Redirect("/CustomProduct/MyRequest");
-        }
-
-        public async Task<IActionResult> DeleteUser(Guid id)
-        {
-            await productService.DeleteRequestAsync(id);
-            return Redirect("/CustomProduct/MyRequest");
+            await customOrderService.AddCustomOrderAsync(model, User.FindFirstValue(ClaimTypes.Email));
+            return Redirect("/CustomProduct/Request");
         }
     }
 }

@@ -49,12 +49,10 @@
             };
             await dbContext.AddAsync<CustomRequest>(request);
             await dbContext.SaveChangesAsync();
-            emailSender.SendEmail(product.EmailAddress, CustomOrderSubject, CustomOrderBody, CustomOrderEnding);
+            emailSender.SendEmail(product.EmailAddress, CustomRequestSubject, CustomRequestBody, Ending);
 
 
         }
-
-
         public async Task<IEnumerable<CustomRequestViewModel>> GetAllRequestsAsync()
         {
             var customRequests = await dbContext.CustomRequests
@@ -138,11 +136,11 @@
 
             dbContext.CustomRequests.Remove(customRequests);
             dbContext.CustomProducts.Remove(customProduct);
-
             await dbContext.SaveChangesAsync();
+            emailSender.SendEmail(this.dbContext.Users.Where(x=>x.Id==customRequests.UserId).Select(x=>x.UserName).First(), DeletedCustomRequestSubject, DeletedCustomRequestBody, Ending);
         }
 
-        public async Task AcceptRequestAsync(CustomRequestViewModel model)
+        public async Task AcceptRequestAsync(CustomRequestViewModel model, string email)
         {
             var customRequests = await dbContext.CustomRequests
                .FirstOrDefaultAsync(x => x.Id == model.RequestId);
@@ -150,59 +148,7 @@
             customRequests.Date = model.Date;
             customRequests.IsAccepted = true;
             await dbContext.SaveChangesAsync();
-
-        }
-
-        public async Task AddCustomOrderAsync(CustomRequestViewModel request)
-        {
-            if (!await SeeIfUserIsACustomerAsync(request.EmailAddress))
-            {
-                Customer customer = new Customer()
-                {
-                    FirstName = request.CustomerViewModel.FirstName,
-                    LastName = request.CustomerViewModel.LastName,
-                    Address = request.CustomerViewModel.Address,
-                    User = dbContext.Users
-                    .Where(x => x.Email == request.EmailAddress)
-                    .First()
-                };
-                CustomOrder customOrder = new CustomOrder()
-                {
-                    Customer = customer,
-                    ProduductId = request.ProductId,
-                    DeliveryCompanyId = dbContext.DeliveryCompanies
-                    .Where(x => x.Name == request.CustomerViewModel.DeliveryCompanyName)
-                    .Select(x => x.Id)
-                    .First(),
-
-                };
-                dbContext.Customers.Add(customer);
-                dbContext.CustomOrders.Add(customOrder);
-                dbContext.CustomRequests.Remove(dbContext.CustomRequests.FirstOrDefault(x => x.Id == request.RequestId)!);
-                await dbContext.SaveChangesAsync();
-            }
-            else
-            {
-                var customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.Email == request.EmailAddress);
-                if (customer.Address != request.CustomerViewModel.Address)
-                {
-                    customer.Address = request.CustomerViewModel.Address;
-                }
-                CustomOrder customOrder = new CustomOrder()
-                {
-                    Customer = customer,
-                    ProduductId = request.ProductId,
-                    DeliveryCompanyId = dbContext.DeliveryCompanies
-                  .Where(x => x.Name == request.CustomerViewModel.DeliveryCompanyName)
-                  .Select(x => x.Id)
-                  .First(),
-
-                };
-                dbContext.CustomOrders.Add(customOrder);
-                dbContext.CustomRequests.Remove(dbContext.CustomRequests.FirstOrDefault(x => x.Id == request.RequestId)!);
-                await dbContext.SaveChangesAsync();
-
-            }
+            emailSender.SendEmail(email, AcceptedCustomRequestSubject, AcceptedCustomRequestBody, Ending);
 
         }
 

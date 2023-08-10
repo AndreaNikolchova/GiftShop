@@ -7,7 +7,7 @@
 <h1 class="text-center mb-5">Accept</h1>
 <div class="container">
     <h2 class="text-center mb-3">@Model.Name</h2>
-    <form asp-action="Send" method="post">
+    <form asp-action="ConfirmOrder" method="post">
         <div class="row mb-3">
             <div class="col-md-4">
                 @if (Model.ImageUrl == null)
@@ -56,6 +56,11 @@
                         <span asp-validation-for="CustomerViewModel.LastName" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-4">
+                        <input asp-for="CustomerViewModel.Town" class="form-control" aria-required="true" required />
+                        <label asp-for="CustomerViewModel.Town"></label>
+                        <span asp-validation-for="CustomerViewModel.Town" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-4">
                         <input asp-for="CustomerViewModel.Address" class="form-control" aria-required="true" required />
                         <label asp-for="CustomerViewModel.Address"></label>
                         <span asp-validation-for="CustomerViewModel.Address" class="text-danger"></span>
@@ -66,6 +71,7 @@
                     <input type="hidden" asp-for="CustomerViewModel.FirstName" />
                     <input type="hidden" asp-for="CustomerViewModel.LastName" />
                     <input type="hidden" asp-for="CustomerViewModel.Address" />
+                    <input type="hidden" asp-for="CustomerViewModel.Town" />
 
                     <p class="product-description-details mt-4">
                         <strong>Your name:</strong>
@@ -80,9 +86,16 @@
                             <label asp-for="CustomerViewModel.Address"></label>
                             <span asp-validation-for="CustomerViewModel.Address" class="text-danger"></span>
                         </div>
+                        <div class="form-floating mb-4" id="town" hidden>
+                            <input asp-for="CustomerViewModel.Town" class="form-control" aria-required="true" required />
+                            <label asp-for="CustomerViewModel.Town"></label>
+                            <span asp-validation-for="CustomerViewModel.Town" class="text-danger"></span>
+                        </div>
                         <script>
                             document.getElementById('changeAddress').addEventListener('click',e=>{
                                   document.getElementById('address').hidden = false;
+                                    document.getElementById('town').hidden = false;
+                                 
                             });
                         </script>
                     </p>

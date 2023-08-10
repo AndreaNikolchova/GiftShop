@@ -57,6 +57,7 @@
                         </select>
                         <label asp-for="DeliveryCompanyName">Delivery Company</label>
                     </div>
+                    
                 </div>
                 <div class="row justify-content-center align-items-center mt-3 mb-3">
                     <div class="form-floating col-md-6">
@@ -68,6 +69,7 @@
                         </select>
                         <label asp-for="PackagingName">Packaging</label>
                     </div>
+                    
                 </div>
                 <div class="container mb-3">
                     <div class="row justify-content-center align-items-center">
@@ -104,44 +106,21 @@
             <h5 class="sumAll text-center mt-3"><strong class="text-black">Sum:</strong> <span id="sum">@Model.Sum</span> BGN</h5>
         </div>
     </div>
-
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
-    $(document).ready(function () {
-        const deliveryCompanySelect = $('#deliveryCompany');
-        const packagingSelect = $('#packaging');
-        const sumElement = $('#sum');
-        let previousDeliveryValue = 0; // To store the previous delivery value
-        let previousPackagingValue = 0; // To store the previous packaging value
+    var originalSum = parseFloat(document.getElementById("sum").textContent);
 
-        // Function to update the sum based on selected options
-        function updateSum() {
-            const selectedDeliveryCompany = parseFloat(deliveryCompanySelect.val());
-            const selectedPackaging = parseFloat(packagingSelect.val());
-
-            // Get the current sum from the span element
-            const currentSum = parseFloat(sumElement.text());
-
-            // Calculate the differences to be subtracted based on the previously selected values
-            const subtractedDelivery = (selectedDeliveryCompany === 0) ? previousDeliveryValue : 0;
-            const subtractedPackaging = (selectedPackaging === 0) ? previousPackagingValue : 0;
-
-            // Calculate the new sum based on the selected options
-            const newSum = currentSum - subtractedDelivery - subtractedPackaging + selectedDeliveryCompany + selectedPackaging;
-
-            // Update the sumElement with the new sum
-            sumElement.text(newSum);
-
-            // Update the previous values for the next selections
-            previousDeliveryValue = selectedDeliveryCompany;
-            previousPackagingValue = selectedPackaging;
-        }
-
-        // Attach event listeners to both select elements
-        deliveryCompanySelect.on('change', updateSum);
-        packagingSelect.on('change', updateSum);
-    });
+    function updateTotalPrice() {
+        var selectedPrice = parseFloat(document.getElementById("deliveryCompany").value);
+        
+        var newSum = originalSum + selectedPrice;
+        
+        document.getElementById("sum").textContent = newSum.toFixed(2);
+        document.getElementById("selectedDeliveryPrice").textContent = selectedPrice.toFixed(2);
+    }
 </script>
+
+
+
+
 
