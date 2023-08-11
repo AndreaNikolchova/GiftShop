@@ -1,14 +1,9 @@
-﻿using GiftShop.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GiftShop.Data.Configuration
+﻿namespace GiftShop.Data.Configuration
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using GiftShop.Models;
     public class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
     {
         public void Configure(EntityTypeBuilder<OrderProduct> builder)
@@ -19,6 +14,6 @@ namespace GiftShop.Data.Configuration
                 e.OrderId,
             });
         }
-    
+
     }
 }

@@ -1,9 +1,10 @@
 ﻿
 namespace GiftShop.Data.Configuration
 {
-    using GiftShop.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using GiftShop.Models;
     public class DeliveryCompanyConfiguration : IEntityTypeConfiguration<DeliveryCompany>
     {
         public void Configure(EntityTypeBuilder<DeliveryCompany> builder)

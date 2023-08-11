@@ -1,8 +1,9 @@
 ﻿namespace GiftShop.Data.Configuration
 {
-    using GiftShop.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using GiftShop.Models;
 
     public class CartProductConfiguration : IEntityTypeConfiguration<CartProduct>
     {

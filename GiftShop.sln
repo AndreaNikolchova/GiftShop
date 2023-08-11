@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Services", "GiftShop.Services\GiftShop.Services.csproj", "{6883BC7C-B577-4D87-8C0B-684B4674A00C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Web.Infrastructure", "Giftshop.Web.Infrastructure\GiftShop.Web.Infrastructure.csproj", "{39DDAD61-6172-477B-8AB2-B8D559E181A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Web.Infrastructure", "Giftshop.Web.Infrastructure\GiftShop.Web.Infrastructure.csproj", "{39DDAD61-6172-477B-8AB2-B8D559E181A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

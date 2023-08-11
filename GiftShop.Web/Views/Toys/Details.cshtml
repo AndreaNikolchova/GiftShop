@@ -1,4 +1,5 @@
-﻿@model ProductDetailsViewModel
+﻿@inject SignInManager<IdentityUser> SignInManager
+@model ProductDetailsViewModel
 @using static GiftShop.Common.ApplicationConstants;
 
 <h1 class="text-center">@Model.Name</h1>
@@ -29,7 +30,16 @@
             <p class="product-price-details">@Model.Price BGN</p>
             @if (!User.IsInRole(AdminRoleName))
             {
-                <button type="button" class="btn btn-primary">Add to Cart</button>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-secondary mb-2" onclick="addToCart(this,'@Html.Raw(Model.Id)','@Html.Raw("Toys")')"> Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                }
+                else
+                {
+                    <a class="btn btn-secondary mb-2" asp-area="Identity" asp-page="/Account/Login">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                }
             }
             else
             {
@@ -47,4 +57,4 @@
         </div>
     </div>
 </div>
-
+<script src="~/js/addToCart.js"></script>

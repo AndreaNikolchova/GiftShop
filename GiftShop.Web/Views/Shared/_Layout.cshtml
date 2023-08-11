@@ -14,6 +14,9 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark myCustomColor mb-3">
             <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/Images/AndyLogo.png" alt="Logo" class="img-fluid img-nav" />
+                </a>
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <img href="~/Images/Andy's.png" />Andy's Gifts</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,9 +25,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-light text-decoration-none" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
                         <li class="nav-item dropdown  myCustomColor">
                             <a class="nav-link dropdown-toggle text-light text-decoration-none" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Products
@@ -38,7 +38,7 @@
                         @if (!User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="CustomProduct" asp-action="Index">Custom</a>
+                                <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="CustomProduct" asp-action="Index">Custom Order</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="CustomProduct" asp-action="Request">My Custom Requests</a>

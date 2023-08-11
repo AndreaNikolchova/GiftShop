@@ -146,3 +146,14 @@
     height: 100%;
     object-fit: cover; 
 }
+a .img-nav {
+    max-width: 75px;
+    max-height: 75px;
+}
+
+.img-nav {
+    max-width: 120px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+}

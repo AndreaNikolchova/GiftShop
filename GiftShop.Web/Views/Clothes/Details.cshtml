@@ -1,33 +1,60 @@
-﻿@model ProductDetailsViewModel
-    <h1 class="text-center">@Model.Name</h1>
-    <div class="container">
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <div class="cardDetails ms-xl-0">
-                    <img src="@Model.ImageUrl" alt="@Model.Name">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <p class="product-description-details">
-                    <strong>Description:</strong>
-                    @Model.Description
-                </p>
-                <p class="product-description-details">
-                    <strong>Size:</strong>
-                    @Model.Size
-                </p>
-                <p class="product-description-details">
-                    <strong>Type:</strong>
-                    @Model.Type
-                </p>
-                <p class="product-description-details">
-                    <strong>Yarn brand and type:</strong>
-                    @Model.YarnName
-                </p>
-                <p class="product-price-details">@Model.Price BGN</p>
-                <button type="button" class="btn btn-primary">Add to Cart</button>
+﻿@inject SignInManager<IdentityUser> SignInManager
+@model ProductDetailsViewModel
+@using static GiftShop.Common.ApplicationConstants;
+
+<h1 class="text-center">@Model.Name</h1>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="cardDetails ms-xl-0">
+                <img src="@Model.ImageUrl" alt="@Model.Name">
             </div>
         </div>
+        <div class="col-md-4">
+            <p class="product-description-details">
+                <strong>Description:</strong>
+                @Model.Description
+            </p>
+            <p class="product-description-details">
+                <strong>Size:</strong>
+                @Model.Size
+            </p>
+            <p class="product-description-details">
+                <strong>Type:</strong>
+                @Model.Type
+            </p>
+            <p class="product-description-details">
+                <strong>Yarn brand and type:</strong>
+                @Model.YarnName
+            </p>
+            <p class="product-price-details">@Model.Price BGN</p>
+            @if (!User.IsInRole(AdminRoleName))
+            {
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-secondary mb-2" onclick="addToCart(this,'@Html.Raw(Model.Id)','@Html.Raw("Toys")')"> Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                }
+                else
+                {
+                    <a class="btn btn-secondary mb-2" asp-area="Identity" asp-page="/Account/Login">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                }
+            }
+            else
+            {
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-success">Edit</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-
-
+</div>
+<script src="~/js/addToCart.js"></script>
