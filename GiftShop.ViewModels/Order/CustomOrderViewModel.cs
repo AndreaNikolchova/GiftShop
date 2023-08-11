@@ -11,9 +11,9 @@
         public Guid DeliveryCompanyId { get; set; }
 
         public DeliveryCompanyViewModel DeliveryCompany { get; set; } = null!;
-        public IEnumerable<CustomProductViewModel> Products { get; set; } = null!;
+        public CustomProductViewModel Product { get; set; } = null!;
         public decimal Sum { get; set; }
-
+        public DateTime CreatedOn { get; set; }
         public PackagingViewModel Packaging { get; set; } = null!;
     }
 }

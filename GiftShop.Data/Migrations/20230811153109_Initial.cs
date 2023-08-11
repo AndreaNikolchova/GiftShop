@@ -57,7 +57,8 @@ namespace GiftShop.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Size = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,7 +70,8 @@ namespace GiftShop.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -245,7 +247,8 @@ namespace GiftShop.Data.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TownName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -266,7 +269,7 @@ namespace GiftShop.Data.Migrations
                     CustomProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -287,13 +290,48 @@ namespace GiftShop.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ProductTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    YarnTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_ProductTypes_ProductTypeId",
+                        column: x => x.ProductTypeId,
+                        principalTable: "ProductTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_YarnTypes_YarnTypeId",
+                        column: x => x.YarnTypeId,
+                        principalTable: "YarnTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CustomOrders",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProduductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DeliveryCompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeliveryCompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PackagingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Sum = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsDone = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -316,6 +354,12 @@ namespace GiftShop.Data.Migrations
                         principalTable: "DeliveryCompanies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CustomOrders_Packaging_PackagingId",
+                        column: x => x.PackagingId,
+                        principalTable: "Packaging",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -326,7 +370,9 @@ namespace GiftShop.Data.Migrations
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeliveryCompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Sum = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PackagingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PackagingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDone = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -352,93 +398,52 @@ namespace GiftShop.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "CartProducts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    ProductTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    YarnTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_CartProducts", x => new { x.CartId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_Products_Cart_CartId",
+                        name: "FK_CartProducts_Cart_CartId",
                         column: x => x.CartId,
                         principalTable: "Cart",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Orders_OrderId",
+                        name: "FK_CartProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderProducts",
+                columns: table => new
+                {
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderProducts", x => new { x.ProductId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_OrderProducts_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Products_ProductTypes_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_YarnTypes_YarnTypeId",
-                        column: x => x.YarnTypeId,
-                        principalTable: "YarnTypes",
+                        name: "FK_OrderProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "DeliveryCompanies",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("3505bf92-0bcd-463f-b117-9f0d8365ef66"), "Ekont" },
-                    { new Guid("41be4560-ba27-46c7-a75c-5dfe69339302"), "Speedy" },
-                    { new Guid("49ce683b-bd2d-4d6c-8d3f-fea4395cefe6"), "Sameday" },
-                    { new Guid("5f6bd9b9-d348-4dea-813c-93a1a365f288"), "Box Now" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ProductTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"), "Accessories" },
-                    { new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"), "Toys" },
-                    { new Guid("c1143e77-ccfa-4231-bd25-49e29470f13a"), "Clothes" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "YarnTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("33db593a-7a2b-493d-ae3c-f35086510855"), "Alize Puffy" },
-                    { new Guid("d9ff2381-dcad-4a99-b2f7-2c8a34af34b2"), "Alexander Yarn Ira" },
-                    { new Guid("fa6e1ffc-2094-4b9d-a985-305443b7ef27"), "Baby Bunny" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "CartId", "Description", "ImageUrl", "Name", "OrderId", "Price", "ProductTypeId", "Quantity", "Size", "YarnTypeId" },
-                values: new object[] { new Guid("51c4de19-c2de-44fc-8078-3a167301a73c"), null, "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)", "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg", "Baby Dear", null, 25.00m, new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"), 1, "20 cm", new Guid("fa6e1ffc-2094-4b9d-a985-305443b7ef27") });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "CartId", "Description", "ImageUrl", "Name", "OrderId", "Price", "ProductTypeId", "Quantity", "Size", "YarnTypeId" },
-                values: new object[] { new Guid("6ec80daa-f0d3-4acb-8211-5bee5605b59b"), null, "A buquet of 5 roses", "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg", "Roses", null, 20.00m, new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"), 2, "25 cm", new Guid("d9ff2381-dcad-4a99-b2f7-2c8a34af34b2") });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "CartId", "Description", "ImageUrl", "Name", "OrderId", "Price", "ProductTypeId", "Quantity", "Size", "YarnTypeId" },
-                values: new object[] { new Guid("97516dfc-1180-44d8-8572-b3751406b6d4"), null, "Blue soft blanket", "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg", "Blanket", null, 130.00m, new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"), 1, "100x180 cm", new Guid("33db593a-7a2b-493d-ae3c-f35086510855") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -485,6 +490,11 @@ namespace GiftShop.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CartProducts_ProductId",
+                table: "CartProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Customers_UserId",
                 table: "Customers",
                 column: "UserId");
@@ -498,6 +508,11 @@ namespace GiftShop.Data.Migrations
                 name: "IX_CustomOrders_DeliveryCompanyId",
                 table: "CustomOrders",
                 column: "DeliveryCompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomOrders_PackagingId",
+                table: "CustomOrders",
+                column: "PackagingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomOrders_ProduductId",
@@ -515,6 +530,11 @@ namespace GiftShop.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderProducts_OrderId",
+                table: "OrderProducts",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
@@ -528,16 +548,6 @@ namespace GiftShop.Data.Migrations
                 name: "IX_Orders_PackagingId",
                 table: "Orders",
                 column: "PackagingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_CartId",
-                table: "Products",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_OrderId",
-                table: "Products",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductTypeId",
@@ -568,31 +578,31 @@ namespace GiftShop.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CartProducts");
+
+            migrationBuilder.DropTable(
                 name: "CustomOrders");
 
             migrationBuilder.DropTable(
                 name: "CustomRequests");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "OrderProducts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "CustomProducts");
+                name: "Cart");
 
             migrationBuilder.DropTable(
-                name: "Cart");
+                name: "CustomProducts");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "ProductTypes");
-
-            migrationBuilder.DropTable(
-                name: "YarnTypes");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Customers");
@@ -602,6 +612,12 @@ namespace GiftShop.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Packaging");
+
+            migrationBuilder.DropTable(
+                name: "ProductTypes");
+
+            migrationBuilder.DropTable(
+                name: "YarnTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

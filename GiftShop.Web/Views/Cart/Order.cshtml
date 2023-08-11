@@ -48,36 +48,44 @@
                 </div>
                 <div class="row justify-content-center align-items-center mt-3 mb-3">
                     <div class="form-floating col-md-6">
-                        <select id="deliveryCompany" asp-for="DeliveryCompanyName" class="form-control" aria-required="true" required>
+                        <select id="delivery" asp-for="DeliveryCompany" class="form-control" aria-required="true" required>
                             <option value="0">Choose a company</option>
                             @foreach (var deliveryCompany in Model.DeliveryCompanyNames)
                             {
                                 <option value="@deliveryCompany.Price">@deliveryCompany.Name</option>
                             }
                         </select>
-                        <label asp-for="DeliveryCompanyName">Delivery Company</label>
+                        <label asp-for="DeliveryCompany">Delivery Company</label>
+                         <span id="error" asp-validation-for="DeliveryCompany" class="text-danger"></span>
                     </div>
                     
                 </div>
                 <div class="row justify-content-center align-items-center mt-3 mb-3">
                     <div class="form-floating col-md-6">
-                        <select id="packaging" asp-for="PackagingName" class="form-control" aria-required="true" required>
+                        <select id="packaging" asp-for="Packaging" class="form-control" aria-required="true" required>
                             @foreach (var packagingViewModel in Model.Packagings.Reverse())
                             {
                                 <option value="@packagingViewModel.Price">@packagingViewModel.Name</option>
                             }
                         </select>
-                        <label asp-for="PackagingName">Packaging</label>
+                        <label asp-for="Packaging">Packaging</label>
                     </div>
                     
                 </div>
-                <div class="container mb-3">
-                    <div class="row justify-content-center align-items-center">
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">Confirm Order</button>
+                <div class="container">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-auto mb-5">
+                                    <a id="calculate" onclick="calculate(this,'@Html.Raw(Model.Sum)')" class="btn btn-primary">Calculate sum</a>
+                                    <p class="product-price text-center mt-3" id="hiddenPrice" hidden>
+                                        <strong class="text-black">Price:  </strong>
+                                        <span id="sum"></span>
+                                    </p>
+                                </div>
+                                <div class="col-auto mb-5">
+                                   <button type="submit" class="btn btn-primary">Order</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
             </form>
         </div>
         <div class="col-md-3 border border-dark custom-rounded ms-5 p-4 bg-white">
@@ -107,18 +115,7 @@
         </div>
     </div>
 </div>
-<script>
-    var originalSum = parseFloat(document.getElementById("sum").textContent);
-
-    function updateTotalPrice() {
-        var selectedPrice = parseFloat(document.getElementById("deliveryCompany").value);
-        
-        var newSum = originalSum + selectedPrice;
-        
-        document.getElementById("sum").textContent = newSum.toFixed(2);
-        document.getElementById("selectedDeliveryPrice").textContent = selectedPrice.toFixed(2);
-    }
-</script>
+<script src="~/js/calculateSum.js"></script>
 
 
 

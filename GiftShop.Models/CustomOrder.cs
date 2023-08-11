@@ -7,6 +7,7 @@
         public CustomOrder()
         {
             this.Id = Guid.NewGuid();
+            this.IsDone = false;
         }
         [Key]
         public Guid Id { get; set; }
@@ -19,5 +20,11 @@
         public Guid DeliveryCompanyId { get; set; }
         [ForeignKey(nameof(DeliveryCompanyId))]
         public DeliveryCompany DeliveryCompany { get; set; } = null!;
+        public Guid PackagingId { get; set; }
+        [ForeignKey(nameof(PackagingId))]
+        public Packaging Packaging { get; set; } = null!;
+        public decimal Sum { get; set; }
+        public bool IsDone { get; set; }    
+        public DateTime CreatedOn { get; set; }
     }
 }

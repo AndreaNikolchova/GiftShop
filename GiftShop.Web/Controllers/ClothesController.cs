@@ -1,10 +1,8 @@
-﻿using GiftShop.Services.Product.Contracts;
-using GiftShop.Web.ViewModels.Product;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
-namespace GiftShop.Web.Controllers
+﻿namespace GiftShop.Web.Controllers
 {
+    using GiftShop.Services.Product.Contracts;
+    using GiftShop.Web.ViewModels.Product;
+    using Microsoft.AspNetCore.Mvc;
     public class ClothesController : Controller
     {
         private IProductService productService;
@@ -40,6 +38,6 @@ namespace GiftShop.Web.Controllers
             return Redirect($"/{model.Type}");
 
         }
-     
+
     }
 }

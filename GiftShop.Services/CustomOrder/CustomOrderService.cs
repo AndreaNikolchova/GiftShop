@@ -49,15 +49,27 @@
                 {
                     customer.Address = request.CustomerViewModel.Address;
                 }
+                if (customer.TownName != request.CustomerViewModel.Town)
+                {
+                    customer.TownName = request.CustomerViewModel.Town;
+                }
             }
+            var deliveryCompanyId =  await dbContext.DeliveryCompanies
+                .Where(x => x.Price == request.DeliveryCompany)
+                .Select(x => x.Id)
+                .FirstAsync();
+            var packagingId =  await dbContext.Packaging
+                .Where(x => x.Price == request.Packaging)
+                .Select(x => x.Id)
+                .FirstAsync();
             CustomOrder customOrder = new CustomOrder()
             {
                 Customer = customer,
                 ProduductId = request.ProductId,
-                DeliveryCompanyId = dbContext.DeliveryCompanies
-                .Where(x => x.Name == request.CustomerViewModel.DeliveryCompanyName)
-                .Select(x => x.Id)
-                .First(),
+                DeliveryCompanyId = deliveryCompanyId,
+                CreatedOn= DateTime.Now,
+                PackagingId = packagingId,
+                Sum = request.Price,
 
             };
             dbContext.CustomOrders.Add(customOrder);
@@ -68,30 +80,39 @@
         }
         public async Task<IEnumerable<CustomOrderViewModel>> GetAllOrdersAsync()
         {
-            var customOrders = this.dbContext.CustomOrders.Select(x => new CustomOrderViewModel()
+            var customOrders = await this.dbContext.CustomOrders.Where(x=>x.IsDone == false).OrderBy(x=>x.CreatedOn).Select(x => new CustomOrderViewModel()
             {
                 Id = x.Id,
                 Customer = new CustomerViewModel()
                 {
                     UserId = x.Customer.UserId,
-                    FirstName= x.Customer.FirstName,
-                    LastName= x.Customer.LastName,
+                    FirstName = x.Customer.FirstName,
+                    LastName = x.Customer.LastName,
                     Town = x.Customer.TownName,
                     Address = x.Customer.Address,
                 },
-                DeliveryCompany= new DeliveryCompanyViewModel()
+                Sum = x.Sum,
+                CreatedOn = x.CreatedOn,
+                Product = new CustomProductViewModel()
                 {
-                    Id=x.DeliveryCompany.Id,
-                    Name=x.DeliveryCompany.Name,
-                },
-                Packaging = new PackagingViewModel()
-                {
-                    Id = .Id,
-                    Name = x.DeliveryCompany.Name,
+                    Name = x.Product.Name,
+                    Description = x.Product.Description,
+                    ImageUrl = x.Product.ImageId,
+                    Size = x.Product.Size,
+                    Quantity = x.Product.Quantity,
+                    EmailAddress = dbContext.Users.Where(u=>u.Id == x.Customer.UserId).Select(x=>x.Email).First(),
+
                 }
+            }).ToArrayAsync();
 
-            });
 
+            return customOrders;
+        }
+        public async Task MarkAnOrderAsDoneAsync(Guid orderId)
+        {
+            var order = await this.dbContext.CustomOrders.FirstAsync(x => x.Id == orderId);
+            order.IsDone = true;
+            await dbContext.SaveChangesAsync();
         }
     }
 }

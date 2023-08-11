@@ -1,6 +1,8 @@
 ﻿namespace GiftShop.Web.ViewModels.CustomProduct
 {
     using GiftShop.Web.ViewModels.Customer;
+    using GiftShop.Web.ViewModels.DeliveryCompany;
+    using GiftShop.Web.ViewModels.Packaging;
     using System.ComponentModel.DataAnnotations;
     using static GiftShop.Common.ModelValidationConstants.Product;
     public class CustomRequestViewModel
@@ -16,11 +18,15 @@
         public string Size { get; set; } = null!;
         public int Quantity { get; set; }
         public string? EmailAddress { get; set; }
-        public string Price { get; set; } = null!;
+        public decimal Price { get; set; }
         public string Date { get; set; } = null!;
 
         public CustomerViewModel CustomerViewModel { get; set; } = null!;
 
-        public IEnumerable<string> DeliveryCompaniesNames { get; set; }
+        public IEnumerable<DeliveryCompanyViewModel> DeliveryCompaniesNames { get; set; }
+        [Required(ErrorMessage = "Please select a delivery company.")]
+        public decimal DeliveryCompany { get; set; }
+        public IEnumerable<PackagingViewModel> PackagesNames { get; set; }
+        public decimal Packaging { get; set; }
     }
 }

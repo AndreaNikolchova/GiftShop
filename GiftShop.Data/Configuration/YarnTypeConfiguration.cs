@@ -5,10 +5,9 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     public class YarnTypeConfiguration : IEntityTypeConfiguration<YarnType>
     {
-
         public void Configure(EntityTypeBuilder<YarnType> builder)
         {
-            builder.HasData(this.Seed());
+           builder.HasData(this.Seed());
         }
 
         public YarnType[] Seed()

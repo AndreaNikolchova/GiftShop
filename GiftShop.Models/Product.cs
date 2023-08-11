@@ -9,6 +9,7 @@
         {
             this.Id = Guid.NewGuid();
             this.CartProduct = new HashSet<CartProduct>();
+            this.OrderProducts = new HashSet<OrderProduct>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -38,6 +39,8 @@
         public YarnType YarnType { get; set; } = null!;
 
         public ICollection<CartProduct> CartProduct { get; set; }
+        public ICollection<OrderProduct> OrderProducts { get; set; }
+
 
 
     }

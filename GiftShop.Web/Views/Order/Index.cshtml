@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OrderViewModel>;
+
+<h1 class="text-center">Orders</h1>
+@{
+    if (Model.Count() == 0)
+    {
+        <div class="row justify-content-center align-items-center mb-5">
+            <div class="col-auto">
+                <div id="banner">
+                    <img class="img-fluid h-200 mb-4" src="/Images/No items found.png" />
+                </div>
+            </div>
+        </div>
+    }
+}
+<div class="container mt-5">
+    @foreach (var order in Model)
+    {
+        <div class="row no-gutters justify-content-center mb-3">
+            <div class="col-md-7  border border-dark custom-rounded bg-white">
+                @foreach (var product in order.Products)
+                {
+
+                    <h2 class="card-title text-center mt-1 mb-2">@product.Name</h2>
+
+                    <div class="row no-gutters justify-content-center mb-3 p-4 ">
+                        <div class="col-md-4  mb-3">
+                            <div class="cardCustomOrder">
+                                <img src="@product.ImageUrl" class="card-img" alt="Product Image">
+                            </div>
+                        </div>
+                        <div class="col-md-3 ms-5 mb-3">
+                            <h4 class="card-title text-center mb-3 ">Product</h4>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Description: </strong>@product.Description</p>
+                                <p class="card-text"><strong>Size: </strong>@product.Size</p>
+                                <p class="card-text"><strong>Quantity: </strong>@product.Quantity</p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                }
+                <div class="container mb-5">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-3 mb-3">
+                            <h4 class="card-title text-center mb-3">Customer</h4>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Name: </strong>@order.Customer.FirstName @order.Customer.LastName</p>
+                                <p class="card-text"><strong>Address: </strong>@order.Customer.Town, @order.Customer.Address</p>
+                                <p class="card-text"><strong>Client's email address: </strong>@order.Email</p>
+
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <p class="product-price"><strong class="text-black">Price: </strong>@order.Sum</p>
+                            <a class="btn btn-primary"  asp-action="Done" asp-route-id="@order.Id" >Done</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="card-text text-end">@order.CreatedOn</p>
+            </div>
+        </div>
+    }
+</div>

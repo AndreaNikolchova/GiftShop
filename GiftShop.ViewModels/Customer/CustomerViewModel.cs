@@ -8,7 +8,5 @@
         public string Address { get; set; } = null!;
         public string Town { get; set; } = null!;
 
-        public string DeliveryCompanyName { get; set; } = null!;    
-
     }
 }

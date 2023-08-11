@@ -4,7 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal class CartProductConfiguration : IEntityTypeConfiguration<CartProduct>
+    public class CartProductConfiguration : IEntityTypeConfiguration<CartProduct>
     {
         public void Configure(EntityTypeBuilder<CartProduct> builder)
         {

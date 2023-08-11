@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShop.Data.Migrations
 {
     [DbContext(typeof(GiftShopDbContext))]
-    [Migration("20230809053534_TownColumnToCustomer")]
-    partial class TownColumnToCustomer
+    [Migration("20230811164159_AddedQuantitiyProduct")]
+    partial class AddedQuantitiyProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,20 +99,34 @@ namespace GiftShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("DeliveryCompanyId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PackagingId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ProduductId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Sum")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("DeliveryCompanyId");
+
+                    b.HasIndex("PackagingId");
 
                     b.HasIndex("ProduductId");
 
@@ -135,6 +149,9 @@ namespace GiftShop.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -164,7 +181,7 @@ namespace GiftShop.Data.Migrations
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
@@ -191,6 +208,9 @@ namespace GiftShop.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.ToTable("DeliveryCompanies");
@@ -199,22 +219,38 @@ namespace GiftShop.Data.Migrations
                         new
                         {
                             Id = new Guid("3505bf92-0bcd-463f-b117-9f0d8365ef66"),
-                            Name = "Ekont"
+                            Name = "Ekont Avtomat",
+                            Price = 6m
+                        },
+                        new
+                        {
+                            Id = new Guid("20adea35-fc7d-4d09-a08d-c1565da80428"),
+                            Name = "Ekont to your address",
+                            Price = 7m
                         },
                         new
                         {
                             Id = new Guid("41be4560-ba27-46c7-a75c-5dfe69339302"),
-                            Name = "Speedy"
+                            Name = "Speedy to your address",
+                            Price = 8m
                         },
                         new
                         {
-                            Id = new Guid("5f6bd9b9-d348-4dea-813c-93a1a365f288"),
-                            Name = "Box Now"
+                            Id = new Guid("32399eb3-76c3-4c96-8b63-1ae65d949175"),
+                            Name = "Speedy Avtomat",
+                            Price = 4.16m
+                        },
+                        new
+                        {
+                            Id = new Guid("692078e5-eaed-48f6-b513-c81fe669f8c3"),
+                            Name = "Sameday to your address",
+                            Price = 5.88m
                         },
                         new
                         {
                             Id = new Guid("49ce683b-bd2d-4d6c-8d3f-fea4395cefe6"),
-                            Name = "Sameday"
+                            Name = "Sameday Avtomat",
+                            Price = 3.48m
                         });
                 });
 
@@ -224,11 +260,17 @@ namespace GiftShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("DeliveryCompanyId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("PackagingId")
                         .HasColumnType("uniqueidentifier");
@@ -245,6 +287,24 @@ namespace GiftShop.Data.Migrations
                     b.HasIndex("PackagingId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("GiftShop.Models.OrderProduct", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderProducts");
                 });
 
             modelBuilder.Entity("GiftShop.Models.Packaging", b =>
@@ -264,6 +324,20 @@ namespace GiftShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Packaging");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0d0cdc67-7dfc-4236-8eab-bc8021aeb942"),
+                            Name = "Normal",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            Id = new Guid("ec46d5b0-38ca-4d42-a336-1151e4152c29"),
+                            Name = "In a box with a bow",
+                            Price = 4.5m
+                        });
                 });
 
             modelBuilder.Entity("GiftShop.Models.Product", b =>
@@ -285,9 +359,6 @@ namespace GiftShop.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -307,8 +378,6 @@ namespace GiftShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.HasIndex("ProductTypeId");
 
                     b.HasIndex("YarnTypeId");
@@ -318,37 +387,37 @@ namespace GiftShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("30e99a25-909f-45c0-bf07-5e94b01776ae"),
+                            Id = new Guid("3f8923b1-d309-44ac-a2ec-742e15cef4e8"),
                             Description = "Blue soft blanket",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
                             Name = "Blanket",
                             Price = 130.00m,
                             ProductTypeId = new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"),
-                            Quantity = 1,
+                            Quantity = 5,
                             Size = "100x180 cm",
                             YarnTypeId = new Guid("33db593a-7a2b-493d-ae3c-f35086510855")
                         },
                         new
                         {
-                            Id = new Guid("fd5124b9-d01b-41b8-9500-e14790d02b05"),
+                            Id = new Guid("fdd4249d-360b-43e0-a9f0-708382a24b01"),
                             Description = "A buquet of 5 roses",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
                             Name = "Roses",
                             Price = 20.00m,
                             ProductTypeId = new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"),
-                            Quantity = 2,
+                            Quantity = 5,
                             Size = "25 cm",
                             YarnTypeId = new Guid("d9ff2381-dcad-4a99-b2f7-2c8a34af34b2")
                         },
                         new
                         {
-                            Id = new Guid("0d85c394-696c-40e7-a5e7-622f1d27f307"),
+                            Id = new Guid("2ec037c7-3e9f-4f72-8151-b2b01caebb4f"),
                             Description = "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
                             Name = "Baby Dear",
                             Price = 25.00m,
                             ProductTypeId = new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"),
-                            Quantity = 1,
+                            Quantity = 5,
                             Size = "20 cm",
                             YarnTypeId = new Guid("fa6e1ffc-2094-4b9d-a985-305443b7ef27")
                         });
@@ -677,6 +746,12 @@ namespace GiftShop.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GiftShop.Models.Packaging", "Packaging")
+                        .WithMany()
+                        .HasForeignKey("PackagingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GiftShop.Models.CustomProduct", "Product")
                         .WithMany()
                         .HasForeignKey("ProduductId")
@@ -686,6 +761,8 @@ namespace GiftShop.Data.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("DeliveryCompany");
+
+                    b.Navigation("Packaging");
 
                     b.Navigation("Product");
                 });
@@ -736,12 +813,27 @@ namespace GiftShop.Data.Migrations
                     b.Navigation("Packaging");
                 });
 
+            modelBuilder.Entity("GiftShop.Models.OrderProduct", b =>
+                {
+                    b.HasOne("GiftShop.Models.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GiftShop.Models.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("GiftShop.Models.Product", b =>
                 {
-                    b.HasOne("GiftShop.Models.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("GiftShop.Models.ProductType", "Type")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
@@ -817,12 +909,14 @@ namespace GiftShop.Data.Migrations
 
             modelBuilder.Entity("GiftShop.Models.Order", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("OrderProducts");
                 });
 
             modelBuilder.Entity("GiftShop.Models.Product", b =>
                 {
                     b.Navigation("CartProduct");
+
+                    b.Navigation("OrderProducts");
                 });
 #pragma warning restore 612, 618
         }

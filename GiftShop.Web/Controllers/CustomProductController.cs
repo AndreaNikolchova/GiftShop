@@ -14,9 +14,10 @@
         private ICustomProductService productService;
         private ICustomOrderService customOrderService;
 
-        public CustomProductController(ICustomProductService productService)
+        public CustomProductController(ICustomProductService productService, ICustomOrderService customOrderService)
         {
             this.productService = productService;
+            this.customOrderService = customOrderService;
         }
 
         public IActionResult Index()
@@ -70,10 +71,9 @@
             await productService.AcceptRequestAsync(model, model.EmailAddress);
             return Redirect("/CustomProduct/Request");
         }
-        [Authorize(Roles = AdminRoleName)]
-        public async Task<IActionResult> DeleteAdmin(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            await productService.DeleteRequestAsync(id);
+            await productService.DeleteRequestAsync(id, User.IsInRole(AdminRoleName));
             return Redirect("/CustomProduct/Request");
         }
 
@@ -82,14 +82,14 @@
             if (User.IsInRole(AdminRoleName))
             {
                 var customProducts = await productService.GetAllRequestsAsync();
-                return View("RequestAdmin",customProducts);
+                return View("RequestAdmin", customProducts);
             }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customApprovedRequests = await productService.GetRequestsFromUserAsync(userId);
             return View("RequestUser", customApprovedRequests);
 
         }
-       
+
         public async Task<IActionResult> ConfirmOrder(Guid id)
         {
             var model = await productService.GetRequestByUserAsync(id);
@@ -99,8 +99,17 @@
         [HttpPost]
         public async Task<IActionResult> ConfirmOrder(CustomRequestViewModel model)
         {
-            await customOrderService.AddCustomOrderAsync(model, User.FindFirstValue(ClaimTypes.Email));
+            if (model.DeliveryCompany == 0)
+            {
+                model.DeliveryCompaniesNames = await productService.GetDeliveryCompaniesAsync();
+                model.PackagesNames = await productService.GetPackagingAsync();
+                ModelState.AddModelError("DeliveryCompany", "Please select a delivery company.");
+                return View(model);
+
+            }
+            await customOrderService.AddCustomOrderAsync(model, model.EmailAddress);
             return Redirect("/CustomProduct/Request");
         }
+
     }
 }

@@ -23,6 +23,7 @@ namespace GiftShop.Data
         public DbSet<CustomRequest> CustomRequests { get; set; } 
         public DbSet<Cart> Cart { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

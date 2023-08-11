@@ -13,43 +13,75 @@
         </div>
     }
 }
-@*<div class="container mt-5">
-    @foreach (var product in Model)
+<div class="container mt-5">
+    @foreach (var order in Model)
     {
-        <div class="mb-5 border border-dark custom-rounded p-3">
-            <div class="row no-gutters mb-3">
-                <div class="col-md-3">
-                    @if (product.ImageUrl != null)
+
+        <div class="row no-gutters justify-content-center mb-3">
+            <div class="col-md-7  border border-dark custom-rounded bg-white">
+
+                <h2 class="card-title text-center mt-3 mb-3">@order.Product.Name</h2>
+
+                <div class="row no-gutters justify-content-center mb-3">
+                    @if (@order.Product.ImageUrl != null)
                     {
-                        <div class="card">
-                            <img src="@product.ImageUrl" class="card-img" alt="Product Image">
+                        <div class="col-md-4">
+                            <div class="cardCustomOrder">
+                                <img src="@order.Product.ImageUrl" class="card-img" alt="Product Image">
+                            </div>
+                        </div>
+                        <div class="col-md-3 ms-5">
+                            <h4 class="card-title text-center mb-3 ">Product</h4>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Description: </strong>@order.Product.Description</p>
+                                <p class="card-text"><strong>Size: </strong>@order.Product.Size</p>
+                                <p class="card-text"><strong>Quantity: </strong>@order.Product.Quantity</p>
+                                <p class="product-price"><strong>Price: </strong>@order.Sum</p>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="card-title text-center mb-3">Customer</h4>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Name: </strong>@order.Customer.FirstName @order.Customer.LastName</p>
+                                <p class="card-text"><strong>Address: </strong>@order.Customer.Town, @order.Customer.Address</p>
+                                <p class="card-text"><strong>Client's email address: </strong>@order.Product.EmailAddress</p>
+
+                            </div>
                         </div>
                     }
                     else
                     {
-                        <p class="card-text text-center mt-5"><strong>Photo: </strong>No photo imported :(</p>
-                    }
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h2 class="card-title text-center">@product.Name</h2>
-                        <p class="card-text"><strong>Description: </strong>@product.Description</p>
-                        <p class="card-text"><strong>Size: </strong>@product.Size</p>
-                        <p class="card-text"><strong>Quantity: </strong>@product.Quantity</p>
-                        <p class="card-text"><strong>Client's email address: </strong>@product.EmailAddress</p>
+                        <div class="col-md-5 ms-5">
+                            <h4 class="card-title text-center mb-3 ">Product</h4>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Description: </strong>@order.Product.Description</p>
+                                <p class="card-text"><strong>Size: </strong>@order.Product.Size</p>
+                                <p class="card-text"><strong>Quantity: </strong>@order.Product.Quantity</p>
+                                <p class="product-price"><strong>Price: </strong>@order.Sum</p>
 
-                    </div>
-
-                    <div class="container mt-5">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-auto">
-                                <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-btn-success">Done</a>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-md-5">
+                            <h4 class="card-title text-center mb-3">Customer</h4>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Name: </strong>@order.Customer.FirstName @order.Customer.LastName</p>
+                                <p class="card-text"><strong>Address: </strong>@order.Customer.Town, @order.Customer.Address</p>
+                                <p class="card-text"><strong>Client's email address: </strong>@order.Product.EmailAddress</p>
 
+                            </div>
+                        </div>
+                    }
                 </div>
+                <div class="container mb-5">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-auto">
+                            <a class="btn btn-primary"  asp-action="Done" asp-route-id="@order.Id" >Done</a>
+                        </div>
+                    </div>
+                </div>
+                  <p class="card-text text-end">@order.CreatedOn</p>
             </div>
         </div>
     }
-</div>*@
+</div>

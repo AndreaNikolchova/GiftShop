@@ -11,6 +11,7 @@
         [MinLength(NameMinLenght)]
         public string Name { get; set; } = null!;
         public IFormFile? Photo { get; set; }
+        public string? ImageUrl { get; set; }
         public string? PhotoError { get; set; }
 
         public string? Description { get; set; }

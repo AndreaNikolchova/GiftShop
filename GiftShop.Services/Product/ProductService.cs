@@ -24,7 +24,7 @@
 
         public async Task<IEnumerable<ProductViewModel>> GetLast3ProductsAsync()
         {
-            var products = await this.dbContext.Products.Take(3)
+            var products = await this.dbContext.Products.Where(x=>x.Quantity>0).Take(3)
                 .Select(p => new ProductViewModel()
                 {
                     Id = p.Id,
@@ -43,7 +43,7 @@
 
         public async Task<IEnumerable<ProductViewModel>> GetAllAsync(string productType)
         {
-            var products = await this.dbContext.Products.Where(x => x.Type.Name == productType)
+            var products = await this.dbContext.Products.Where(x => x.Type.Name == productType&& x.Quantity>0)
                    .Select(p => new ProductViewModel()
                    {
                        Id = p.Id,
@@ -202,16 +202,16 @@
             var product = await this.dbContext.Products
                 .FirstOrDefaultAsync(x => x.Id == id);
             var thisUsersCart = await this.dbContext.Cart
-                .FirstOrDefaultAsync(x => x.UserId == userId); 
-            var usersCartProducts = await this.dbContext.Cart
-                .Where(x => x.UserId == userId)
-                .Select(x=>x.CartProduct)
-                .FirstAsync();
+                .FirstOrDefaultAsync(x => x.UserId == userId);
             if (thisUsersCart != null)
             {
-                
+                var usersCartProducts = await this.dbContext.Cart
+                    .Where(x => x.UserId == userId)
+                    .Select(x => x.CartProduct)
+                    .FirstAsync();
+
                 var products = usersCartProducts
-                    .Select(x=>x.Product)
+                    .Select(x => x.Product)
                     .ToArray();
                 if (!products.Contains(product))
                 {

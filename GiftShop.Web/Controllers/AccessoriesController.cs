@@ -1,10 +1,12 @@
-﻿using GiftShop.Services.Product.Contracts;
-using GiftShop.Web.ViewModels.Product;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
-namespace GiftShop.Web.Controllers
+﻿namespace GiftShop.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+
+    using GiftShop.Services.Product.Contracts;
+    using GiftShop.Web.ViewModels.Product;
+    using static GiftShop.Common.ApplicationConstants;
+
     public class AccessoriesController : Controller
     {
         private IProductService productService;
@@ -26,17 +28,20 @@ namespace GiftShop.Web.Controllers
             var product = await this.productService.GetDetailsAsync(id);
             return View(product);
         }
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Delete(Guid id)
         {
             await this.productService.DeleteAsync(id);
             return Redirect("/Index");
         }
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Edit(Guid id)
         {
             var model = await productService.GetDetailsForEditAsync(id);
             return View(model);
         }
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Edit(EditProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -47,6 +52,6 @@ namespace GiftShop.Web.Controllers
             return Redirect($"/{model.Type}");
 
         }
-      
+
     }
 }

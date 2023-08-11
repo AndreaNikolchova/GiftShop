@@ -5,6 +5,8 @@
     public interface IOrderService
     {
         public Task<OrderViewModel> FillOrderViewModel(CartViewModel cartViewModel);
-        public Task AddOrder(OrderViewModel order, string userId);
+        public Task AddOrder(OrderViewModel order, string userId, string email);
+        public Task<IEnumerable<OrderViewModel>> GetAllOrdersAsync();
+        public Task MarkAnOrderAsDoneAsync(Guid orderId);
     }
 }

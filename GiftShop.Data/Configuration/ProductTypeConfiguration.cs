@@ -8,7 +8,7 @@
 
         public void Configure(EntityTypeBuilder<ProductType> builder)
         {
-            builder.HasData(this.Seed());
+           builder.HasData(this.Seed());
         }
 
         private ProductType[] Seed()

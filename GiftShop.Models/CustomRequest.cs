@@ -24,7 +24,7 @@
         public IdentityUser User { get; set; } = null!;
 
         public bool IsAccepted { get; set; }
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
         public string? Date { get; set; }    
 
     }
