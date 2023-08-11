@@ -1,8 +1,8 @@
 ﻿namespace GiftShop.Models
 {
-    using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Microsoft.AspNetCore.Identity;
     using static GiftShop.Common.ModelValidationConstants.Customer;
     public class Customer
     {

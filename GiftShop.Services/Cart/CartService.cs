@@ -1,11 +1,13 @@
 ﻿namespace GiftShop.Services.Cart
 {
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+
     using GiftShop.Data;
     using GiftShop.Services.Cart.Contracts;
     using GiftShop.Web.ViewModels.Cart;
     using GiftShop.Web.ViewModels.Product;
-    using Microsoft.EntityFrameworkCore;
-    using System.Threading.Tasks;
 
     public class CartService : ICartService
     {

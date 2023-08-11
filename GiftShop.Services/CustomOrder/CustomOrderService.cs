@@ -1,5 +1,7 @@
 ﻿namespace GiftShop.Services.CustomOrder
 {
+    using Microsoft.EntityFrameworkCore;
+
     using GiftShop.Data;
     using GiftShop.Models;
     using GiftShop.Services.CustomOrder.Contracts;
@@ -7,10 +9,7 @@
     using GiftShop.Services.EmailSender.Contracts;
     using GiftShop.Web.ViewModels.Customer;
     using GiftShop.Web.ViewModels.CustomProduct;
-    using GiftShop.Web.ViewModels.DeliveryCompany;
     using GiftShop.Web.ViewModels.Order;
-    using GiftShop.Web.ViewModels.Packaging;
-    using Microsoft.EntityFrameworkCore;
     using static GiftShop.Common.EmailMessagesConstants;
 
     public class CustomOrderService : ICustomOrderService
