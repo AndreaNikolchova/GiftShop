@@ -44,12 +44,17 @@ Account cloudinaryCredentials = new Account(
 Cloudinary cloudinary = new Cloudinary(cloudinaryCredentials);
 builder.Services.AddSingleton(cloudinary);
 
+builder.Services.ConfigureApplicationCookie(cfg =>
+{
+    cfg.LoginPath = "/User/Login";
+    cfg.AccessDeniedPath = "/Home/Error/401";
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
-    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
     app.UseDeveloperExceptionPage();
 }
 else
@@ -69,9 +74,12 @@ app.UseAuthorization();
 app.SeedAdministrator(DeveloperAdminEmail);
 app.UseSession();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(config =>
+{
+    config.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    config.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+    config.MapRazorPages();
+});
 app.MapRazorPages();
 
 app.Run();

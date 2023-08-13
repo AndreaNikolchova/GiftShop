@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShop.Data.Migrations
 {
     [DbContext(typeof(GiftShopDbContext))]
-    [Migration("20230811164159_AddedQuantitiyProduct")]
-    partial class AddedQuantitiyProduct
+    [Migration("20230813092558_Seed")]
+    partial class Seed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -387,8 +387,8 @@ namespace GiftShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3f8923b1-d309-44ac-a2ec-742e15cef4e8"),
-                            Description = "Blue soft blanket",
+                            Id = new Guid("f2697be3-c0f2-47e5-b9d4-1d182939da9c"),
+                            Description = "Wrap yourself in the soothing comfort of our blue soft crochet blanket. Handcrafted with care, this cozy and inviting blanket features a delicate crochet pattern that adds a touch of elegance to its comforting embrace. ",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
                             Name = "Blanket",
                             Price = 130.00m,
@@ -399,8 +399,8 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fdd4249d-360b-43e0-a9f0-708382a24b01"),
-                            Description = "A buquet of 5 roses",
+                            Id = new Guid("7bd529b6-53a0-41e3-babc-b40cfeffa774"),
+                            Description = "Elevate the ordinary with our crochet bouquet of five intricately crafted roses, a timeless and artful display that captures the essence of nature's beauty in delicate yarn. A thoughtful and lasting gift for any occasion, adding a touch of handmade elegance to your surroundings.",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
                             Name = "Roses",
                             Price = 20.00m,
@@ -411,8 +411,8 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2ec037c7-3e9f-4f72-8151-b2b01caebb4f"),
-                            Description = "This baby dear is so adorable and a perfect Xmas gift.The scarf is with a custom color which should be added in the notes when you order :)",
+                            Id = new Guid("b328f085-95f8-4345-894a-099c8086e42a"),
+                            Description = "Delight in the enchanting innocence of our crochet baby deer plushie, a soft and lovable addition to any nursery that promises warmth and companionship for your little bundle of joy.",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
                             Name = "Baby Dear",
                             Price = 25.00m,
@@ -420,6 +420,42 @@ namespace GiftShop.Data.Migrations
                             Quantity = 5,
                             Size = "20 cm",
                             YarnTypeId = new Guid("fa6e1ffc-2094-4b9d-a985-305443b7ef27")
+                        },
+                        new
+                        {
+                            Id = new Guid("1f6a651a-6bc4-46cc-bb8c-e859cbeaffd8"),
+                            Description = "Introduce a serene touch to your living space with our blue pillow, its soothing hue and plush texture offering both aesthetic elegance and cozy comfort.",
+                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691317411/Pillow.jpg",
+                            Name = "Pillow",
+                            Price = 60.00m,
+                            ProductTypeId = new Guid("1e1ee133-0f1a-4585-89ed-e251dd84b98d"),
+                            Quantity = 5,
+                            Size = "40x40cm",
+                            YarnTypeId = new Guid("33db593a-7a2b-493d-ae3c-f35086510855")
+                        },
+                        new
+                        {
+                            Id = new Guid("098e2f65-6390-46df-93d1-247218a92b96"),
+                            Description = "Meet our adorable crochet penguin, meticulously handcrafted to bring a touch of whimsy and charm into your life. With its intricate stitches and lovable design, this penguin plushie is a perfect cuddly companion for both kids and the young at heart.",
+                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691390683/test.jpg",
+                            Name = "Penguin",
+                            Price = 35.00m,
+                            ProductTypeId = new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"),
+                            Quantity = 5,
+                            Size = "25cm",
+                            YarnTypeId = new Guid("d9ff2381-dcad-4a99-b2f7-2c8a34af34b2")
+                        },
+                        new
+                        {
+                            Id = new Guid("0f0e4163-f1b8-4814-9d3d-5b0366dbd3c0"),
+                            Description = "Say hello to Leggy Froggie, our delightful crochet creation that adds a playful twist to traditional plushies. With its vibrant colors, long and stretchy legs, and a cheerful smile, Leggy Froggie is ready to hop into your heart and become a cherished companion.",
+                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691667795/Frog.jpg",
+                            Name = "Leggy Froggie",
+                            Price = 15.00m,
+                            ProductTypeId = new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"),
+                            Quantity = 5,
+                            Size = "12cm",
+                            YarnTypeId = new Guid("d9ff2381-dcad-4a99-b2f7-2c8a34af34b2")
                         });
                 });
 

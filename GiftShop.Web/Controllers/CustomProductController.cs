@@ -24,12 +24,14 @@
         {
             return View();
         }
-
-
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await productService.DeleteRequestAsync(id, User.IsInRole(AdminRoleName));
+            return Redirect("/CustomProduct/Request");
+        }
         [HttpPost]
         public async Task<IActionResult> Index(CustomProductViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 model.User = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -49,40 +51,11 @@
             return View(model);
         }
 
-        [Authorize(Roles = AdminRoleName)]
-        public async Task<IActionResult> RequestAdmin()
-        {
-            var customProducts = await productService.GetAllRequestsAsync();
-            return View(customProducts);
-
-        }
-
-        [Authorize(Roles = AdminRoleName)]
-        public async Task<IActionResult> Accept(Guid id)
-        {
-            var model = await productService.GetRequestByAdminAsync(id);
-            return View(model);
-
-        }
-        [Authorize(Roles = AdminRoleName)]
-        [HttpPost]
-        public async Task<IActionResult> Accept(CustomRequestViewModel model)
-        {
-            await productService.AcceptRequestAsync(model, model.EmailAddress);
-            return Redirect("/CustomProduct/Request");
-        }
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            await productService.DeleteRequestAsync(id, User.IsInRole(AdminRoleName));
-            return Redirect("/CustomProduct/Request");
-        }
-
         public async Task<IActionResult> Request()
         {
             if (User.IsInRole(AdminRoleName))
             {
-                var customProducts = await productService.GetAllRequestsAsync();
-                return View("RequestAdmin", customProducts);
+                return RedirectToAction("Index", "CustomProduct", new { Area = AdminAreaName });
             }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customApprovedRequests = await productService.GetRequestsFromUserAsync(userId);

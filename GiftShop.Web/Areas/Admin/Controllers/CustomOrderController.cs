@@ -1,11 +1,9 @@
-﻿namespace GiftShop.Web.Controllers
+﻿namespace GiftShop.Web.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using GiftShop.Services.CustomOrder.Contracts;
-    using Microsoft.AspNetCore.Authorization;
 
-    [Authorize]
-    public class CustomOrderController : Controller
+    using GiftShop.Services.CustomOrder.Contracts;
+    public class CustomOrderController : BaseAdminController
     {
         private ICustomOrderService customOrderService;
 

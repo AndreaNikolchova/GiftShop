@@ -43,10 +43,10 @@
                     <div class="container mt-5">
                         <div class="row justify-content-center align-items-center">
                             <div class="col-auto">
-                                <a asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-primary">Accept</a>
+                                <a asp-controller="CustomProduct" asp-action="Accept" asp-route-id="@product.RequestId" class="btn btn-primary">Accept</a>
                             </div>
                             <div class="col-auto">
-                                <a asp-action="Delete" asp-route-id="@product.RequestId" class="btn btn-danger">Delete</a>
+                                <a asp-area="" asp-controller="CustomProduct" asp-action="Delete" asp-route-id="@product.RequestId" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     </div>

@@ -30,9 +30,9 @@
                                 Products
                             </a>
                             <div class="dropdown-menu  myCustomColor" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item text-light" asp-controller="Toys" asp-action="Index">Toys</a>
-                                <a class="dropdown-item text-light" asp-controller="Clothes" asp-action="Index">Clothes</a>
-                                <a class="dropdown-item text-light" asp-controller="Accessories" asp-action="Index">Accessories</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Toys" asp-action="Index">Toys</a>
+                                <a class="dropdown-item text-light"asp-area=""  asp-controller="Clothes" asp-action="Index">Clothes</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Accessories" asp-action="Index">Accessories</a>
                             </div>
                         </li>
                         @if (!User.IsInRole("Administrator"))
@@ -48,16 +48,16 @@
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item ms-3">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Product" asp-action="Add">Add Product</a>
                             </li>
                             <li class="nav-item ms-3">
                                 <a class="nav-link text-light" asp-area="" asp-controller="CustomProduct" asp-action="Request">View custom requests</a>
                             </li>
                             <li class="nav-item ms-3 ">
-                                <a class="nav-link text-light" asp-area="" asp-controller="CustomOrder" asp-action="Index">View custom orders</a>
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="CustomOrder" asp-action="Index">View custom orders</a>
                             </li>
                              <li class="nav-item ms-3 ">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Order" asp-action="Index">View orders</a>
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Order" asp-action="Index">View orders</a>
                             </li>
                         }
                     </ul>

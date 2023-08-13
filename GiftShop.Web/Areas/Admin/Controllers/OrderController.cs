@@ -1,11 +1,9 @@
-﻿namespace GiftShop.Web.Controllers
+﻿namespace GiftShop.Web.Areas.Admin.Controllers
 {
     using GiftShop.Services.Order.Contracts;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using static GiftShop.Common.ApplicationConstants;
-    public class OrderController : Controller
+    public class OrderController : BaseAdminController
     {
         private IOrderService orderService;
 
@@ -13,13 +11,11 @@
         {
             this.orderService = customOrderService;
         }
-        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Index()
         {
             var model = await orderService.GetAllOrdersAsync();
             return View(model);
         }
-        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Done(Guid id)
         {
             await orderService.MarkAnOrderAsDoneAsync(id);
