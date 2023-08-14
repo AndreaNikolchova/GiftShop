@@ -48,16 +48,16 @@
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item ms-3">
-                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Product" asp-action="Add">Add Product</a>
+                                <a class="nav-link text-light"  asp-area="Admin" asp-controller="Product" asp-action="Add">Add Product</a>
                             </li>
                             <li class="nav-item ms-3">
                                 <a class="nav-link text-light" asp-area="" asp-controller="CustomProduct" asp-action="Request">View custom requests</a>
                             </li>
                             <li class="nav-item ms-3 ">
-                                <a class="nav-link text-light" asp-area="Admin" asp-controller="CustomOrder" asp-action="Index">View custom orders</a>
+                                <a class="nav-link text-light"  asp-controller="CustomOrder" asp-action="Index">View custom orders</a>
                             </li>
                              <li class="nav-item ms-3 ">
-                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Order" asp-action="Index">View orders</a>
+                                <a class="nav-link text-light"  asp-controller="Order" asp-action="Index">View orders</a>
                             </li>
                         }
                     </ul>

@@ -1,13 +1,17 @@
 ﻿namespace GiftShop.Web.Areas.Admin.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using GiftShop.Services.Product.Contracts;
     using GiftShop.Web.ViewModels.Product;
-    using Microsoft.AspNetCore.Mvc;
-    public class ProductContoller : BaseAdminController
+    using static GiftShop.Common.ApplicationConstants;
+
+    [Area(AdminAreaName)]
+    public class ProductController : BaseAdminController
     {
         private IProductService productService;
 
-        public ProductContoller(IProductService productService)
+        public ProductController (IProductService productService)
         {
             this.productService = productService;
         }

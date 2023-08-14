@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Services", "GiftSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShop.Web.Infrastructure", "Giftshop.Web.Infrastructure\GiftShop.Web.Infrastructure.csproj", "{39DDAD61-6172-477B-8AB2-B8D559E181A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShop.Web.Tests", "GiftShop.Web.Tests\GiftShop.Web.Tests.csproj", "{B79BBAD7-D6C1-4C4D-914F-D7A5B09EAB47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{39DDAD61-6172-477B-8AB2-B8D559E181A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39DDAD61-6172-477B-8AB2-B8D559E181A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39DDAD61-6172-477B-8AB2-B8D559E181A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79BBAD7-D6C1-4C4D-914F-D7A5B09EAB47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79BBAD7-D6C1-4C4D-914F-D7A5B09EAB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79BBAD7-D6C1-4C4D-914F-D7A5B09EAB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79BBAD7-D6C1-4C4D-914F-D7A5B09EAB47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
