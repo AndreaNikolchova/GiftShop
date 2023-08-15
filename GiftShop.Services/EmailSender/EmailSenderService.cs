@@ -4,6 +4,9 @@
     using System.Net;
     using System.Net.Mail;
     using Microsoft.Extensions.Configuration;
+    using GiftShop.Services.CustomProducts;
+    using GiftShop.Services.MediaService;
+    using Microsoft.EntityFrameworkCore;
 
     public class EmailSenderService : IEmailSenderService
     {
@@ -49,5 +52,6 @@
             }
 
         }
+      
     }
 }
