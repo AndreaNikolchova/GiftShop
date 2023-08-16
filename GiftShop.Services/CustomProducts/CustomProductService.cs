@@ -94,7 +94,7 @@
             customRequest.PackagesNames = await GetPackagingAsync();
             if (await SeeIfUserIsACustomerAsync(customRequest.EmailAddress))
             {
-                var customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.UserName == customRequest.EmailAddress);
+                var customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.Email == customRequest.EmailAddress);
                 CustomerViewModel customerViewModel = new CustomerViewModel()
                 {
                     FirstName = customer.FirstName,
