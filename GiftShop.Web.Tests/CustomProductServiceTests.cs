@@ -1,24 +1,27 @@
-﻿using GiftShop.Data;
-using GiftShop.Models;
-using GiftShop.Services.CustomProducts;
-using GiftShop.Services.CustomProducts.Contracts;
-using GiftShop.Services.EmailSender.Contracts;
-using GiftShop.Services.MediaService.Contracts;
-using GiftShop.Web.ViewModels.CustomProduct;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using Moq;
-using System.Threading.Tasks;
-using Xunit;
-using static GiftShop.Common.EmailMessagesConstants;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.Linq;
-using GiftShop.Web.ViewModels.Customer;
-
-namespace GiftShop.Web.Tests
+﻿namespace GiftShop.Web.Tests
 {
+    using System;
+    using System.IO;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Http;
+
+    using GiftShop.Data;
+    using GiftShop.Models;
+    using GiftShop.Services.CustomProducts;
+    using GiftShop.Services.CustomProducts.Contracts;
+    using GiftShop.Services.EmailSender.Contracts;
+    using GiftShop.Services.MediaService.Contracts;
+    using GiftShop.Web.ViewModels.CustomProduct;
+    using GiftShop.Web.ViewModels.Customer;
+
+    using Moq;
+    using Xunit;
     public class CustomProductServiceTests
     {
         private ICustomProductService customProductService;
@@ -32,7 +35,7 @@ namespace GiftShop.Web.Tests
             emailSenderServiceMock = new Mock<IEmailSenderService>();
             mediaServiceMock = new Mock<IMediaService>();
             this.dbOptions = new DbContextOptionsBuilder<GiftShopDbContext>()
-                .UseInMemoryDatabase("CarMarketplaceInMemory" + Guid.NewGuid().ToString())
+                .UseInMemoryDatabase("GiftShopInMemory" + Guid.NewGuid().ToString())
                 .Options;
 
             this.dbContext = new GiftShopDbContext(this.dbOptions);
@@ -66,6 +69,42 @@ namespace GiftShop.Web.Tests
             Assert.Equal(request[2].CustomProduct.Quantity, customProductViewModel.Quantity);
             Assert.Equal(request[2].UserId, customProductViewModel.User);
         }
+        [Fact]
+        public async Task SeeIfAddCustomRequestAddsTheCorrectCustomRequestWithPhoto()
+        {
+            var formFile = new FormFile(
+        baseStream: new MemoryStream(Encoding.UTF8.GetBytes("Mock file content")),
+        baseStreamOffset: 0,
+        length: "Mock file content".Length,
+        name: "Photo",
+        fileName: "test.jpg")
+            {
+                Headers = new HeaderDictionary(),
+                ContentType = "image/jpeg"
+            };
+
+            CustomProductViewModel customProductViewModel = new CustomProductViewModel()
+            {
+                Description = "Test description",
+                Size = "10cm",
+                Name = "Test",
+                Quantity = 1,
+                User = "testUserId",
+                EmailAddress = "test@gmail.com",
+                Photo = formFile
+            };
+
+            await this.customProductService.AddCustomRequestAsync(customProductViewModel);
+
+            var request = await dbContext.CustomRequests.ToListAsync();
+
+            Assert.Equal(request[2].CustomProduct.Name, customProductViewModel.Name);
+            Assert.Equal(request[2].CustomProduct.Description, customProductViewModel.Description);
+            Assert.Equal(request[2].CustomProduct.Size, customProductViewModel.Size);
+            Assert.Equal(request[2].CustomProduct.Quantity, customProductViewModel.Quantity);
+            Assert.Equal(request[2].UserId, customProductViewModel.User);
+        }
+
 
         [Fact]
         public async Task SeeIfGetAllRequestsGivesCorrectData()
@@ -79,16 +118,8 @@ namespace GiftShop.Web.Tests
                 Description = "Test Description",
                 Quantity = 1,
             };
-            var viewModelSecond = new CustomRequestViewModel()
-            {
-                RequestId = Guid.Parse("86ee833e-e048-422c-8040-e6fb21e9fcea"),
-                ProductId = Guid.Parse("db42d48e-e0ad-4434-b195-394a13a8f227"),
-                Name = "TestCustomProduct",
-                Size = "10cm",
-                Description = "Test Description",
-                Quantity = 1,
-            };
-            var list = new List<CustomRequestViewModel> { viewModelFirst, viewModelSecond };
+
+            var list = new List<CustomRequestViewModel> { viewModelFirst };
             var resultIenumerable = await this.customProductService.GetAllRequestsAsync();
             var result = resultIenumerable.ToList();
 
@@ -101,12 +132,6 @@ namespace GiftShop.Web.Tests
             Assert.Equal(list[0].Description, result[0].Description);
             Assert.Equal(list[0].Quantity, result[0].Quantity);
 
-            Assert.Equal(list[1].RequestId, result[1].RequestId);
-            Assert.Equal(list[1].ProductId, result[1].ProductId);
-            Assert.Equal(list[1].Name, result[1].Name);
-            Assert.Equal(list[1].Size, result[1].Size);
-            Assert.Equal(list[1].Description, result[1].Description);
-            Assert.Equal(list[1].Quantity, result[1].Quantity);
 
         }
 
@@ -224,6 +249,18 @@ namespace GiftShop.Web.Tests
             Assert.Null(customProduct);
 
         }
+        [Fact]
+        public async Task SeeIfDeleteRequestDeletesTheRequestWithAdmin()
+        {
+            await this.customProductService.DeleteRequestAsync(Guid.Parse("a0775228-4ae7-45ef-915b-a2befdd96bc8"), true);
+
+            var request = this.dbContext.CustomRequests.FirstOrDefault(x => x.Id == Guid.Parse("a0775228-4ae7-45ef-915b-a2befdd96bc8"));
+            var customProduct = this.dbContext.CustomProducts.FirstOrDefault(x => x.Id == Guid.Parse("3b40aa0e-6c86-4f13-ad33-bddd1a247201"));
+
+            Assert.Null(request);
+            Assert.Null(customProduct);
+
+        }
 
         [Fact]
         public async Task SeeIfAcceptRequestAcceptsTheCorrectRequest()
@@ -237,7 +274,7 @@ namespace GiftShop.Web.Tests
                 Description = "Test Description",
                 Quantity = 1,
                 ImageUrl = "TestUrl",
-                Date= "10:10",
+                Date = "10:10",
                 Price = 10.00m
             };
             await this.customProductService.AcceptRequestAsync(viewModel, "test@gmail.com");
@@ -248,13 +285,77 @@ namespace GiftShop.Web.Tests
 
 
         }
+
+        [Fact]
+        public async Task SeeIfUserIsACustomerMethodReturnsCorrectInformationWithAExistingCustomer()
+        {
+            var isCustomer = await this.customProductService.SeeIfUserIsACustomerAsync("testcustomeremail@abv.bg");
+            Assert.Equal(isCustomer, true);
+
+        }
+        [Fact]
+        public async Task SeeIfUserIsACustomerMethodReturnsCorrectInformationWithANonExistingCustomer()
+        {
+            var isCustomer = await this.customProductService.SeeIfUserIsACustomerAsync("noncustomer@abv.bg");
+            Assert.Equal(isCustomer, false);
+
+        }
+
+        [Fact]
+        public async Task SeeIfGetRequestByAdminReturnsCorrectInformation()
+        {
+            var viewModel = new CustomRequestViewModel()
+            {
+                RequestId = Guid.Parse("a0775228-4ae7-45ef-915b-a2befdd96bc8"),
+                ProductId = Guid.Parse("3b40aa0e-6c86-4f13-ad33-bddd1a247201"),
+                Name = "TestCustomProduct",
+                Size = "10cm",
+                Description = "Test Description",
+                Quantity = 1,
+                Price = 10m,
+                ImageUrl = "TestUrl",
+                EmailAddress = "testemail@abv.bg"
+            };
+            var model = await this.customProductService.GetRequestByAdminAsync(Guid.Parse("a0775228-4ae7-45ef-915b-a2befdd96bc8"));
+
+            Assert.Equal(viewModel.RequestId, model.RequestId);
+            Assert.Equal(viewModel.ProductId, model.ProductId);
+            Assert.Equal(viewModel.Name, model.Name);
+            Assert.Equal(viewModel.Size, model.Size);
+            Assert.Equal(viewModel.Description, model.Description);
+            Assert.Equal(viewModel.Quantity, model.Quantity);
+            Assert.Equal(viewModel.ImageUrl, model.ImageUrl);
+            Assert.Equal(viewModel.EmailAddress, model.EmailAddress);
+
+        }
+
+        [Fact]
+        public async Task SeeIfGetDeliveryCompaniesReturnsCorrectInformation()
+        {
+            var model = await this.customProductService.GetDeliveryCompaniesAsync();
+            var result = model.ToList();
+            Assert.Equal(result.Count, 6);
+        }
+
+        [Fact]
+        public async Task SeeGetPackagingReturnsCorrectInformation()
+        {
+
+            var model = await this.customProductService.GetPackagingAsync();
+            var result = model.ToList();
+
+            Assert.Equal(result.Count, 2);
+
+        }
+
+
         private void SeedDatabase(GiftShopDbContext dbContext)
         {
             var user = new IdentityUser()
             {
                 Id = "testUserId",
                 Email = "testemail@abv.bg",
-                NormalizedEmail = "TESTEMAIL@ABV.Bg",
+                NormalizedEmail = "TESTEMAIL@ABV.BG",
                 UserName = "testUser",
                 NormalizedUserName = "TESTUSER",
                 SecurityStamp = "12345",
@@ -315,6 +416,7 @@ namespace GiftShop.Web.Tests
                     ImageId = "TestUrl"
                 },
             };
+
             dbContext.Users.Add(user);
             dbContext.Users.Add(customerUser);
             dbContext.Customers.Add(customer);

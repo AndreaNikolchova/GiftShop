@@ -1,11 +1,12 @@
-
 namespace GiftShop.Web.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     using GiftShop.Data;
     using GiftShop.Models;
@@ -13,8 +14,7 @@ namespace GiftShop.Web.Tests
     using GiftShop.Services.Cart.Contracts;
     using GiftShop.Web.ViewModels.Cart;
     using GiftShop.Web.ViewModels.Product;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
+
     using Xunit;
 
     public class CartServiceTests
@@ -25,7 +25,7 @@ namespace GiftShop.Web.Tests
         public CartServiceTests()
         {
             this.dbOptions = new DbContextOptionsBuilder<GiftShopDbContext>()
-                .UseInMemoryDatabase("CarMarketplaceInMemory" + Guid.NewGuid().ToString())
+                .UseInMemoryDatabase("GiftShopInMemory" + Guid.NewGuid().ToString())
                 .Options;
 
             this.dbContext = new GiftShopDbContext(this.dbOptions);
