@@ -28,20 +28,8 @@
         public async Task AddCustomOrderAsync(CustomRequestViewModel request, string email)
         {
             var customer = new Customer();
-            if (!await customProductService.SeeIfUserIsACustomerAsync(request.EmailAddress))
-            {
-
-                customer.FirstName = request.CustomerViewModel.FirstName;
-                customer.LastName = request.CustomerViewModel.LastName;
-                customer.Address = request.CustomerViewModel.Address;
-                customer.TownName = request.CustomerViewModel.Town;
-                customer.User = dbContext.Users
-                .Where(x => x.Email == request.EmailAddress)
-                .First();
-                dbContext.Customers.Add(customer);
-
-            }
-            else
+            var test = await customProductService.SeeIfUserIsACustomerAsync(request.EmailAddress);
+            if (await customProductService.SeeIfUserIsACustomerAsync(request.EmailAddress))
             {
                 customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.Email == request.EmailAddress);
                 if (customer.Address != request.CustomerViewModel.Address)
@@ -52,6 +40,20 @@
                 {
                     customer.TownName = request.CustomerViewModel.Town;
                 }
+
+                
+
+            }
+            else
+            {
+                customer.FirstName = request.CustomerViewModel.FirstName;
+                customer.LastName = request.CustomerViewModel.LastName;
+                customer.Address = request.CustomerViewModel.Address;
+                customer.TownName = request.CustomerViewModel.Town;
+                customer.User = dbContext.Users
+                .Where(x => x.Email == request.EmailAddress)
+                .First();
+                dbContext.Customers.Add(customer);
             }
             var deliveryCompanyId =  await dbContext.DeliveryCompanies
                 .Where(x => x.Price == request.DeliveryCompany)
@@ -113,5 +115,6 @@
             order.IsDone = true;
             await dbContext.SaveChangesAsync();
         }
+       
     }
 }

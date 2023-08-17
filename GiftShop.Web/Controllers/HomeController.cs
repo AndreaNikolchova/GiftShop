@@ -18,10 +18,7 @@
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            if (User.IsInRole(AdminRoleName))
-            {
-                return this.RedirectToAction("Index","Home", new {Area = AdminAreaName});
-            }
+           
             var products = await productService.GetLast3ProductsAsync();
             return View(products);
         }

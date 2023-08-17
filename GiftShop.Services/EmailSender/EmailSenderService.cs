@@ -11,10 +11,11 @@
     public class EmailSenderService : IEmailSenderService
     {
         private readonly IConfiguration configuration;
-
-        public EmailSenderService(IConfiguration configuration)
+        private readonly ISmtpClientWrapper smtpClientWrapper;
+        public EmailSenderService(IConfiguration configuration, ISmtpClientWrapper smtpClientWrapper)
         {
             this.configuration = configuration;
+            this.smtpClientWrapper = smtpClientWrapper;
         }
         public void SendEmail(string email, string subject, string description, string ending)
         {
@@ -39,17 +40,7 @@
             string bussinessEmail = this.configuration["MySecrets:Email"];
             string password = this.configuration["MySecrets:Password"];
 
-            using (SmtpClient client = new SmtpClient())
-            {
-                client.EnableSsl = true;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(bussinessEmail, password);
-                client.Host = "smtp.gmail.com";
-                client.Port = 587;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-                client.Send(message);
-            }
+           this.smtpClientWrapper.Send(message, bussinessEmail, password);
 
         }
       

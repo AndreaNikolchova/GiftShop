@@ -7,12 +7,11 @@
 
     public class MediaService : IMediaService
     {
-        private Cloudinary cloudinary;
-        public MediaService(Cloudinary cloudinary)
+        private readonly ICloudinaryService cloudinaryService;
+        public MediaService(ICloudinaryService cloudinaryService)
         {
-            this.cloudinary = cloudinary;
+            this.cloudinaryService = cloudinaryService;
         }
-
 
         public async Task<string> UploadPictureAsync(IFormFile file,string name)
         {
@@ -30,7 +29,7 @@
                 PublicId = name,
             };
 
-            var result = await this.cloudinary.UploadAsync(uploadParams);
+            var result = await this.cloudinaryService.UploadAsync(uploadParams);
 
             if (result.Error != null)
             {

@@ -8,5 +8,6 @@
         public Task AddCustomOrderAsync(CustomRequestViewModel request, string email);
         public Task<IEnumerable<CustomOrderViewModel>> GetAllOrdersAsync();
         public Task MarkAnOrderAsDoneAsync(Guid orderId);
+     
     }
 }

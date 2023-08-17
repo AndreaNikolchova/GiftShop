@@ -160,9 +160,10 @@
         }
         public async Task MarkAnOrderAsDoneAsync(Guid orderId)
         {
-            var order =  await this.dbContext.Orders.FirstAsync(x => x.Id == orderId);
+            var order = await this.dbContext.Orders.FirstAsync(x => x.Id == orderId);
             order.IsDone = true;
             await dbContext.SaveChangesAsync();
         }
+
     }
 }

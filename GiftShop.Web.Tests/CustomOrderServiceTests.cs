@@ -47,7 +47,7 @@ using System;
         }
 
         [Fact]
-        public async Task SeeIfAddCustomOrderAddsTheCorrectOrderWithUser()
+        public async Task SeeIfAddCustomOrderAddsTheCorrectOrderWithoutUser()
         {
             var viewModel = new CustomRequestViewModel()
             {
@@ -61,7 +61,7 @@ using System;
                 ImageUrl = "TestUrl",
                 DeliveryCompany = 8.00m,
                 Packaging = 0m,
-                EmailAddress = "testcustomeremail@abv.bg",
+                EmailAddress = "testCustomerEmail@abv.bg",
                 CustomerViewModel = new CustomerViewModel()
                 {
                     FirstName = "CustomerFirstName",
@@ -71,7 +71,7 @@ using System;
 
                 }
             };
-            await this.customOrderService.AddCustomOrderAsync(viewModel, "testcustomeremail@abv.bg");
+            await this.customOrderService.AddCustomOrderAsync(viewModel, "testCustomerEmail@abv.bg");
             var order = this.dbContext.CustomOrders.First();
 
             Assert.Equal(order.Sum,10.00m);
@@ -80,7 +80,14 @@ using System;
             Assert.Equal(order.Product.Description ,viewModel.Description);
         }
 
-     
+      
+        [Fact]
+        public async Task SeeIfGetAllOrdersReturnsCorrectData()
+        {
+            
+        }
+
+
 
         private void SeedDatabase(GiftShopDbContext dbContext)
         {
@@ -99,8 +106,8 @@ using System;
             var customerUser = new IdentityUser()
             {
                 Id = "testCustomerId",
-                Email = "testcustomeremail@abv.bg",
-                NormalizedEmail = "TESTCUSTOMEREMAIL@ABV.Bg",
+                Email = "testCustomerEmail@abv.bg",
+                NormalizedEmail = "TESTCUSTOMEREMAIL@ABV.BG",
                 UserName = "testCustomer",
                 NormalizedUserName = "TESTCUSTOMER",
                 SecurityStamp = "12345",
