@@ -11,8 +11,8 @@
     public class EmailSenderService : IEmailSenderService
     {
         private readonly IConfiguration configuration;
-        private readonly ISmtpClientWrapper smtpClientWrapper;
-        public EmailSenderService(IConfiguration configuration, ISmtpClientWrapper smtpClientWrapper)
+        private readonly ISmtpClientService smtpClientWrapper;
+        public EmailSenderService(IConfiguration configuration, ISmtpClientService smtpClientWrapper)
         {
             this.configuration = configuration;
             this.smtpClientWrapper = smtpClientWrapper;

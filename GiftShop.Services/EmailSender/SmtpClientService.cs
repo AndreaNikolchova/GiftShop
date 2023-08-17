@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GiftShop.Services.EmailSender
 {
-    public class SmtpClientWrapper : ISmtpClientWrapper
+    public class SmtpClientService : ISmtpClientService
     {
         public void Send(MailMessage message, string bussinessEmail, string password)
         {

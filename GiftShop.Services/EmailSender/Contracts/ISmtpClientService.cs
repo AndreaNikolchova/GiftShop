@@ -1,7 +1,7 @@
 ﻿namespace GiftShop.Services.EmailSender.Contracts
 {
     using System.Net.Mail;
-    public interface ISmtpClientWrapper
+    public interface ISmtpClientService
     {
         void Send(MailMessage message,string email, string password);
     }

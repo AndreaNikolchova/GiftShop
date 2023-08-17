@@ -31,6 +31,7 @@
             var test = await customProductService.SeeIfUserIsACustomerAsync(request.EmailAddress);
             if (await customProductService.SeeIfUserIsACustomerAsync(request.EmailAddress))
             {
+
                 customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.Email == request.EmailAddress);
                 if (customer.Address != request.CustomerViewModel.Address)
                 {
@@ -40,7 +41,6 @@
                 {
                     customer.TownName = request.CustomerViewModel.Town;
                 }
-
                 
 
             }

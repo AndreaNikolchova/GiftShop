@@ -174,7 +174,7 @@
 
         public async Task<bool> SeeIfUserIsACustomerAsync(string userId)
         {
-            var customer = await dbContext.Customers.FirstOrDefaultAsync(x => x.User.Email == userId);
+            var customer = await dbContext.Customers.Select(x=>x.User).FirstOrDefaultAsync(x => x.Email == userId);
             if (customer == null)
             {
                 return false;
