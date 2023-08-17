@@ -1,15 +1,14 @@
-﻿
-namespace GiftShop.Web.Tests
+﻿namespace GiftShop.Web.Tests
 {
 
-using GiftShop.Data;
-using GiftShop.Services.CustomProducts.Contracts;
+    using GiftShop.Data;
+    using GiftShop.Services.CustomProducts.Contracts;
 
-using GiftShop.Services.EmailSender.Contracts;
+    using GiftShop.Services.EmailSender.Contracts;
 
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using System;
+    using Microsoft.EntityFrameworkCore;
+    using Moq;
+    using System;
     using GiftShop.Services.CustomOrder.Contracts;
     using GiftShop.Models;
     using Microsoft.AspNetCore.Identity;
@@ -20,14 +19,13 @@ using System;
     using GiftShop.Web.ViewModels.CustomProduct;
     using System.Linq;
     using GiftShop.Web.ViewModels.Order;
-    using CloudinaryDotNet.Actions;
-
+    
 
     public class CustomOrderServiceTests
     {
         private ICustomOrderService customOrderService;
         private Mock<ICustomProductService> customProductMock;
-       
+
         private readonly Mock<IEmailSenderService> emailSenderServiceMock;
 
         private DbContextOptions<GiftShopDbContext> dbOptions;
@@ -36,7 +34,7 @@ using System;
         {
             emailSenderServiceMock = new Mock<IEmailSenderService>();
             customProductMock = new Mock<ICustomProductService>();
-         
+
             this.dbOptions = new DbContextOptionsBuilder<GiftShopDbContext>()
                 .UseInMemoryDatabase("GiftShopInMemory" + Guid.NewGuid().ToString())
                 .Options;
@@ -49,7 +47,7 @@ using System;
             customOrderService = new CustomOrderService(dbContext, emailSenderServiceMock.Object, customProductMock.Object);
         }
 
-      
+
 
 
         [Fact]
@@ -75,7 +73,7 @@ using System;
                     LastName = "test",
                     Town = "testTown"
                 }
-                
+
             };
             await this.customOrderService.AddCustomOrderAsync(viewModel, "testemail@abv.bg");
             var order = this.dbContext.CustomOrders.ToList()[1];
@@ -105,7 +103,7 @@ using System;
                 {
                     Description = "Test",
                     Size = "10cm",
-                    Name ="test",
+                    Name = "test",
                     Quantity = 1,
                     EmailAddress = "testCustomerEmail@abv.bg"
                 }
@@ -120,7 +118,7 @@ using System;
             Assert.Equal(model.Customer.FirstName, result.Customer.FirstName);
             Assert.Equal(model.Customer.LastName, result.Customer.LastName);
             Assert.Equal(model.Customer.Town, result.Customer.Town);
-           
+
             Assert.Equal(model.Product.Name, result.Product.Name);
             Assert.Equal(model.Product.Description, result.Product.Description);
             Assert.Equal(model.Product.Size, result.Product.Size);
@@ -131,9 +129,9 @@ using System;
         [Fact]
         public async Task SeeIfMarkAnOrderAsDoneMarksTheCorrectOrder()
         {
-           
-           await this.customOrderService.MarkAnOrderAsDoneAsync(Guid.Parse("e92d29c4-15af-4b6d-8bb8-e75a8e54f98c"));
-            var order = dbContext.CustomOrders.First(x=>x.Id == Guid.Parse("e92d29c4-15af-4b6d-8bb8-e75a8e54f98c"));
+
+            await this.customOrderService.MarkAnOrderAsDoneAsync(Guid.Parse("e92d29c4-15af-4b6d-8bb8-e75a8e54f98c"));
+            var order = dbContext.CustomOrders.First(x => x.Id == Guid.Parse("e92d29c4-15af-4b6d-8bb8-e75a8e54f98c"));
 
             Assert.True(order.IsDone);
 

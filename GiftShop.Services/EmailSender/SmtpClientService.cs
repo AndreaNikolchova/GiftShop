@@ -11,6 +11,7 @@ namespace GiftShop.Services.EmailSender
 {
     public class SmtpClientService : ISmtpClientService
     {
+       
         public void Send(MailMessage message, string bussinessEmail, string password)
         {
             using (SmtpClient client = new SmtpClient())
