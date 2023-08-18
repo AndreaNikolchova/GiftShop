@@ -15,16 +15,23 @@ This is my graduation project for **C# Web** course at [SoftUni](https://softuni
 * [ASP.NET Core 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 * [ASP.NET Core Areas](https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/areas?view=aspnetcore-6.0)
 * [Entity Framework Core 6.0](https://learn.microsoft.com/en-us/ef/core/)
-* [AutoMapper](https://automapper.org/)
 * [Bootstrap](https://github.com/twbs/bootstrap)
 * [Bootswatch](https://bootswatch.com/)
 * [MSSQL Server](https://www.microsoft.com/en-us/sql-server)
+* [Gmail](https://mail.google.com)
 * [Cloudinary](https://cloudinary.com/)
+* [xUnit](https://github.com/xunit/xunit)
+* [In-Memory Database](https://learn.microsoft.com/en-us/sql/relational-databases/in-memory-database?view=sql-server-ver16)
+* [Moq](https://github.com/moq/moq)
 * JavaScript
 * AJAX real-time Requests
+
  
 ## :wrench: DB Diagram
 ![](https://res.cloudinary.com/andysgiftshop/image/upload/v1691786959/image_tgcn7m.png)
+
+## :chart: Unit tests code coverage
+![](https://res.cloudinary.com/andysgiftshop/image/upload/v1692371840/TestCoverage_rtmhwp.png)
 
 ## :v: Show your opinion
 Give a :star: if you like this project!
