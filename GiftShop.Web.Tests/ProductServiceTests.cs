@@ -74,19 +74,7 @@ namespace GiftShop.Web.Tests
                 User = customerUser
             };
 
-            var product = new Product()
-            {
-                Id = Guid.Parse("09a6440f-8dec-433f-aa73-577d9a017412"),
-                Name = "test",
-                Description = "test",
-                ImageUrl = "tetsUrl",
-                Price = 10m,
-                Type = new ProductType()
-                {
-                    Id = Guid.Parse("52db6308-27d5-44e2-a796-3f4c470c8cde"),
-                    Name = "Test"
-                }
-            };
+
            
             dbContext.Users.Add(user);
             dbContext.Users.Add(customerUser);
