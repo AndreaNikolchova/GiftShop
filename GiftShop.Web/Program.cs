@@ -55,6 +55,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
     app.UseDeveloperExceptionPage();
 }
 else
