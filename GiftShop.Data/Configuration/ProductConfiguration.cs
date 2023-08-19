@@ -64,7 +64,7 @@
                        new Product()
                 {
                     Name = "Penguin",
-                    ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691390683/test.jpg",
+                    ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691694736/Penguin.jpg",
                     Price = 35.00m,
                     Description = "Meet our adorable crochet penguin, meticulously handcrafted to bring a touch of whimsy and charm into your life. With its intricate stitches and lovable design, this penguin plushie is a perfect cuddly companion for both kids and the young at heart.",
                     Size = "25cm",

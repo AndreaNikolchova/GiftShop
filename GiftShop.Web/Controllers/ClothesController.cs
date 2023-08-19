@@ -20,7 +20,7 @@
         public async Task<IActionResult> Delete(Guid id)
         {
             await this.productService.DeleteAsync(id);
-            return Redirect("/Index");
+            return Redirect("/Clothes/Index");
         }
         public async Task<IActionResult> Edit(Guid id)
         {

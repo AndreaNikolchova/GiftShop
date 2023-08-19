@@ -24,7 +24,7 @@
 
         public async Task<IEnumerable<ProductViewModel>> GetLast3ProductsAsync()
         {
-            var products = await this.dbContext.Products.Where(x=>x.Quantity>0).Take(3)
+            var products = await this.dbContext.Products.Where(x => x.Quantity > 0).Take(3)
                 .Select(p => new ProductViewModel()
                 {
                     Id = p.Id,
@@ -43,18 +43,39 @@
 
         public async Task<IEnumerable<ProductViewModel>> GetAllAsync(string productType)
         {
-            var products = await this.dbContext.Products.Where(x => x.Type.Name == productType&& x.Quantity>0)
-                   .Select(p => new ProductViewModel()
-                   {
-                       Id = p.Id,
-                       Name = p.Name,
-                       ImageUrl = p.ImageUrl,
-                       Price = p.Price.ToString(),
-                       Description = p.Description!,
+            var products = new List<ProductViewModel>();
+            if (string.IsNullOrWhiteSpace(productType))
+            {
+                 products = await this.dbContext.Products.Where(x=>x.Quantity > 0)
+                 .Select(p => new ProductViewModel()
+                 {
+                     Id = p.Id,
+                     Name = p.Name,
+                     ImageUrl = p.ImageUrl,
+                     Price = p.Price.ToString(),
+                     Description = p.Description!,
+                     Type = p.Type.Name
 
 
-                   })
-                   .ToArrayAsync();
+                 })
+                 .ToListAsync();
+            }
+            else
+            {
+                products = await this.dbContext.Products.Where(x => x.Type.Name.ToLower() == productType.ToLower() && x.Quantity > 0)
+                       .Select(p => new ProductViewModel()
+                       {
+                           Id = p.Id,
+                           Name = p.Name,
+                           ImageUrl = p.ImageUrl,
+                           Price = p.Price.ToString(),
+                           Description = p.Description!,
+
+
+                       })
+                       .ToListAsync();
+
+            }
             return products;
         }
 
@@ -79,45 +100,38 @@
 
         public async Task AddProductAsync(AddProductViewModel addProductViewModel)
         {
-            try
+
+            var picture = await this.mediaService.UploadPictureAsync(addProductViewModel.Photo, addProductViewModel.Name);
+
+
+            var yarnType = await dbContext.YarnTypes
+                .FirstOrDefaultAsync(x => x.Name == addProductViewModel.YarnType);
+            var newYarnType = new YarnType()
             {
-
-                var picture = await this.mediaService.UploadPictureAsync(addProductViewModel.Photo, addProductViewModel.Name);
-
-
-                var yarnType = await dbContext.YarnTypes
-                    .FirstOrDefaultAsync(x => x.Name == addProductViewModel.YarnType);
-                var newYarnType = new YarnType()
-                {
-                    Name = addProductViewModel.Name
-                };
+                Name = addProductViewModel.Name
+            };
 
 
-                Product product = new Product()
-                {
-                    Name = addProductViewModel.Name,
-                    ImageUrl = picture,
-                    Description = addProductViewModel.Description,
-                    Size = addProductViewModel.Size,
-                    Quantity = addProductViewModel.Quantity,
-                    Price = decimal.Parse(addProductViewModel.Price),
-                    ProductTypeId = await dbContext.ProductTypes
-                        .Where(x => x.Name == addProductViewModel.Type)
-                        .Select(x => x.Id)
-                        .FirstAsync(),
-                    YarnTypeId = yarnType != null ? yarnType.Id : newYarnType.Id,
-                };
-                if (yarnType == null)
-                {
-                    await dbContext.YarnTypes.AddAsync(newYarnType);
-                }
-                await dbContext.Products.AddAsync(product);
-                await dbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
+            Product product = new Product()
             {
-                throw ex;
+                Name = addProductViewModel.Name,
+                ImageUrl = picture,
+                Description = addProductViewModel.Description,
+                Size = addProductViewModel.Size,
+                Quantity = addProductViewModel.Quantity,
+                Price = decimal.Parse(addProductViewModel.Price),
+                ProductTypeId = await dbContext.ProductTypes
+                    .Where(x => x.Name == addProductViewModel.Type)
+                    .Select(x => x.Id)
+                    .FirstAsync(),
+                YarnTypeId = yarnType != null ? yarnType.Id : newYarnType.Id,
+            };
+            if (yarnType == null)
+            {
+                await dbContext.YarnTypes.AddAsync(newYarnType);
             }
+            await dbContext.Products.AddAsync(product);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<AddProductViewModel> FillTypesAsync()
@@ -223,7 +237,7 @@
                     thisUsersCart.CartProduct.Add(cartProduct);
                     product.CartProduct.Add(cartProduct);
                 }
-                //Add toaser
+
             }
             else
             {

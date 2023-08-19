@@ -5,8 +5,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
-
-    [Authorize]
     public class ProductController : Controller
     {
         private IProductService productService;

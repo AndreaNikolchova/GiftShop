@@ -21,7 +21,7 @@
         public async Task<IActionResult> Done(Guid id)
         {
             await customOrderService.MarkAnOrderAsDoneAsync(id);
-            return Redirect("/CustomOrder/Index");
+            return RedirectToAction("Index");
         }
     }
 }

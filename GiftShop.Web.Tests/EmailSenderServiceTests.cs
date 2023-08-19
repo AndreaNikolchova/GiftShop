@@ -1,5 +1,4 @@
-﻿
-namespace GiftShop.Web.Tests
+﻿namespace GiftShop.Web.Tests
 {
     using GiftShop.Services.EmailSender.Contracts;
     using GiftShop.Services.EmailSender;
@@ -17,7 +16,7 @@ namespace GiftShop.Web.Tests
 
             var configurationMock = new Mock<IConfiguration>();
             configurationMock.Setup(conf => conf["MySecrets:Email"]).Returns("giftsmadebyandy@gmail.com");
-            configurationMock.Setup(conf => conf["MySecrets:Password"]).Returns("mlujygldzfnudhzm");
+            configurationMock.Setup(conf => conf["MySecrets:Password"]).Returns("buhloqelmmgugdic");
 
             var smtpClientMock = new Mock<ISmtpClientService>();
             var emailSenderService = new EmailSenderService(configurationMock.Object, smtpClientMock.Object);
@@ -29,7 +28,7 @@ namespace GiftShop.Web.Tests
           client => client.Send(
               It.IsAny<MailMessage>(),
               "giftsmadebyandy@gmail.com",
-              "mlujygldzfnudhzm"
+              "buhloqelmmgugdic"
           ),
           Times.Once
       );

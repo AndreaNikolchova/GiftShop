@@ -28,7 +28,7 @@ namespace GiftShop.Web.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             await this.productService.DeleteAsync(id);
-            return Redirect("/Index");
+            return Redirect("/Toys/Index");
         }
         public async Task<IActionResult> Edit(Guid id)
         {

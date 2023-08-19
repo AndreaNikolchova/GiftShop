@@ -4,6 +4,7 @@ using GiftShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShop.Data.Migrations
 {
     [DbContext(typeof(GiftShopDbContext))]
-    partial class GiftShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230818120248_ProductNullablePhoto")]
+    partial class ProductNullablePhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -384,7 +386,7 @@ namespace GiftShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("da8d5812-dc10-4efb-a27c-f8c006643653"),
+                            Id = new Guid("2f558699-0ade-4437-a52e-649ce238b2aa"),
                             Description = "Wrap yourself in the soothing comfort of our blue soft crochet blanket. Handcrafted with care, this cozy and inviting blanket features a delicate crochet pattern that adds a touch of elegance to its comforting embrace. ",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300911/IMG_4014_yctppj.jpg",
                             Name = "Blanket",
@@ -396,7 +398,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dc08f773-dcf3-4aa8-af7f-a37b67a9234b"),
+                            Id = new Guid("193f5a1c-d161-4833-9789-9acc26a0697d"),
                             Description = "Elevate the ordinary with our crochet bouquet of five intricately crafted roses, a timeless and artful display that captures the essence of nature's beauty in delicate yarn. A thoughtful and lasting gift for any occasion, adding a touch of handmade elegance to your surroundings.",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300910/IMG_8323_axmhkr.jpg",
                             Name = "Roses",
@@ -408,7 +410,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f902eba6-a95e-441a-864c-6abdeef28acd"),
+                            Id = new Guid("ed73248a-9a68-41f2-a926-51de5d086ce3"),
                             Description = "Delight in the enchanting innocence of our crochet baby deer plushie, a soft and lovable addition to any nursery that promises warmth and companionship for your little bundle of joy.",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1690300909/IMG_3999_qe9com.jpg",
                             Name = "Baby Dear",
@@ -420,7 +422,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("39bb57cf-449c-4b71-86d2-b577ea7075f5"),
+                            Id = new Guid("b9d8d516-885b-43bf-a747-8da6f58cecff"),
                             Description = "Introduce a serene touch to your living space with our blue pillow, its soothing hue and plush texture offering both aesthetic elegance and cozy comfort.",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691317411/Pillow.jpg",
                             Name = "Pillow",
@@ -432,9 +434,9 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b729c6f4-bc43-44a8-bea7-90b128dcb5de"),
+                            Id = new Guid("b9bff006-e66c-43d4-8dd1-629b70e3f5c1"),
                             Description = "Meet our adorable crochet penguin, meticulously handcrafted to bring a touch of whimsy and charm into your life. With its intricate stitches and lovable design, this penguin plushie is a perfect cuddly companion for both kids and the young at heart.",
-                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691694736/Penguin.jpg",
+                            ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691390683/test.jpg",
                             Name = "Penguin",
                             Price = 35.00m,
                             ProductTypeId = new Guid("979b887d-03fc-4f43-91b4-1c36daae5ac5"),
@@ -444,7 +446,7 @@ namespace GiftShop.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2538ac7b-d3c1-4ea9-8f87-b170dd5ba9b8"),
+                            Id = new Guid("73339734-206e-4540-b670-f1530c202ca3"),
                             Description = "Say hello to Leggy Froggie, our delightful crochet creation that adds a playful twist to traditional plushies. With its vibrant colors, long and stretchy legs, and a cheerful smile, Leggy Froggie is ready to hop into your heart and become a cherished companion.",
                             ImageUrl = "https://res.cloudinary.com/andysgiftshop/image/upload/v1691667795/Frog.jpg",
                             Name = "Leggy Froggie",

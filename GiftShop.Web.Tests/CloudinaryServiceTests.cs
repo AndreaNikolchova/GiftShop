@@ -1,9 +1,6 @@
 ﻿namespace GiftShop.Web.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+
     using System.Threading.Tasks;
     using Xunit;
     using CloudinaryDotNet;
@@ -20,7 +17,7 @@
         [Fact]
         public async Task UploadAsync_UploadSuccessful_ReturnsImageUrl()
         {
-            // Arrange
+
             var cloudinary = new Cloudinary(
                 new Account(TestCloudName, TestApiKey, TestApiSecret)
             );
@@ -35,10 +32,10 @@
                 PublicId = "testPublicId", 
             };
 
-            // Act
+
             var result = await cloudinaryService.UploadAsync(uploadParams);
 
-            // Assert
+
             Assert.NotNull(result.Url);
             Assert.StartsWith("http://res.cloudinary.com/", result.Url.AbsoluteUri);
         }

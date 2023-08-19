@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims
+@inject SignInManager<IdentityUser> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +19,7 @@
                     <img src="/Images/AndyLogo.png" alt="Logo" class="img-fluid img-nav" />
                 </a>
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <img href="~/Images/Andy's.png" />Andy's Gifts</a>
+                <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="AllProducts" asp-action="Index">All Products</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,33 +33,49 @@
                             </a>
                             <div class="dropdown-menu  myCustomColor" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item text-light" asp-area="" asp-controller="Toys" asp-action="Index">Toys</a>
-                                <a class="dropdown-item text-light"asp-area=""  asp-controller="Clothes" asp-action="Index">Clothes</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Clothes" asp-action="Index">Clothes</a>
                                 <a class="dropdown-item text-light" asp-area="" asp-controller="Accessories" asp-action="Index">Accessories</a>
                             </div>
                         </li>
                         @if (!User.IsInRole("Administrator"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="CustomProduct" asp-action="Index">Custom Order</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="CustomProduct" asp-action="Request">My Custom Requests</a>
-                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="CustomProduct" asp-action="Index">Custom Order</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="CustomProduct" asp-action="Request">My Custom Requests</a>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light text-decoration-none" asp-area="Identity" asp-page="/Account/Login">Custom Order</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light text-decoration-none" asp-area="Identity" asp-page="/Account/Login">My Custom Requests</a>
+                                </li>
+
+                            }
+
                         }
+
 
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item ms-3">
-                                <a class="nav-link text-light"  asp-area="Admin" asp-controller="Product" asp-action="Add">Add Product</a>
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Product" asp-action="Add">Add Product</a>
                             </li>
                             <li class="nav-item ms-3">
                                 <a class="nav-link text-light" asp-area="" asp-controller="CustomProduct" asp-action="Request">View custom requests</a>
                             </li>
                             <li class="nav-item ms-3 ">
-                                <a class="nav-link text-light"  asp-controller="CustomOrder" asp-action="Index">View custom orders</a>
+                                <a class="nav-link text-light" asp-controller="CustomOrder" asp-action="Index">View custom orders</a>
                             </li>
-                             <li class="nav-item ms-3 ">
-                                <a class="nav-link text-light"  asp-controller="Order" asp-action="Index">View orders</a>
+                            <li class="nav-item ms-3 ">
+                                <a class="nav-link text-light" asp-controller="Order" asp-action="Index">View orders</a>
                             </li>
                         }
                     </ul>
@@ -66,14 +84,21 @@
 
                             <partial name="_LoginPartial" />
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i></a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-light text-decoration-none" asp-area="" asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light text-decoration-none" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-shopping-cart"></i></a>
+                            </li>
+                        }
 
                     </ul>
-
-
-
                 </div>
             </div>
         </nav>

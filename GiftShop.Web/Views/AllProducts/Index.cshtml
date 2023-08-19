@@ -1,0 +1,100 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+@model IEnumerable<ProductViewModel>
+@using static GiftShop.Common.ApplicationConstants;
+<body>
+    <h1 class="text-center">All Products</h1>
+    <div class="container mt-5 mb-3">
+        <p class="text-center text-primary">This search bar searches just by product type!</p>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <input class="form-control" id="search" type="text" placeholder="Search" aria-label="Search">
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn btn-secondary" type="submit" onclick="loadPage()">Search</button>
+            </div>
+        </div>
+    </div>
+    @{
+        if (Model.Count() == 0)
+        {
+            <div class="row justify-content-center align-items-center mb-5">
+                <div class="col-auto">
+                    <div id="banner">
+                        <img class="img-fluid h-200 mb-4" src="~/Images/No items found.png" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <div class="row row-cols-1 row-cols-md-3 ms-5">
+
+        @foreach (var product in Model)
+        {
+            <div class="col">
+                <div class="product-card text-decoration-none text-dark shadow-lg ">
+                    <a class="card" asp-controller="@product.Type" asp-action="Details" asp-route-id="@product.Id">
+                        <img src="@product.ImageUrl" alt="@product.Name">
+                    </a>
+                    <div class="product-info">
+                        <h3 class="product-title text-center">@product.Name</h3>
+                        <p class="product-description">@product.Description</p>
+                        @if (!User.IsInRole(AdminRoleName))
+                        {
+                            <div class="container">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-auto">
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            <a class="btn btn-secondary mb-2" onclick="addToCart(this,'@Html.Raw(product.Id)','@Html.Raw(product.Type)')"> Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-secondary mb-2" asp-area="Identity" asp-page="/Account/Login">Add to Cart <i class="fa fa-shopping-cart"></i> </a>
+
+                                        }
+                                    </div>
+                                    <span class="product-price text-center ">@product.Price BGN</span>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="container">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-auto">
+                                        <a asp-controller="@product.Type" asp-action="Edit" asp-route-id="@product.Id" type="button" class="btn btn-success">Edit</a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a asp-controller="@product.Type" asp-action="Delete" asp-route-id="@product.Id" type="button" class="btn btn-danger">Delete</a>
+                                    </div>
+                                    <span class="product-price text-center mb-2 mt-2">@product.Price BGN</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</body>
+<script src="~/js/addToCart.js"></script>
+<script>
+    function loadPage() {
+
+        let searchString = document.getElementById('search').value;
+        $.ajax({
+            url: '@Url.Action("Index", "AllProducts")',
+            type: 'GET',
+            data: { searchString: searchString },
+            success: function (result) {
+                $('body').html(result);
+            },
+            error: function () {
+                alert('Error loading page.');
+            }
+        });
+    }
+</script>

@@ -1,15 +1,10 @@
-﻿using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GiftShop.Services.MediaService.Contracts;
-
-namespace GiftShop.Services.MediaService
+﻿namespace GiftShop.Services.MediaService
 {
-   
+
+    using CloudinaryDotNet.Actions;
+    using CloudinaryDotNet;
+
+    using GiftShop.Services.MediaService.Contracts;
 
     public class CloudinaryService : ICloudinaryService
     {

@@ -28,20 +28,20 @@
             var product = await this.productService.GetDetailsAsync(id);
             return View(product);
         }
-        [Authorize(Roles = AdminRoleName)]
+      
         public async Task<IActionResult> Delete(Guid id)
         {
             await this.productService.DeleteAsync(id);
-            return Redirect("/Index");
+            return Redirect("/Accessories/Index");
         }
-        [Authorize(Roles = AdminRoleName)]
+     
         public async Task<IActionResult> Edit(Guid id)
         {
             var model = await productService.GetDetailsForEditAsync(id);
             return View(model);
         }
         [HttpPost]
-        [Authorize(Roles = AdminRoleName)]
+      
         public async Task<IActionResult> Edit(EditProductViewModel model)
         {
             if (!ModelState.IsValid)
