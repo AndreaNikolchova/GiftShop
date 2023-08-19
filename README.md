@@ -31,7 +31,7 @@ This is my graduation project for **C# Web** course at [SoftUni](https://softuni
 ![](https://res.cloudinary.com/andysgiftshop/image/upload/v1691786959/image_tgcn7m.png)
 
 ## :chart: Unit tests code coverage
-![](https://res.cloudinary.com/andysgiftshop/image/upload/v1692371840/TestCoverage_rtmhwp.png)
+![](https://res.cloudinary.com/andysgiftshop/image/upload/v1692435269/image_miql7v.png)
 
 ## :v: Show your opinion
 Give a :star: if you like this project!
